@@ -1,4 +1,3 @@
-import {AbstractControl} from '@angular/forms';
 import {NgxFormModule} from '../ngx-form.module';
 import {NgxFormGroup} from '../model/ngx-form-group.model';
 

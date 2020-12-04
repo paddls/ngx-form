@@ -14,8 +14,3 @@ export class UserForm {
   })
   public company: CompanyForm;
 }
-
-class UserDto {
-
-  public displayName: string;
-}

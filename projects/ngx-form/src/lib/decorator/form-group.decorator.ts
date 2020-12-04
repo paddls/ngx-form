@@ -14,7 +14,7 @@ export interface FormGroupContextConfiguration<T> extends FormGroupContext<T> {
 
 export function FormGroup<T>(formGroupContext: FormGroupContext<T>): any {
   return (target: any, propertyKey: string): void => {
-    let formGroupContextConfiguration: FormGroupContextConfiguration<T> = {
+    const formGroupContextConfiguration: FormGroupContextConfiguration<T> = {
       propertyKey,
       name: propertyKey,
       ...formGroupContext

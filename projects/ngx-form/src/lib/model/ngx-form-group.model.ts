@@ -3,13 +3,14 @@ import {FORM_CONTROLS_METADATA_KEY, FormControlContextConfiguration} from '../de
 import {FORM_ARRAYS_METADATA_KEY, FormArrayContextConfiguration} from '../decorator/form-array.decorator';
 import {set} from 'lodash';
 import {FORM_GROUPS_METADATA_KEY, FormGroupContextConfiguration} from '../decorator/form-group.decorator';
-import {NgxForm} from './ngx-form.model';
 
 export const FORM_GROUP_METADATAKEY: string = 'ngx-form:form-group';
 
 export class NgxFormGroup<V> extends FormGroup {
 
-  public constructor(controls: { [key: string]: AbstractControl; }, validatorOrOpts?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null, asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null) {
+  public constructor(controls: { [key: string]: AbstractControl; },
+                     validatorOrOpts?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null,
+                     asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null) {
     super(controls, validatorOrOpts, asyncValidator);
   }
 

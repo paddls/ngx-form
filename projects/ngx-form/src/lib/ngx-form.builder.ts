@@ -5,9 +5,9 @@ import {NgxFormControl} from './model/ngx-form-control.model';
 import {NgxFormArray} from './model/ngx-form-array.model';
 
 function isAbstractControlOptions(options: AbstractControlOptions| {[key: string]: any}): options is AbstractControlOptions {
-  return (<AbstractControlOptions>options).asyncValidators !== undefined ||
-    (<AbstractControlOptions>options).validators !== undefined ||
-    (<AbstractControlOptions>options).updateOn !== undefined;
+  return (options as AbstractControlOptions).asyncValidators !== undefined ||
+    (options as AbstractControlOptions).validators !== undefined ||
+    (options as AbstractControlOptions).updateOn !== undefined;
 }
 
 export type FormHooks = 'change'|'blur'|'submit';
@@ -20,7 +20,7 @@ export class NgxFormBuilder extends FormBuilder {
 
     let validators: ValidatorFn|ValidatorFn[]|null = null;
     let asyncValidators: AsyncValidatorFn|AsyncValidatorFn[]|null = null;
-    let updateOn: FormHooks|undefined = undefined;
+    let updateOn: FormHooks|undefined;
 
     if (options != null) {
       if (isAbstractControlOptions(options)) {
@@ -28,8 +28,8 @@ export class NgxFormBuilder extends FormBuilder {
         asyncValidators = options.asyncValidators != null ? options.asyncValidators : null;
         updateOn = options.updateOn != null ? options.updateOn : undefined;
       } else {
-        validators = options['validator'] != null ? options['validator'] : null;
-        asyncValidators = options['asyncValidator'] != null ? options['asyncValidator'] : null;
+        validators = options[`validator`] != null ? options[`validator`] : null;
+        asyncValidators = options[`asyncValidator`] != null ? options[`asyncValidator`] : null;
       }
     }
 
