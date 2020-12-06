@@ -163,6 +163,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "ngx-form"
+    }
+  },
+  "defaultProject": "ngx-form",
+  "cli": {
+    "analytics": "a9eb65a5-44a7-4a42-9553-566630bd19cd"
+  }
 }

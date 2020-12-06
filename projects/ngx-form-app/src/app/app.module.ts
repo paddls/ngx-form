@@ -1,10 +1,10 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
 
-import {AppRoutingModule} from './app-routing.module';
-import {AppComponent} from './app/app.component';
-import {ReactiveFormsModule} from '@angular/forms';
-import {NgxFormModule} from '@witty-services/ngx-form';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app/app.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgxFormModule } from '@witty-services/ngx-form';
 import {AddressFormComponent} from './address-form/address-form.component';
 import {CompanyFormComponent} from './company-form/company-form.component';
 
@@ -23,4 +23,5 @@ import {CompanyFormComponent} from './company-form/company-form.component';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
