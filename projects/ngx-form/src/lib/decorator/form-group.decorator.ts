@@ -1,10 +1,12 @@
+import {ConstructorFunction} from '../common';
+
 export const FORM_GROUPS_METADATA_KEY: string = 'ngx-form:form-groups';
 
 export interface FormGroupContext<T> {
 
   name?: string;
 
-  type: () => new(...args: any[]) => T;
+  type: () => ConstructorFunction<T>;
 }
 
 export interface FormGroupContextConfiguration<T> extends FormGroupContext<T> {

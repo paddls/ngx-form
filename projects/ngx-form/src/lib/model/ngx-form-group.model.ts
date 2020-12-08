@@ -3,6 +3,7 @@ import {FORM_CONTROLS_METADATA_KEY, FormControlContextConfiguration} from '../de
 import {FORM_ARRAYS_METADATA_KEY, FormArrayContextConfiguration} from '../decorator/form-array.decorator';
 import {set} from 'lodash';
 import {FORM_GROUPS_METADATA_KEY, FormGroupContextConfiguration} from '../decorator/form-group.decorator';
+import {ConstructorFunction} from '../common';
 
 export const FORM_GROUP_METADATAKEY: string = 'ngx-form:form-group';
 
@@ -19,7 +20,7 @@ export class NgxFormGroup<V> extends FormGroup {
       parent += parent + '.';
     }
 
-    const type: new(...args: any[]) => V = Reflect.getMetadata(FORM_GROUP_METADATAKEY, this);
+    const type: ConstructorFunction<V> = Reflect.getMetadata(FORM_GROUP_METADATAKEY, this);
     const value: V = new type();
 
     const controlContextConfigurations: FormControlContextConfiguration<any>[] = Reflect.getMetadata(FORM_CONTROLS_METADATA_KEY, type.prototype) || [];

@@ -1,3 +1,5 @@
+import {ConstructorFunction} from '../common';
+
 export const FORM_ARRAYS_METADATA_KEY: string = 'ngx-form:form-arrays';
 
 export interface FormArrayContext<T> {
@@ -6,7 +8,7 @@ export interface FormArrayContext<T> {
 
   value?: any;
 
-  type?: () => new(...args: any[]) => T;
+  type?: () => ConstructorFunction<T>;
 }
 
 export interface FormArrayContextConfiguration<T> extends FormArrayContext<T> {

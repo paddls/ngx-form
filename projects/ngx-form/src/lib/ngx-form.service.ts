@@ -4,6 +4,7 @@ import {NgxFormBuilder} from './ngx-form.builder';
 import {FORM_CONTROLS_METADATA_KEY, FormControlContextConfiguration} from './decorator/form-control.decorator';
 import {FORM_ARRAYS_METADATA_KEY, FormArrayContextConfiguration} from './decorator/form-array.decorator';
 import {FORM_GROUPS_METADATA_KEY, FormGroupContextConfiguration} from './decorator/form-group.decorator';
+import {ConstructorFunction} from './common';
 
 @Injectable()
 export class NgxFormService {
@@ -11,7 +12,7 @@ export class NgxFormService {
   public constructor(protected readonly formBuilder: NgxFormBuilder) {
   }
 
-  public build<V>(type: new(...args: any[]) => V): NgxFormGroup<V> {
+  public build<V>(type: ConstructorFunction<V>): NgxFormGroup<V> {
     const form: NgxFormGroup<V> = this.formBuilder.group({});
     Reflect.defineMetadata(FORM_GROUP_METADATAKEY, type, form);
 

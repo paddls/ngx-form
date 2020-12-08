@@ -1,14 +1,15 @@
 import {NgxFormModule} from '../ngx-form.module';
 import {NgxFormGroup} from '../model/ngx-form-group.model';
+import {ConstructorFunction} from '../common';
 
 export const FORM_METADATA_KEY: string = 'ngx-form:form';
 export const FORM_INSTANCE_METADATA_KEY: string = 'ngx-form:form-instance';
 
 export interface FormContextConfiguration<T> {
-  type: () => new(...args: any[]) => T;
+  type: () => ConstructorFunction<T>;
 }
 
-export function Form<V>(type: () => new(...args: any[]) => V): any {
+export function Form<V>(type: () => ConstructorFunction<V>): any {
   return (target: any, propertyKey: string): void => {
     const formContextConfiguration: FormContextConfiguration<V> = {
       type

@@ -1,3 +1,5 @@
+import {ConstructorFunction} from '../common';
+
 export const FORM_CONTROLS_METADATA_KEY: string = 'ngx-form:form-controls';
 
 export interface FormControlContext<T> {
@@ -6,7 +8,7 @@ export interface FormControlContext<T> {
 
   value?: any;
 
-  type?: () => new(...args: any[]) => T;
+  type?: () => ConstructorFunction<T>;
 }
 
 export interface FormControlContextConfiguration<T> extends FormControlContext<T> {
