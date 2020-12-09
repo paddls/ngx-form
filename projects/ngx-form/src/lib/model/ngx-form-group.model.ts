@@ -1,9 +1,10 @@
 import {AbstractControl, AbstractControlOptions, AsyncValidatorFn, FormGroup, ValidatorFn} from '@angular/forms';
-import {FORM_CONTROLS_METADATA_KEY, FormControlContextConfiguration} from '../decorator/form-control.decorator';
-import {FORM_ARRAYS_METADATA_KEY, FormArrayContextConfiguration} from '../decorator/form-array.decorator';
 import {set} from 'lodash';
-import {FORM_GROUPS_METADATA_KEY, FormGroupContextConfiguration} from '../decorator/form-group.decorator';
 import {ConstructorFunction} from '../common';
+import {FORM_CONTROL_SUFFIX_METADATA_KEY} from '../decorator/form-control.decorator';
+import {FORM_GROUP_SUFFIX_METADATA_KEY, FormGroupContext} from '../decorator/form-group.decorator';
+import {findPropertyFormContexts, FormContextCommon} from '../decorator/decorator.common';
+import {FORM_ARRAY_SUFFIX_METADATA_KEY} from '../decorator/form-array.decorator';
 
 export const FORM_GROUP_METADATAKEY: string = 'ngx-form:form-group';
 
@@ -23,27 +24,19 @@ export class NgxFormGroup<V> extends FormGroup {
     const type: ConstructorFunction<V> = Reflect.getMetadata(FORM_GROUP_METADATAKEY, this);
     const value: V = new type();
 
-    const controlContextConfigurations: FormControlContextConfiguration<any>[] = Reflect.getMetadata(FORM_CONTROLS_METADATA_KEY, type.prototype) || [];
+    const controlContexts: {[key: string]: FormContextCommon<V>} = findPropertyFormContexts(type.prototype, FORM_CONTROL_SUFFIX_METADATA_KEY);
+    Object.keys(controlContexts).forEach((key: string) => {
+      const controlContext: FormContextCommon<V> = controlContexts[key];
+      set(value as any, key, this.get(controlContext.name).value);
+    });
 
-    for(const controlContextConfiguration of controlContextConfigurations) {
-      set(value as any, controlContextConfiguration.propertyKey, this.get(controlContextConfiguration.name).value);
-    }
+    // const arrayContexts: {[key: string]: FormContextCommon<V>} = findPropertyFormContexts(type.prototype, FORM_ARRAY_SUFFIX_METADATA_KEY);
 
-    const formArrayContextConfigurations: FormArrayContextConfiguration<any>[] = Reflect.getMetadata(FORM_ARRAYS_METADATA_KEY, type.prototype) || [];
-
-    for(const formArrayContextConfiguration of formArrayContextConfigurations) {
-      set(value as any, formArrayContextConfiguration.propertyKey, this.get(formArrayContextConfiguration.name).value);
-    }
-
-    const formGroupContextConfigurations: FormGroupContextConfiguration<any>[] = Reflect.getMetadata(FORM_GROUPS_METADATA_KEY, type.prototype) || [];
-
-    for(const formGroupContextConfiguration of formGroupContextConfigurations) {
-      set(
-        value as any,
-        formGroupContextConfiguration.propertyKey,
-        (this.get(formGroupContextConfiguration.name) as NgxFormGroup<any>).getValue(parent + formGroupContextConfiguration.propertyKey)
-      );
-    }
+    const groupContexts: {[key: string]: FormContextCommon<V>} = findPropertyFormContexts(type.prototype, FORM_GROUP_SUFFIX_METADATA_KEY);
+    Object.keys(groupContexts).forEach((key: string) => {
+      const groupContext: FormGroupContext<V> = groupContexts[key] as FormGroupContext<V>;
+      set(value as any, key, (this.get(groupContext.name) as NgxFormGroup<any>).getValue(parent + key))
+    });
 
     return value;
   }

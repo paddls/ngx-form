@@ -1,0 +1,20 @@
+import {Component, OnInit} from '@angular/core';
+import {ControlContainer} from '@angular/forms';
+import {AddressForm} from '../form/address.form';
+import {NgxFormGroup} from '@witty-services/ngx-form';
+
+@Component({
+  selector: 'app-address-form',
+  templateUrl: './address-form.component.html'
+})
+export class AddressFormComponent implements OnInit {
+
+  public addressForm: NgxFormGroup<AddressForm>;
+
+  public constructor(private readonly controlContainer: ControlContainer) {
+  }
+
+  public ngOnInit(): void {
+    this.addressForm = this.controlContainer.control as NgxFormGroup<AddressForm>;
+  }
+}

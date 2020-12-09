@@ -1,13 +1,11 @@
 import 'reflect-metadata';
 
 import {Injector, NgModule} from '@angular/core';
-import {NgxFormService} from './ngx-form.service';
 import {NgxFormBuilder} from './ngx-form.builder';
 
 @NgModule({
   providers: [
-    NgxFormBuilder,
-    NgxFormService
+    NgxFormBuilder
   ]
 })
 export class NgxFormModule {
@@ -18,7 +16,7 @@ export class NgxFormModule {
     NgxFormModule.injector = injector;
   }
 
-  public static getNgxFormService(): NgxFormService {
-    return NgxFormModule.injector.get(NgxFormService);
+  public static getNgxFormBuilder(): NgxFormBuilder {
+    return NgxFormModule.injector.get(NgxFormBuilder);
   }
 }

@@ -1,0 +1,15 @@
+<div [formGroup]="companyForm">
+  <h5>Company</h5>
+
+  <div>
+    <label for="companyName">Company's name : </label>
+    <input type="text" id="companyName" name="companyName" formControlName="name"/>
+  </div>
+
+  <div>
+    <label for="companySiret">Company's Siret : </label>
+    <input type="text" id="companySiret" name="companySiret" formControlName="siret"/>
+  </div>
+
+  <app-address-form formGroupName="address"></app-address-form>
+</div>

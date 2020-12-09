@@ -1,25 +1,16 @@
 import {ConstructorFunction} from '../common';
+import {addFormContextCommon, FormContextCommon} from './decorator.common';
 
-export const FORM_ARRAYS_METADATA_KEY: string = 'ngx-form:form-arrays';
+export const FORM_ARRAY_SUFFIX_METADATA_KEY: string = 'form-array';
 
-export interface FormArrayContext<T> {
-
-  name?: string;
-
-  value?: any;
+export interface FormArrayContext<T> extends FormContextCommon<T> {
 
   type?: () => ConstructorFunction<T>;
 }
 
-export interface FormArrayContextConfiguration<T> extends FormArrayContext<T> {
-
-  propertyKey: string;
-}
-
-export function FormArray<T>(formArrayContext?: FormArrayContext<T>|string): any {
+export function FormArray<T>(formArrayContext?: FormContextCommon<T>|string|(() => ConstructorFunction<T>)): any {
   return (target: any, propertyKey: string): void => {
-    let formArrayContextConfiguration: FormArrayContextConfiguration<T> = {
-      propertyKey,
+    let formArrayContextConfiguration: FormArrayContext<T> = {
       name: propertyKey
     }
 
@@ -30,13 +21,10 @@ export function FormArray<T>(formArrayContext?: FormArrayContext<T>|string): any
       };
     } else if (typeof formArrayContext === 'string') {
       formArrayContextConfiguration.name = formArrayContext;
+    } else if (typeof formArrayContext === 'function') {
+      formArrayContextConfiguration.type = formArrayContext;
     }
 
-    let metas: FormArrayContextConfiguration<T>[] = [];
-    if (Reflect.hasMetadata(FORM_ARRAYS_METADATA_KEY, target)) {
-      metas = Reflect.getMetadata(FORM_ARRAYS_METADATA_KEY, target);
-    }
-
-    Reflect.defineMetadata(FORM_ARRAYS_METADATA_KEY, metas.concat(formArrayContextConfiguration), target);
+    addFormContextCommon(target, formArrayContextConfiguration, propertyKey, FORM_ARRAY_SUFFIX_METADATA_KEY);
   }
 }

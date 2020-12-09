@@ -1,16 +1,21 @@
-import {FormControl, FormGroup} from '@witty-services/ngx-form';
+import {FormControl, FormGroup, UpdateOn, FormArray} from '@witty-services/ngx-form';
 import {CompanyForm} from './company.form';
+import {AddressForm} from './address.form';
 
+@UpdateOn('change')
 export class UserForm {
 
-  @FormControl({value: 'Thomas'})
+  @FormControl()
+  @UpdateOn('blur')
   public firstName: string;
 
-  @FormControl({value: 'Nisole'})
+  @FormControl('lastname')
   public lastName: string;
 
-  @FormGroup({
-    type: () => CompanyForm
-  })
-  public company: CompanyForm;
+  @FormArray(() => CompanyForm)
+  public companies: CompanyForm[];
+
+  @FormGroup(() => AddressForm)
+  @UpdateOn('submit')
+  public personalAddress: AddressForm;
 }

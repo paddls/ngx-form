@@ -1,0 +1,19 @@
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="firstName">FirstName : </label>
+    <input type="text" id="firstName" name="firstName" formControlName="firstName"/>
+  </div>
+
+  <div>
+    <label for="lastname">LastName : </label>
+    <input type="text" id="lastname" name="lastname" formControlName="lastname"/>
+  </div>
+
+  <app-address-form formGroupName="personalAddress"></app-address-form>
+
+  <ng-container formArrayName="companies" *ngFor="let control of companyForms.controls; index as i">
+    <app-company-form [formGroupName]="i"></app-company-form>
+  </ng-container>
+
+  <input type="submit" />
+</form>

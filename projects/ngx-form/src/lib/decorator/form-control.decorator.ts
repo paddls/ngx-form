@@ -1,25 +1,10 @@
-import {ConstructorFunction} from '../common';
+import {addFormContextCommon, FormContextCommon} from './decorator.common';
 
-export const FORM_CONTROLS_METADATA_KEY: string = 'ngx-form:form-controls';
+export const FORM_CONTROL_SUFFIX_METADATA_KEY: string = 'form-control';
 
-export interface FormControlContext<T> {
-
-  name?: string;
-
-  value?: any;
-
-  type?: () => ConstructorFunction<T>;
-}
-
-export interface FormControlContextConfiguration<T> extends FormControlContext<T> {
-
-  propertyKey: string;
-}
-
-export function FormControl<T>(formControlContext?: FormControlContext<T>|string): any {
+export function FormControl<T>(formControlContext?: FormContextCommon<T>|string): any {
   return (target: any, propertyKey: string): void => {
-    let formControlContextConfiguration: FormControlContextConfiguration<T> = {
-      propertyKey,
+    let formControlContextConfiguration: FormContextCommon<T> = {
       name: propertyKey
     }
 
@@ -32,11 +17,6 @@ export function FormControl<T>(formControlContext?: FormControlContext<T>|string
       formControlContextConfiguration.name = formControlContext;
     }
 
-    let metas: FormControlContextConfiguration<T>[] = [];
-    if (Reflect.hasMetadata(FORM_CONTROLS_METADATA_KEY, target)) {
-      metas = Reflect.getMetadata(FORM_CONTROLS_METADATA_KEY, target);
-    }
-
-    Reflect.defineMetadata(FORM_CONTROLS_METADATA_KEY, metas.concat(formControlContextConfiguration), target);
+    addFormContextCommon(target, formControlContextConfiguration, propertyKey, FORM_CONTROL_SUFFIX_METADATA_KEY);
   }
 }

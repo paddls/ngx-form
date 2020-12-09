@@ -1,10 +1,14 @@
-import {FormControl} from '@witty-services/ngx-form';
+import {FormControl, FormGroup} from '@witty-services/ngx-form';
+import {AddressForm} from './address.form';
 
 export class CompanyForm {
 
-  @FormControl({value: 'Nisole & fils'})
+  @FormControl()
   public name: string;
 
-  @FormControl({value: '123456789'})
+  @FormControl()
   public siret: string;
+
+  @FormGroup(() => AddressForm)
+  public address: AddressForm;
 }

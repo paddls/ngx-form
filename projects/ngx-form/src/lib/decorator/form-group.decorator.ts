@@ -1,32 +1,28 @@
 import {ConstructorFunction} from '../common';
+import {addFormContextCommon, FormContextCommon} from './decorator.common';
 
-export const FORM_GROUPS_METADATA_KEY: string = 'ngx-form:form-groups';
+export const FORM_GROUP_SUFFIX_METADATA_KEY: string = 'form-group';
 
-export interface FormGroupContext<T> {
-
-  name?: string;
+export interface FormGroupContext<T> extends FormContextCommon<T> {
 
   type: () => ConstructorFunction<T>;
 }
 
-export interface FormGroupContextConfiguration<T> extends FormGroupContext<T> {
-
-  propertyKey: string;
-}
-
-export function FormGroup<T>(formGroupContext: FormGroupContext<T>): any {
+export function FormGroup<T>(formGroupContext: FormGroupContext<T>|(() => ConstructorFunction<T>)): any {
   return (target: any, propertyKey: string): void => {
-    const formGroupContextConfiguration: FormGroupContextConfiguration<T> = {
-      propertyKey,
+    let formGroupContextConfiguration: FormGroupContext<T> = {
       name: propertyKey,
-      ...formGroupContext
+    } as FormGroupContext<T>;
+
+    if (typeof formGroupContext === 'object') {
+      formGroupContextConfiguration = {
+        ...formGroupContextConfiguration,
+        ...formGroupContext
+      };
+    } else if (typeof formGroupContext === 'function') {
+      formGroupContextConfiguration.type = formGroupContext;
     }
 
-    let metas: FormGroupContextConfiguration<T>[] = [];
-    if (Reflect.hasMetadata(FORM_GROUPS_METADATA_KEY, target)) {
-      metas = Reflect.getMetadata(FORM_GROUPS_METADATA_KEY, target);
-    }
-
-    Reflect.defineMetadata(FORM_GROUPS_METADATA_KEY, metas.concat(formGroupContextConfiguration), target);
+    addFormContextCommon(target, formGroupContextConfiguration, propertyKey, FORM_GROUP_SUFFIX_METADATA_KEY);
   }
 }
