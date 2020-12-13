@@ -4,7 +4,6 @@ import {ConstructorFunction} from '../common';
 import {FORM_CONTROL_SUFFIX_METADATA_KEY} from '../decorator/form-control.decorator';
 import {FORM_GROUP_SUFFIX_METADATA_KEY, FormGroupContext} from '../decorator/form-group.decorator';
 import {findPropertyFormContexts, FormContextCommon} from '../decorator/decorator.common';
-import {FORM_ARRAY_SUFFIX_METADATA_KEY} from '../decorator/form-array.decorator';
 
 export const FORM_GROUP_METADATAKEY: string = 'ngx-form:form-group';
 
@@ -24,7 +23,7 @@ export class NgxFormGroup<V> extends FormGroup {
     const type: ConstructorFunction<V> = Reflect.getMetadata(FORM_GROUP_METADATAKEY, this);
     const value: V = new type();
 
-    const controlContexts: {[key: string]: FormContextCommon<V>} = findPropertyFormContexts(type.prototype, FORM_CONTROL_SUFFIX_METADATA_KEY);
+    const controlContexts: { [key: string]: FormContextCommon<V> } = findPropertyFormContexts(type.prototype, FORM_CONTROL_SUFFIX_METADATA_KEY);
     Object.keys(controlContexts).forEach((key: string) => {
       const controlContext: FormContextCommon<V> = controlContexts[key];
       set(value as any, key, this.get(controlContext.name).value);
@@ -32,7 +31,7 @@ export class NgxFormGroup<V> extends FormGroup {
 
     // const arrayContexts: {[key: string]: FormContextCommon<V>} = findPropertyFormContexts(type.prototype, FORM_ARRAY_SUFFIX_METADATA_KEY);
 
-    const groupContexts: {[key: string]: FormContextCommon<V>} = findPropertyFormContexts(type.prototype, FORM_GROUP_SUFFIX_METADATA_KEY);
+    const groupContexts: { [key: string]: FormContextCommon<V> } = findPropertyFormContexts(type.prototype, FORM_GROUP_SUFFIX_METADATA_KEY);
     Object.keys(groupContexts).forEach((key: string) => {
       const groupContext: FormGroupContext<V> = groupContexts[key] as FormGroupContext<V>;
       set(value as any, key, (this.get(groupContext.name) as NgxFormGroup<any>).getValue(parent + key))

@@ -8,7 +8,7 @@ export interface FormArrayContext<T> extends FormContextCommon<T> {
   type?: () => ConstructorFunction<T>;
 }
 
-export function FormArray<T>(formArrayContext?: FormContextCommon<T>|string|(() => ConstructorFunction<T>)): any {
+export function FormArray<T>(formArrayContext?: FormContextCommon<T> | string | (() => ConstructorFunction<T>)): any {
   return (target: any, propertyKey: string): void => {
     let formArrayContextConfiguration: FormArrayContext<T> = {
       name: propertyKey

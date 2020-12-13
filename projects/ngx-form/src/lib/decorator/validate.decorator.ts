@@ -1,4 +1,4 @@
-import { ValidatorFn } from '@angular/forms';
+import {ValidatorFn} from '@angular/forms';
 
 export const VALIDATORS_METADATA_KEY: string = 'ngx-form:validators';
 
