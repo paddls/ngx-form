@@ -9,7 +9,7 @@ import {FORM_CONTROL_SUFFIX_METADATA_KEY} from './decorator/form-control.decorat
 import {UPDATE_ON_METADATA_KEY} from './decorator/update-on.decorator';
 import {FORM_ARRAY_SUFFIX_METADATA_KEY, FormArrayContext} from './decorator/form-array.decorator';
 
-function isAbstractControlOptions(options: AbstractControlOptions| {[key: string]: any}): options is AbstractControlOptions {
+function isAbstractControlOptions(options: AbstractControlOptions | { [key: string]: any }): options is AbstractControlOptions {
   return (options as AbstractControlOptions).asyncValidators !== undefined ||
     (options as AbstractControlOptions).validators !== undefined ||
     (options as AbstractControlOptions).updateOn !== undefined;
@@ -21,9 +21,9 @@ export class NgxFormBuilder extends FormBuilder {
   public group<V>(controlsConfig: { [key: string]: any; }, options?: AbstractControlOptions | { [key: string]: any; } | null): NgxFormGroup<V> {
     const fg: FormGroup = super.group(controlsConfig, options);
 
-    let validators: ValidatorFn|ValidatorFn[]|null = null;
-    let asyncValidators: AsyncValidatorFn|AsyncValidatorFn[]|null = null;
-    let updateOn: FormHooks|undefined;
+    let validators: ValidatorFn | ValidatorFn[] | null = null;
+    let asyncValidators: AsyncValidatorFn | AsyncValidatorFn[] | null = null;
+    let updateOn: FormHooks | undefined;
 
     if (options != null) {
       if (isAbstractControlOptions(options)) {
@@ -58,7 +58,7 @@ export class NgxFormBuilder extends FormBuilder {
     );
     Reflect.defineMetadata(FORM_GROUP_METADATAKEY, rootGroupContext.type(), form);
 
-    const controlContexts: {[key: string]: FormContextCommon<V>} = findPropertyFormContexts(rootGroupContext.type().prototype, FORM_CONTROL_SUFFIX_METADATA_KEY) || {};
+    const controlContexts: { [key: string]: FormContextCommon<V> } = findPropertyFormContexts(rootGroupContext.type().prototype, FORM_CONTROL_SUFFIX_METADATA_KEY) || {};
 
     Object.keys(controlContexts).forEach((key: string) => {
       const controlConfiguration: FormContextCommon<V> = controlContexts[key];
@@ -69,13 +69,13 @@ export class NgxFormBuilder extends FormBuilder {
           {
             validators: [],
             asyncValidators: [],
-            updateOn: Reflect.getMetadata(`${UPDATE_ON_METADATA_KEY}:${key}`, rootGroupContext.type().prototype)
+            updateOn: Reflect.getMetadata(`${ UPDATE_ON_METADATA_KEY }:${ key }`, rootGroupContext.type().prototype)
           }
         )
       )
     });
 
-    const arrayContexts: {[key: string]: FormContextCommon<V>} = findPropertyFormContexts(rootGroupContext.type().prototype, FORM_ARRAY_SUFFIX_METADATA_KEY) || {};
+    const arrayContexts: { [key: string]: FormContextCommon<V> } = findPropertyFormContexts(rootGroupContext.type().prototype, FORM_ARRAY_SUFFIX_METADATA_KEY) || {};
 
     Object.keys(arrayContexts).forEach((key: string) => {
       const arrayContext: FormArrayContext<V> = arrayContexts[key] as FormArrayContext<V>;
@@ -86,18 +86,18 @@ export class NgxFormBuilder extends FormBuilder {
           {
             validators: [],
             asyncValidators: [],
-            updateOn: Reflect.getMetadata(`${UPDATE_ON_METADATA_KEY}:${key}`, rootGroupContext.type().prototype)
+            updateOn: Reflect.getMetadata(`${ UPDATE_ON_METADATA_KEY }:${ key }`, rootGroupContext.type().prototype)
           }
         )
       )
     });
 
-    const groupContexts: {[key: string]: FormContextCommon<V>} = findPropertyFormContexts(rootGroupContext.type().prototype, FORM_GROUP_SUFFIX_METADATA_KEY) || {};
+    const groupContexts: { [key: string]: FormContextCommon<V> } = findPropertyFormContexts(rootGroupContext.type().prototype, FORM_GROUP_SUFFIX_METADATA_KEY) || {};
 
     Object.keys(groupContexts).forEach((key: string) => {
       const groupContext: FormGroupContext<V> = groupContexts[key] as FormGroupContext<V>;
-      const groupUpdateOn: FormHooks = Reflect.getMetadata(`${UPDATE_ON_METADATA_KEY}:${key}`, rootGroupContext.type().prototype) ||
-        Reflect.getMetadata(`${UPDATE_ON_METADATA_KEY}`, groupContext.type());
+      const groupUpdateOn: FormHooks = Reflect.getMetadata(`${ UPDATE_ON_METADATA_KEY }:${ key }`, rootGroupContext.type().prototype) ||
+        Reflect.getMetadata(`${ UPDATE_ON_METADATA_KEY }`, groupContext.type());
       form.addControl(
         groupContext.name,
         this.build(
