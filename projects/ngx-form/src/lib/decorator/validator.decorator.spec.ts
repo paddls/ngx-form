@@ -1,6 +1,6 @@
+import 'reflect-metadata';
 import {Validator, VALIDATORS_METADATA_KEY} from './validator.decorator';
 import {Validators} from '@angular/forms';
-import 'reflect-metadata';
 
 @Validator(Validators.required)
 class LibraryForm {
@@ -11,7 +11,8 @@ class LibraryForm {
   public numberOfBooks: number = 10;
 }
 
-class NotAForm {}
+class NotAForm {
+}
 
 describe('ValidatorDecorator', () => {
 
