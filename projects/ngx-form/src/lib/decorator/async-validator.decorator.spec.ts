@@ -22,7 +22,7 @@ class LibraryForm {
 class NotAForm {
 }
 
-describe('ValidatorDecorator', () => {
+describe('AsyncValidatorDecorator', () => {
 
   const form: LibraryForm = new LibraryForm();
 
