@@ -8,8 +8,10 @@ import {FORM_GROUP_SUFFIX_METADATA_KEY, FormGroupContext} from './decorator/form
 import {FORM_CONTROL_SUFFIX_METADATA_KEY} from './decorator/form-control.decorator';
 import {UPDATE_ON_METADATA_KEY} from './decorator/update-on.decorator';
 import {FORM_ARRAY_SUFFIX_METADATA_KEY, FormArrayContext} from './decorator/form-array.decorator';
+import {VALIDATORS_METADATA_KEY} from './decorator/validator.decorator';
+import {ASYNC_VALIDATORS_METADATA_KEY} from './decorator/async-validator.decorator';
 
-function isAbstractControlOptions(options: AbstractControlOptions | { [key: string]: any }): options is AbstractControlOptions {
+function isAbstractControlOptions(options: AbstractControlOptions | {[key: string]: any}): options is AbstractControlOptions {
   return (options as AbstractControlOptions).asyncValidators !== undefined ||
     (options as AbstractControlOptions).validators !== undefined ||
     (options as AbstractControlOptions).updateOn !== undefined;
@@ -18,7 +20,7 @@ function isAbstractControlOptions(options: AbstractControlOptions | { [key: stri
 @Injectable()
 export class NgxFormBuilder extends FormBuilder {
 
-  public group<V>(controlsConfig: { [key: string]: any; }, options?: AbstractControlOptions | { [key: string]: any; } | null): NgxFormGroup<V> {
+  public group<V>(controlsConfig: {[key: string]: any;}, options?: AbstractControlOptions | {[key: string]: any;} | null): NgxFormGroup<V> {
     const fg: FormGroup = super.group(controlsConfig, options);
 
     let validators: ValidatorFn | ValidatorFn[] | null = null;
@@ -47,18 +49,14 @@ export class NgxFormBuilder extends FormBuilder {
     return new NgxFormArray(controlsConfig, validatorOrOpts, asyncValidator);
   }
 
-  public build<V>(rootGroupContext: FormGroupContext<V>, updateOn?: FormHooks): NgxFormGroup<V> {
+  public build<V>(rootGroupContext: FormGroupContext<V>, options?: AbstractControlOptions): NgxFormGroup<V> {
     const form: NgxFormGroup<V> = this.group(
       {},
-      {
-        validators: [],
-        asyncValidators: [],
-        updateOn
-      }
+      options
     );
     Reflect.defineMetadata(FORM_GROUP_METADATAKEY, rootGroupContext.type(), form);
 
-    const controlContexts: { [key: string]: FormContextCommon<V> } = findPropertyFormContexts(rootGroupContext.type().prototype, FORM_CONTROL_SUFFIX_METADATA_KEY) || {};
+    const controlContexts: {[key: string]: FormContextCommon<V>} = findPropertyFormContexts(rootGroupContext.type().prototype, FORM_CONTROL_SUFFIX_METADATA_KEY) || {};
 
     Object.keys(controlContexts).forEach((key: string) => {
       const controlConfiguration: FormContextCommon<V> = controlContexts[key];
@@ -67,15 +65,15 @@ export class NgxFormBuilder extends FormBuilder {
         this.control(
           controlConfiguration.value || null,
           {
-            validators: [],
-            asyncValidators: [],
-            updateOn: Reflect.getMetadata(`${ UPDATE_ON_METADATA_KEY }:${ key }`, rootGroupContext.type().prototype)
+            validators: Reflect.getMetadata(`${VALIDATORS_METADATA_KEY}:${key}`, rootGroupContext.type().prototype),
+            asyncValidators: Reflect.getMetadata(`${ASYNC_VALIDATORS_METADATA_KEY}:${key}`, rootGroupContext.type().prototype),
+            updateOn: Reflect.getMetadata(`${UPDATE_ON_METADATA_KEY}:${key}`, rootGroupContext.type().prototype)
           }
         )
       )
     });
 
-    const arrayContexts: { [key: string]: FormContextCommon<V> } = findPropertyFormContexts(rootGroupContext.type().prototype, FORM_ARRAY_SUFFIX_METADATA_KEY) || {};
+    const arrayContexts: {[key: string]: FormContextCommon<V>} = findPropertyFormContexts(rootGroupContext.type().prototype, FORM_ARRAY_SUFFIX_METADATA_KEY) || {};
 
     Object.keys(arrayContexts).forEach((key: string) => {
       const arrayContext: FormArrayContext<V> = arrayContexts[key] as FormArrayContext<V>;
@@ -84,25 +82,33 @@ export class NgxFormBuilder extends FormBuilder {
         this.array(
           [],
           {
-            validators: [],
-            asyncValidators: [],
-            updateOn: Reflect.getMetadata(`${ UPDATE_ON_METADATA_KEY }:${ key }`, rootGroupContext.type().prototype)
+            validators: Reflect.getMetadata(`${VALIDATORS_METADATA_KEY}:${key}`, rootGroupContext.type().prototype),
+            asyncValidators: Reflect.getMetadata(`${ASYNC_VALIDATORS_METADATA_KEY}:${key}`, rootGroupContext.type().prototype),
+            updateOn: Reflect.getMetadata(`${UPDATE_ON_METADATA_KEY}:${key}`, rootGroupContext.type().prototype)
           }
         )
       )
     });
 
-    const groupContexts: { [key: string]: FormContextCommon<V> } = findPropertyFormContexts(rootGroupContext.type().prototype, FORM_GROUP_SUFFIX_METADATA_KEY) || {};
+    const groupContexts: {[key: string]: FormContextCommon<V>} = findPropertyFormContexts(rootGroupContext.type().prototype, FORM_GROUP_SUFFIX_METADATA_KEY) || {};
 
     Object.keys(groupContexts).forEach((key: string) => {
       const groupContext: FormGroupContext<V> = groupContexts[key] as FormGroupContext<V>;
-      const groupUpdateOn: FormHooks = Reflect.getMetadata(`${ UPDATE_ON_METADATA_KEY }:${ key }`, rootGroupContext.type().prototype) ||
-        Reflect.getMetadata(`${ UPDATE_ON_METADATA_KEY }`, groupContext.type());
+      const groupValidators: ValidatorFn | ValidatorFn[] = Reflect.getMetadata(`${VALIDATORS_METADATA_KEY}:${key}`, rootGroupContext.type().prototype) ||
+        Reflect.getMetadata(`${VALIDATORS_METADATA_KEY}`, groupContext.type());
+      const groupAsyncValidators: AsyncValidatorFn | AsyncValidatorFn[] = Reflect.getMetadata(`${ASYNC_VALIDATORS_METADATA_KEY}:${key}`, rootGroupContext.type().prototype) ||
+        Reflect.getMetadata(`${ASYNC_VALIDATORS_METADATA_KEY}`, groupContext.type());
+      const groupUpdateOn: FormHooks = Reflect.getMetadata(`${UPDATE_ON_METADATA_KEY}:${key}`, rootGroupContext.type().prototype) ||
+        Reflect.getMetadata(`${UPDATE_ON_METADATA_KEY}`, groupContext.type());
       form.addControl(
         groupContext.name,
         this.build(
           groupContext as FormGroupContext<V>,
-          groupUpdateOn
+          {
+            validators: groupValidators,
+            asyncValidators: groupAsyncValidators,
+            updateOn: groupUpdateOn
+          }
         )
       );
     });
