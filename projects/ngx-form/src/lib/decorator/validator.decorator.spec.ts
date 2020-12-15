@@ -11,11 +11,25 @@ class LibraryForm {
   public numberOfBooks: number = 10;
 }
 
+class NotAForm {}
+
 describe('ValidatorDecorator', () => {
 
   const form: LibraryForm = new LibraryForm();
 
   it('should add validator metadata on property with decorator', () => {
-    expect(Reflect.getMetadata(`${VALIDATORS_METADATA_KEY}:numberOfBooks`, form).toString()).toEqual([Validators.required, Validators.min(0)].toString());
+    expect(Reflect.getMetadata(`${VALIDATORS_METADATA_KEY}:numberOfBooks`, form)).toBeDefined();
+  })
+
+  it('should not add validator metadata on property without decorator', () => {
+    expect(Reflect.getMetadata(`${VALIDATORS_METADATA_KEY}:name`, form)).toBeUndefined();
+  })
+
+  it('should add validator metadata on class with decorator', () => {
+    expect(Reflect.getMetadata(`${VALIDATORS_METADATA_KEY}`, LibraryForm)).toBeDefined();
+  })
+
+  it('should not add validator metadata on class without decorator', () => {
+    expect(Reflect.getMetadata(`${VALIDATORS_METADATA_KEY}`, NotAForm)).toBeUndefined();
   })
 })
