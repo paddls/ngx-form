@@ -2,7 +2,7 @@ import {addFormContextCommon, FormContextCommon} from './decorator.common';
 
 export const FORM_CONTROL_SUFFIX_METADATA_KEY: string = 'form-control';
 
-export function FormControl<T>(formControlContext?: FormContextCommon<T>|string): any {
+export function FormControl<T>(formControlContext?: FormContextCommon<T> | string): any {
   return (target: any, propertyKey: string): void => {
     let formControlContextConfiguration: FormContextCommon<T> = {
       name: propertyKey

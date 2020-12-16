@@ -2,8 +2,10 @@ import {NgxFormModule} from '../ngx-form.module';
 import {NgxFormGroup} from '../model/ngx-form-group.model';
 import {ConstructorFunction} from '../common';
 import {FormGroupContext} from './form-group.decorator';
-import {FormHooks} from './decorator.common';
 import {UPDATE_ON_METADATA_KEY} from './update-on.decorator';
+import {AbstractControlOptions} from '@angular/forms';
+import {VALIDATORS_METADATA_KEY} from './validator.decorator';
+import {ASYNC_VALIDATORS_METADATA_KEY} from './async-validator.decorator';
 
 export const BUILD_FORM_METADATA_KEY: string = 'ngx-form:build-form';
 export const BUILD_FORM_INSTANCE_METADATA_KEY: string = 'ngx-form:form-instance';
@@ -28,8 +30,14 @@ export function BuildForm<V>(type: () => ConstructorFunction<V>): any {
         const formGroupContextConfiguration: FormGroupContext<V> = {
           type,
         };
-        const updateOn: FormHooks = Reflect.getMetadata(UPDATE_ON_METADATA_KEY, target);
-        const form: NgxFormGroup<V> = NgxFormModule.getNgxFormBuilder().build(formGroupContextConfiguration, updateOn);
+
+        const options: AbstractControlOptions = {
+          validators: Reflect.getMetadata(VALIDATORS_METADATA_KEY, target),
+          asyncValidators: Reflect.getMetadata(ASYNC_VALIDATORS_METADATA_KEY, target),
+          updateOn: Reflect.getMetadata(UPDATE_ON_METADATA_KEY, target)
+        };
+
+        const form: NgxFormGroup<V> = NgxFormModule.getNgxFormBuilder().build(formGroupContextConfiguration, options);
         Reflect.defineMetadata(BUILD_FORM_INSTANCE_METADATA_KEY, form, this, propertyKey);
 
         return form;

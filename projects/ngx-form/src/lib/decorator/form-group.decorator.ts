@@ -8,7 +8,7 @@ export interface FormGroupContext<T> extends FormContextCommon<T> {
   type: () => ConstructorFunction<T>;
 }
 
-export function FormGroup<T>(formGroupContext: FormGroupContext<T>|(() => ConstructorFunction<T>)): any {
+export function FormGroup<T>(formGroupContext: FormGroupContext<T> | (() => ConstructorFunction<T>)): any {
   return (target: any, propertyKey: string): void => {
     let formGroupContextConfiguration: FormGroupContext<T> = {
       name: propertyKey,
