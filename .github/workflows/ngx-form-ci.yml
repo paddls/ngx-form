@@ -17,26 +17,26 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [ 10.16.0 ]
+        node-version: [10.16.0]
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: Installation
-        run: npm ci
-      - name: Build NgxForm
-        run: npm run build:ngx-form
-        env:
-          CI: true
-      - name: Linter
-        run: npm run lint
-      - name: Test
-        run: npm run test:ci
-      - name: Send coverage to Coverall
-        uses: coverallsapp/github-action@v1.0.1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: ./coverage/merged/lcov.info
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Installation
+      run: npm ci
+    - name: Build NgxForm
+      run: npm run build:ngx-form
+      env:
+        CI: true
+    - name: Linter
+      run: npm run lint
+    - name: Test
+      run: npm run test:ci
+    - name: Send coverage to Coverall
+      uses: coverallsapp/github-action@v1.0.1
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        path-to-lcov: ./coverage/merged/lcov.info
