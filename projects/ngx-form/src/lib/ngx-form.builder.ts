@@ -7,7 +7,7 @@ import {findPropertyFormContexts, FormContextCommon, FormHooks} from './decorato
 import {FORM_GROUP_SUFFIX_METADATA_KEY, FormGroupContext} from './decorator/form-group.decorator';
 import {FORM_CONTROL_SUFFIX_METADATA_KEY} from './decorator/form-control.decorator';
 import {UPDATE_ON_METADATA_KEY} from './decorator/update-on.decorator';
-import {FORM_ARRAY_SUFFIX_METADATA_KEY, FormArrayContext} from './decorator/form-array.decorator';
+import {FORM_ARRAY_INSTANCE_METADATA_KEY, FORM_ARRAY_SUFFIX_METADATA_KEY, FormArrayContext} from './decorator/form-array.decorator';
 import {VALIDATORS_METADATA_KEY} from './decorator/validator.decorator';
 import {ASYNC_VALIDATORS_METADATA_KEY} from './decorator/async-validator.decorator';
 
@@ -46,7 +46,7 @@ export class NgxFormBuilder extends FormBuilder {
   }
 
   public array(controlsConfig: any[], validatorOrOpts?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null, asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null): NgxFormArray {
-    return new NgxFormArray(controlsConfig, validatorOrOpts, asyncValidator);
+    return new NgxFormArray(this, controlsConfig, validatorOrOpts, asyncValidator);
   }
 
   public build<V>(rootGroupContext: FormGroupContext<V>, options?: AbstractControlOptions): NgxFormGroup<V> {
@@ -77,17 +77,17 @@ export class NgxFormBuilder extends FormBuilder {
 
     Object.keys(arrayContexts).forEach((key: string) => {
       const arrayContext: FormArrayContext<V> = arrayContexts[key] as FormArrayContext<V>;
-      form.addControl(
-        arrayContext.name,
-        this.array(
-          [],
-          {
-            validators: Reflect.getMetadata(`${VALIDATORS_METADATA_KEY}:${key}`, rootGroupContext.type().prototype),
-            asyncValidators: Reflect.getMetadata(`${ASYNC_VALIDATORS_METADATA_KEY}:${key}`, rootGroupContext.type().prototype),
-            updateOn: Reflect.getMetadata(`${UPDATE_ON_METADATA_KEY}:${key}`, rootGroupContext.type().prototype)
-          }
-        )
-      )
+      console.log(arrayContext);
+      const ngxFormArray: NgxFormArray = this.array(
+        [],
+        {
+          validators: Reflect.getMetadata(`${VALIDATORS_METADATA_KEY}:${key}`, rootGroupContext.type().prototype),
+          asyncValidators: Reflect.getMetadata(`${ASYNC_VALIDATORS_METADATA_KEY}:${key}`, rootGroupContext.type().prototype),
+          updateOn: Reflect.getMetadata(`${UPDATE_ON_METADATA_KEY}:${key}`, rootGroupContext.type().prototype)
+        }
+      );
+      Reflect.defineMetadata(FORM_ARRAY_INSTANCE_METADATA_KEY, arrayContext, ngxFormArray);
+      form.addControl(arrayContext.name, ngxFormArray);
     });
 
     const groupContexts: {[key: string]: FormContextCommon<V>} = findPropertyFormContexts(rootGroupContext.type().prototype, FORM_GROUP_SUFFIX_METADATA_KEY) || {};

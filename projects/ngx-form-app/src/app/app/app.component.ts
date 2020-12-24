@@ -19,10 +19,15 @@ export class AppComponent {
     console.log(this.userForm);
     this.companyForms = this.userForm.get('companies') as NgxFormArray;
     (this.userForm.get('companies') as NgxFormArray).push(formBuilder.build({type: () => CompanyForm}));
+    /// this.onAddCompany();
   }
 
   public onSubmit(): void {
     console.log(this.userForm);
     console.log(this.userForm.getValue());
+  }
+
+  public onAddCompany(): void {
+    (this.userForm.get('companies') as NgxFormArray).add();
   }
 }
