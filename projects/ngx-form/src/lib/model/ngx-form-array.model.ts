@@ -1,9 +1,12 @@
 import {AbstractControl, AbstractControlOptions, AsyncValidatorFn, FormArray, ValidatorFn} from '@angular/forms';
 import {NgxFormBuilder} from '../ngx-form.builder';
-import {FORM_ARRAY_INSTANCE_METADATA_KEY, FormArrayContext} from '../decorator/form-array.decorator';
+import {FormArrayContext} from '../decorator/form-array.decorator';
 import {UPDATE_ON_METADATA_KEY} from '../decorator/update-on.decorator';
+import {NgxForm} from './ngx-form';
 
-export class NgxFormArray extends FormArray {
+export const FORM_ARRAY_INSTANCE_METADATA_KEY: string = 'ngx-form:form-array-instance';
+
+export class NgxFormArray<V> extends FormArray implements NgxForm {
 
   public constructor(private readonly builder: NgxFormBuilder,
                      controls: AbstractControl[],
@@ -12,12 +15,12 @@ export class NgxFormArray extends FormArray {
     super(controls, validatorOrOpts, asyncValidator);
   }
 
-  public add(index: number = -1): AbstractControl {
+  public add(value: V = null, index: number = -1): AbstractControl {
     const formArrayContext: FormArrayContext<any> = Reflect.getMetadata(FORM_ARRAY_INSTANCE_METADATA_KEY, this);
     let form: AbstractControl;
     if (!formArrayContext.type) {
       form = this.builder.control(
-        formArrayContext.value || null,
+        value || formArrayContext.defaultValue,
         {
           validators: [],
           asyncValidators: [],
@@ -26,12 +29,11 @@ export class NgxFormArray extends FormArray {
       );
     } else {
       form = this.builder.build(
-        {type: formArrayContext.type, value: formArrayContext.value},
+        {type: formArrayContext.type, defaultValue: formArrayContext.defaultValue},
         formArrayContext.updateOn || Reflect.getMetadata(`${UPDATE_ON_METADATA_KEY}`, formArrayContext.type())
       )
     }
 
-    console.log(form);
     if (index === -1) {
       this.push(form);
     } else {
@@ -39,5 +41,31 @@ export class NgxFormArray extends FormArray {
     }
 
     return form;
+  }
+
+  public setValue(values: V[], options?: { onlySelf?: boolean; emitEvent?: boolean }): void {
+    this.clear();
+    values.forEach(() => this.add());
+    super.setValue(values.map((value: V) => value), options);
+  }
+
+  public patchValue(values: V[], options?: { onlySelf?: boolean; emitEvent?: boolean }): void {
+    this.clear();
+    values.forEach(() => this.add());
+    super.setValue(values.map((value: V) => value), options);
+  }
+
+  public cancel(): void {
+  }
+
+  public empty(): void {
+    this.clear();
+  }
+
+  public restore(): void {
+    this.clear();
+
+    const formArrayContext: FormArrayContext<V> = Reflect.getMetadata(FORM_ARRAY_INSTANCE_METADATA_KEY, this);
+    (formArrayContext.defaultValues || []).forEach((value: V) => this.add(value));
   }
 }

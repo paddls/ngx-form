@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
-import {BuildForm, NgxFormArray, NgxFormBuilder, NgxFormGroup} from '@witty-services/ngx-form';
+import {BuildForm, FormChild, NgxFormArray, NgxFormGroup} from '@witty-services/ngx-form';
 import {UserForm} from '../form/user.form';
 import {CompanyForm} from '../form/company.form';
+import {AddressForm} from '../form/address.form';
 
 @Component({
   selector: 'app-root',
@@ -13,21 +14,87 @@ export class AppComponent {
   @BuildForm(() => UserForm)
   public userForm: NgxFormGroup<UserForm>;
 
-  public companyForms: NgxFormArray;
+  @FormChild({attribute: 'userForm', path: 'skills'})
+  public skillForms: NgxFormArray<string>;
 
-  public constructor(formBuilder: NgxFormBuilder) {
+  @FormChild({attribute: 'userForm', path: 'companies'})
+  public companyForms: NgxFormArray<CompanyForm>;
+
+  private valueToSet: UserForm = new UserForm({
+    firstName: 'Thomas',
+    lastName: 'Nisole',
+    skills: ['Angular', 'NestJS'],
+    personalAddress: new AddressForm({
+      city: 'Cesson',
+      route: 'rue des Myosotis',
+      streetNumber: 1,
+      zipCode: '35510'
+    }),
+    companies: [
+      new CompanyForm({
+        name: 'Witty SARL',
+        address: new AddressForm({
+          city: 'Cesson',
+          route: 'a rue des Charmilles',
+          streetNumber: 7,
+          zipCode: '35510'
+        }),
+        siret: '1010101010101010'
+      })
+
+    ]
+  });
+
+  public constructor() {
     console.log(this.userForm);
-    this.companyForms = this.userForm.get('companies') as NgxFormArray;
-    (this.userForm.get('companies') as NgxFormArray).push(formBuilder.build({type: () => CompanyForm}));
-    /// this.onAddCompany();
+  }
+
+  public onResetForm(): void {
+    this.userForm.reset();
+  }
+
+  public onRestore(): void {
+    this.userForm.restore();
+  }
+
+  public onEmpty(): void {
+    this.userForm.empty();
+  }
+
+  public onCancel(): void {
+    this.userForm.cancel();
+  }
+
+  public onLoadUserProfile(): void {
+    this.userForm.setValue(this.valueToSet);
+
+    setTimeout(() => {
+      this.userForm.patchValue(new UserForm({
+        companies: [...this.userForm.getValue().companies, new CompanyForm({
+          name: 'Romain SA',
+          address: new AddressForm({
+            city: 'Cesson',
+            route: 'a rue des Charmilles',
+            streetNumber: 7,
+            zipCode: '35510'
+          }),
+          siret: '1010101010101010'
+        })]
+      }));
+    }, 2000);
+  }
+
+  public onAddSkill(): void {
+    this.skillForms.add();
+  }
+
+  public onAddCompany(): void {
+    this.companyForms.add();
   }
 
   public onSubmit(): void {
     console.log(this.userForm);
     console.log(this.userForm.getValue());
-  }
-
-  public onAddCompany(): void {
-    (this.userForm.get('companies') as NgxFormArray).add();
+    console.log(this.userForm.value);
   }
 }

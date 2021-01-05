@@ -3,15 +3,19 @@ import {FormControl, UpdateOn} from '@witty-services/ngx-form';
 @UpdateOn('blur')
 export class AddressForm {
 
-  @FormControl()
+  @FormControl({defaultValue: 0})
   public streetNumber: number;
 
-  @FormControl()
+  @FormControl({defaultValue: 'Default route'})
   public route: string;
 
-  @FormControl()
+  @FormControl({defaultValue: 'Default zipCode'})
   public zipCode: string;
 
-  @FormControl()
+  @FormControl({defaultValue: 'Default city'})
   public city: string;
+
+  public constructor(data: Partial<AddressForm> = {}) {
+    Object.assign(this,  data);
+  }
 }

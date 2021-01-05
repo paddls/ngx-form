@@ -9,7 +9,7 @@ class UserForm {
   @FormControl()
   public name: string;
 
-  @FormControl({value: 'Oscar GUERIN'})
+  @FormControl({defaultValue: 'Oscar GUERIN'})
   public displayName: string;
 }
 

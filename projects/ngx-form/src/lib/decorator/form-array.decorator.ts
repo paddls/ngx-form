@@ -2,16 +2,17 @@ import {ConstructorFunction} from '../common';
 import {addFormContextCommon, FormContextCommon, FormHooks} from './decorator.common';
 
 export const FORM_ARRAY_SUFFIX_METADATA_KEY: string = 'form-array';
-export const FORM_ARRAY_INSTANCE_METADATA_KEY: string = 'ngx-form:form-array-instance';
 
 export interface FormArrayContext<T> extends FormContextCommon<T> {
 
   type?: () => ConstructorFunction<T>;
 
-  updateOn?: FormHooks
+  updateOn?: FormHooks;
+
+  defaultValues?: T[];
 }
 
-export function FormArray<T>(formArrayContext?: FormContextCommon<T> | string | (() => ConstructorFunction<T>)): any {
+export function FormArray<T>(formArrayContext?: FormArrayContext<T> | string | (() => ConstructorFunction<T>)): any {
   return (target: any, propertyKey: string): void => {
     let formArrayContextConfiguration: FormArrayContext<T> = {
       name: propertyKey

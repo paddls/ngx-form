@@ -11,4 +11,8 @@ export class CompanyForm {
 
   @FormGroup(() => AddressForm)
   public address: AddressForm;
+
+  public constructor(data: Partial<CompanyForm> = {}) {
+    Object.assign(this, data);
+  }
 }

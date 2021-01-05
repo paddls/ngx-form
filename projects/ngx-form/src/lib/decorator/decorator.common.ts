@@ -6,7 +6,7 @@ export interface FormContextCommon<T> {
 
   name?: string;
 
-  value?: any;
+  defaultValue?: any;
 }
 
 export function addFormContextCommon<T>(target: T, formControlContext: FormContextCommon<T>, propertyKey: string, suffixKey: string): void {

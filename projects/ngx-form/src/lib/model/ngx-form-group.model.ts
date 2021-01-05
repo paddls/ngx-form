@@ -1,13 +1,16 @@
 import {AbstractControl, AbstractControlOptions, AsyncValidatorFn, FormGroup, ValidatorFn} from '@angular/forms';
-import {set} from 'lodash';
-import {ConstructorFunction} from '../common';
-import {FORM_CONTROL_SUFFIX_METADATA_KEY} from '../decorator/form-control.decorator';
-import {FORM_GROUP_SUFFIX_METADATA_KEY, FormGroupContext} from '../decorator/form-group.decorator';
-import {findPropertyFormContexts, FormContextCommon} from '../decorator/decorator.common';
+import {transformSmartValueToValue, transformValueToSmartValue} from '../common';
+import {NgxForm} from './ngx-form';
+import {values} from 'lodash';
+import {FormGroupContext} from '../decorator/form-group.decorator';
 
-export const FORM_GROUP_METADATAKEY: string = 'ngx-form:form-group';
+export const FORM_GROUP_INSTANCE_METADATA_KEY: string = 'ngx-form:form-group-instance';
 
-export class NgxFormGroup<V> extends FormGroup {
+export class NgxFormGroup<V> extends FormGroup implements NgxForm {
+
+  private makeRestoration: boolean = false;
+
+  public readonly value: any;
 
   public constructor(controls: { [key: string]: AbstractControl; },
                      validatorOrOpts?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null,
@@ -20,23 +23,39 @@ export class NgxFormGroup<V> extends FormGroup {
       parent += parent + '.';
     }
 
-    const type: ConstructorFunction<V> = Reflect.getMetadata(FORM_GROUP_METADATAKEY, this);
-    const value: V = new type();
+    return transformValueToSmartValue(this, parent);
+  }
 
-    const controlContexts: { [key: string]: FormContextCommon<V> } = findPropertyFormContexts(type.prototype, FORM_CONTROL_SUFFIX_METADATA_KEY);
-    Object.keys(controlContexts).forEach((key: string) => {
-      const controlContext: FormContextCommon<V> = controlContexts[key];
-      set(value as any, key, this.get(controlContext.name).value);
-    });
+  public setValue(value: V, options?: { onlySelf?: boolean; emitEvent?: boolean }): void {
+    super.setValue(transformSmartValueToValue(value), options);
 
-    // const arrayContexts: {[key: string]: FormContextCommon<V>} = findPropertyFormContexts(type.prototype, FORM_ARRAY_SUFFIX_METADATA_KEY);
+    if (this.makeRestoration) {
+      this.makeRestoration = false;
 
-    const groupContexts: { [key: string]: FormContextCommon<V> } = findPropertyFormContexts(type.prototype, FORM_GROUP_SUFFIX_METADATA_KEY);
-    Object.keys(groupContexts).forEach((key: string) => {
-      const groupContext: FormGroupContext<V> = groupContexts[key] as FormGroupContext<V>;
-      set(value as any, key, (this.get(groupContext.name) as NgxFormGroup<any>).getValue(parent + key))
-    });
+      return;
+    }
+  }
 
-    return value;
+  public patchValue(value: Partial<V>, options?: { onlySelf?: boolean; emitEvent?: boolean }): void {
+    super.patchValue(transformSmartValueToValue(value), options);
+  }
+
+  public cancel(): void {
+  }
+
+  public empty(): void {
+    this.reset();
+
+    (values(this.controls) as any).forEach((control: NgxForm) => control.empty());
+  }
+
+  public restore(): void {
+    (values(this.controls) as any).forEach((control: NgxForm) => control.restore());
+    const groupContext: FormGroupContext<V> = Reflect.getMetadata(FORM_GROUP_INSTANCE_METADATA_KEY, this);
+
+    if (groupContext.defaultValue !== undefined) {
+      this.makeRestoration = true;
+      this.patchValue(groupContext.defaultValue);
+    }
   }
 }

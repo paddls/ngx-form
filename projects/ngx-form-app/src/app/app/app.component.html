@@ -1,4 +1,13 @@
+<button type="button" (click)="onResetForm()">Reset form</button>
+<button type="button" (click)="onRestore()">Restore form</button>
+<button type="button" (click)="onEmpty()">Empty form</button>
+<button type="button" (click)="onCancel()">Cancel form</button>
+<button type="button" (click)="onLoadUserProfile()">Load user profile</button>
+
+<h1>User profile :</h1>
+
 <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <h2>Personal informations :</h2>
   <div>
     <label for="firstName">FirstName : </label>
     <input type="text" id="firstName" name="firstName" formControlName="firstName"/>
@@ -9,13 +18,24 @@
     <input type="text" id="lastname" name="lastname" formControlName="lastname"/>
   </div>
 
+  <h2>Address :</h2>
   <app-address-form formGroupName="personalAddress"></app-address-form>
 
+  <h2>Skills :</h2>
+  <ul>
+    <li formArrayName="skills" *ngFor="let control of skillForms.controls; index as i">
+      <input type="text" id="skills-{{ i }}" name="skills-{{ i }}" [formControlName]="i" />
+    </li>
+  </ul>
+
+  <button type="button" (click)="onAddSkill()">Add Skill</button>
+
+  <h2>Companies :</h2>
   <ng-container formArrayName="companies" *ngFor="let control of companyForms.controls; index as i">
     <app-company-form [formGroupName]="i"></app-company-form>
   </ng-container>
 
   <button type="button" (click)="onAddCompany()">Add company</button>
 
-  <input type="submit" />
+  <input type="submit" style="display: block"/>
 </form>
