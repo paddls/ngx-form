@@ -1,4 +1,4 @@
-const PROPERTY_CONFIGURATIONS_METADATA_KEY: string = 'ngx-form:form-context-commons';
+export const PROPERTY_CONFIGURATIONS_METADATA_KEY: string = 'ngx-form:form-context-commons';
 
 export type FormHooks = 'change' | 'blur' | 'submit';
 

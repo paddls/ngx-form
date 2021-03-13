@@ -30,6 +30,6 @@ export class UserForm {
   public personalAddress: AddressForm;
 
   public constructor(data: Partial<UserForm> = {}) {
-    Object.assign(this,  data);
+    Object.assign(this, data);
   }
 }
