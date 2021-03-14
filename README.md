@@ -17,7 +17,10 @@ Model based typed reactive forms made easy.
 * [Basic usage](#basic-usage)
     * [Create a form](#create-a-form)
     * [Build a form](#build-a-form)
-* [Nested forms](#nested-forms)
+* [FormGroup](#formgroup)
+* [FormArray](#formarray)
+* [Validator, AsyncValidator and UpdateOn](#validator-asyncvalidator-and-updateon)
+* [FormChild](#formchild)
 * [Install and build project](#install-and-build-project)
 
 
@@ -60,32 +63,42 @@ import {FormControl} from '@witty-services/ngx-form';
 
 export class AddressForm {
 
-  @FormControl({value: 3})
-  public streetNumber: number;
-
-  @FormControl({value: 'Kennedy Street'})
-  public route: string;
-
-  @FormControl({value: '10055'})
-  public zipCode: string;
-
   @FormControl()
   public city: string;
+
+  @FormControl({defaultValue: 3})
+  public streetNumber: number;
+
+  @FormControl({defaultValue: '10055', name: 'postalCode'})
+  public zipCode: string;
+
+  @FormControl('street')
+  public route: string;
 }
 ```
 
 Each class attribute with the ``@FormControl()`` decorator will 
 be marked as a form control.
-You can specify a default value by adding it to the decorator context.
+Inside the ``@FormControl()`` annotation, you can add some context at your will. Two 
+properties are available : ``defaultValue`` and ``name``.
+
+By specifying a ``defaultValue``, the form control will be initialized with this value at 
+the form creation. 
+
+With the ``name`` property, you can differentiate the name given to the field in your model and 
+the name of the control in the created form.
+
+You can define only one of the properties in the context, or both. If you just want to specify the 
+``name`` property, you can do it just by passing a string as the context like in the example above.
 
 ### Build a form
 
 Once you've created the model, you can build the form wherever you 
-like through your entire Angular application using the ``@Form()`` decorator.
+like through your entire Angular application using the ``@BuildForm()`` decorator.
 
 ```typescript
 import {Component} from '@angular/core';
-import {Form, NgxFormGroup} from '@witty-services/ngx-form';
+import {BuildForm, NgxFormGroup} from '@witty-services/ngx-form';
 import {AddressForm} from './form/address.form';
 
 @Component({
@@ -94,7 +107,7 @@ import {AddressForm} from './form/address.form';
 })
 export class AppComponent {
 
-  @Form(() => AddressForm)
+  @BuildForm(() => AddressForm)
   public addressForm: NgxFormGroup<AddressForm>;
 
   public onSubmit(): void {
@@ -106,9 +119,9 @@ export class AppComponent {
 That's it ! You can now use your newly created form juste like 
 any other reactive form.
 Furthermore, the form is strongly typed. To retrieve the strongly 
-typed result, just call ```form.getValue()``` method.
+typed result, just call ``form.getValue()`` method.
 
-## Nested forms
+## FormGroup
 
 ```typescript
 import {FormControl, FormGroup} from '@witty-services/ngx-form';
@@ -116,21 +129,129 @@ import {AddressForm} from './address.form';
 
 export class UserForm {
 
-  @FormControl({value: 'Thomas'})
+  @FormControl({value: 'Brad'})
   public firstName: string;
 
-  @FormControl({value: 'Nisole'})
+  @FormControl({value: 'Pitt'})
   public lastName: string;
 
-  @FormGroup({
-    type: () => AddressForm
-  })
-  public address: AddressForm;
+  @FormGroup(() => AddressForm)
+  public personalAddress: AddressForm;
+
+  @FormGroup({type: () => AddressForm, defaultValue: myAddressValue, name: 'companyAddress'})
+  public workAddress: AddressForm;
 }
 ```
 
-To nest forms, use the ```@FormGroup()``` decorator. Do not forget
+To nest forms, use the ``@FormGroup()`` decorator. Do not forget
 to specify the type of your child form in the decorator context.
+
+You can also specify ``defaultValue`` and ``name`` properties if necessary. If you don't
+need to specify them, you can specify the type in the context directly like in the example 
+above.
+
+## FormArray
+
+```typescript
+import {FormControl, FormArray} from '@witty-services/ngx-form';
+import {CompanyForm} from './company.form';
+
+export class UserForm {
+
+  @FormControl({defaultValue: 'Leonardo'})
+  public firstName: string;
+
+  @FormControl()
+  public lastName: string;
+
+  @FormArray({defaultValue: 'Default skill', defaultValues: ['Java', 'C++'], updateOn: 'blur', name: 'userSkills'})
+  public skills: string[];
+
+  @FormArray(() => CompanyForm)
+  public companies: CompanyForm[];
+}
+```
+
+To add a ``FormArray`` to your form model, just add an attribute with the ``@FormArray()`` 
+decorator. Again, you can specify ``defaultValue`` and ``name`` properties if necessary. Like with
+the ``@FormGroup()`` decorator, you can specify a type if you wish to create an array of nested 
+forms.
+
+Additionally, you can add ``defaultValues`` or ``updateOn`` properties to the context.
+
+Like with the ``@FormControl()`` or ``@FormGroup()`` decorators, shorthands for ``name`` and ``type``
+properties are available. Just specify the properties directly in the context if they are the only
+property used.
+
+## Validator, AsyncValidator and UpdateOn
+
+```typescript
+import {FormControl, FormGroup, UpdateOn, Validator, AsyncValidator} from '@witty-services/ngx-form';
+import {AddressForm} from './address.form';
+import {clone} from 'lodash';
+import {Validators} from '@angular/forms';
+
+@UpdateOn('change')
+export class UserForm {
+
+  @FormControl({defaultValue: 'Thomas'})
+  @Validator(Validators.required)
+  @UpdateOn('blur')
+  public firstName: string;
+
+  @AsyncValidator(myAsyncValidator)
+  @FormControl('lastname')
+  public lastName: string;
+
+  @Validator([Validators.required, Validators.min(0)])
+  public age: number;
+
+  @FormGroup({type: () => AddressForm, defaultValue: clone(defaultAddress)})
+  @UpdateOn('submit')
+  public personalAddress: AddressForm;
+}
+```
+
+To add Validators, AsyncValidators or specify the ``updateOn`` property on any form, ``FormControl``,
+``FormGroup`` or ``FormArray``, just add a ``@Validator``, ``@AsyncValidator`` or ``@UpdateOn`` decorator
+on any form model attribute or on the form model class if you want to apply it to a form.
+
+The ``@Validator`` or ``@AsyncValidator`` decorators take any ``ValidatorFn``, ``AsyncValidatorFn`` or arrays of
+``ValidatorFn`` and ``AsyncValidatorFn`` as parameters to apply them to the desired control or form. The 
+``@UpdateOn`` decorator takes ``'change'``, ``'blur'`` or ``'submit'`` value as parameter to apply it to the 
+desired control or form.
+
+## FormChild
+
+```typescript
+import {Component} from '@angular/core';
+import {BuildForm, FormChild, NgxFormArray, NgxFormGroup} from '@witty-services/ngx-form';
+import {UserForm} from '../form/user.form';
+import {CompanyForm} from '../form/company.form';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
+})
+export class AppComponent {
+
+  @BuildForm(() => UserForm)
+  public userForm: NgxFormGroup<UserForm>;
+
+  @FormChild({attribute: 'userForm', path: 'skills'})
+  public skillForms: NgxFormArray<string>;
+
+  @FormChild({attribute: 'userForm', path: 'companies'})
+  public companyForms: NgxFormArray<CompanyForm>;
+}
+```
+
+``@FormChild`` attribute can be used to access a subform of a built parent form directly.
+To do that, add an attribute with the ``@FormChild`` decorator in the same class as your 
+built parent form. Just specify the attribute name of the parent form with the ``attribute``
+decorator parameter, the ``path`` of the form child you want to directly access, and you're
+done !
 
 ## Install and build project
 
