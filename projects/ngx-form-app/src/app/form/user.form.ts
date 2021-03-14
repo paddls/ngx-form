@@ -1,7 +1,8 @@
-import {FormArray, FormControl, FormGroup, UpdateOn} from '@witty-services/ngx-form';
+import {FormArray, FormControl, FormGroup, UpdateOn, Validator} from '@witty-services/ngx-form';
 import {CompanyForm} from './company.form';
 import {AddressForm} from './address.form';
 import {clone} from 'lodash';
+import {Validators} from '@angular/forms';
 
 const defaultAddress: AddressForm = new AddressForm({
   route: 'User route',
@@ -13,11 +14,15 @@ const defaultAddress: AddressForm = new AddressForm({
 export class UserForm {
 
   @FormControl({defaultValue: 'Thomas'})
+  @Validator(Validators.required)
   @UpdateOn('blur')
   public firstName: string;
 
   @FormControl('lastname')
   public lastName: string;
+
+  @Validator([Validators.required, Validators.min(0)])
+  public age: number;
 
   @FormArray({defaultValue: 'Default skill', defaultValues: ['Java', 'C++']})
   public skills: string[];
