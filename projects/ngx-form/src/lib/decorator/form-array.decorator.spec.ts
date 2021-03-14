@@ -20,6 +20,9 @@ class UserForm {
   @FormArray({defaultValue: 'Default skill', defaultValues: ['Java', 'C++']})
   public skills: string[];
 
+  @FormArray('userSoftSkills')
+  public softSkills: string[];
+
   @FormArray(() => CompanyForm)
   public companies: CompanyForm[];
 }

@@ -1,9 +1,9 @@
 import {clone} from 'lodash';
 import {FormControl} from '../decorator/form-control.decorator';
 import {FormGroup, FormGroupContext} from '../decorator/form-group.decorator';
-import {UpdateOn} from '../decorator/update-on.decorator';
 import {NgxFormBuilder} from '../ngx-form.builder';
 import {NgxFormGroup} from './ngx-form-group.model';
+import {FormArray} from '../decorator/form-array.decorator';
 
 
 class AddressForm {
@@ -24,12 +24,13 @@ const defaultAddress: AddressForm = new AddressForm({
   route: 'User route'
 })
 
-@UpdateOn('change')
 class UserForm {
 
   @FormGroup({type: () => AddressForm, defaultValue: clone(defaultAddress)})
-  @UpdateOn('submit')
   public address: AddressForm;
+
+  @FormArray({defaultValue: 'Default skill'})
+  public skills: string[];
 
   public constructor(data: Partial<UserForm> = {}) {
     Object.assign(this, data);
@@ -58,7 +59,8 @@ describe('NgxFormGroup', () => {
       address: new AddressForm({
         route: 'Hey',
         streetNumber: 8
-      })
+      }),
+      skills: ['Java']
     }));
     expect(form.getValue().address.streetNumber).toEqual(8);
   });
@@ -68,7 +70,8 @@ describe('NgxFormGroup', () => {
       address: new AddressForm({
         route: 'Hey',
         streetNumber: 8
-      })
+      }),
+      skills: []
     }));
     form.restore();
     expect(form.getValue().address.streetNumber).toEqual(7);
@@ -78,4 +81,14 @@ describe('NgxFormGroup', () => {
     form.empty();
     expect(form.getValue().address.streetNumber).toEqual(null);
   });
+
+  it('should patch value on method call', () => {
+    form.patchValue(new UserForm({
+      address: new AddressForm({
+        route: 'Hey',
+        streetNumber: 8
+      })
+    }));
+    expect(form.getValue().address.streetNumber).toEqual(8);
+  })
 })
