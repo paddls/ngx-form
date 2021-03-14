@@ -48,4 +48,8 @@ describe('FormChildDecorator', () => {
   it('should not create form child when path is incorrect', () => {
     expect(component.wrongPathForm).toBeNull();
   });
+
+  it('should have value defined', () => {
+    expect(component.skillForm.value).toBeDefined();
+  });
 })

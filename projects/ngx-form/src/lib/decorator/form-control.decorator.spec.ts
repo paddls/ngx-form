@@ -3,7 +3,7 @@ import {FormContextCommon, PROPERTY_CONFIGURATIONS_METADATA_KEY} from './decorat
 
 class UserForm {
 
-  @FormControl()
+  @FormControl('userName')
   public name: string;
 
   @FormControl({defaultValue: 'Oscar GUERIN'})
@@ -25,7 +25,7 @@ describe('FormControlDecorator', () => {
   it('should add control name on metadata', () => {
     const formMetadata: {[key: string]: FormContextCommon<any>} =
       Reflect.getMetadata(`${PROPERTY_CONFIGURATIONS_METADATA_KEY}:${FORM_CONTROL_SUFFIX_METADATA_KEY}`, form);
-    expect(formMetadata.name.name).toEqual('name');
+    expect(formMetadata.name.name).toEqual('userName');
     expect(formMetadata.displayName.name).toEqual('displayName');
   })
 

@@ -13,7 +13,7 @@ class UserForm {
   public firstName: string;
 
   @Validator(Validators.required)
-  @FormControl()
+  @FormControl('userLastName')
   public lastName: string;
 }
 

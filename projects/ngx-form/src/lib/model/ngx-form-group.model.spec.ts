@@ -75,6 +75,14 @@ describe('NgxFormGroup', () => {
     }));
     form.restore();
     expect(form.getValue().address.streetNumber).toEqual(7);
+    form.setValue(new UserForm({
+      address: new AddressForm({
+        route: 'Hey',
+        streetNumber: 8
+      }),
+      skills: []
+    }));
+    expect(form.getValue().address.streetNumber).toEqual(8);
   });
 
   it('should reset value on method call', () => {

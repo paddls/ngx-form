@@ -7,10 +7,10 @@ import {NgxFormArray} from './ngx-form-array.model';
 
 class CompanyForm {
 
-  @FormControl()
+  @FormControl({defaultValue: 'Witty Services'})
   public name: string;
 
-  @FormControl()
+  @FormControl({defaultValue: '00000000000000'})
   public siret: string;
 
   public constructor(data: Partial<CompanyForm> = {}) {
@@ -57,6 +57,20 @@ describe('NgxFormArray', () => {
   it('should add value on method call', () => {
     (form.controls.skills as NgxFormArray<string>).add('C#');
     expect(form.getValue().skills).toEqual(['Java', 'C++', 'C#']);
+  })
+
+  it('should insert value on add method call with index', () => {
+    (form.controls.skills as NgxFormArray<string>).add('C#', 0);
+    expect(form.getValue().skills).toEqual(['C#', 'Java', 'C++']);
+  })
+
+  it('should add form value on method call', () => {
+    const companyForm: CompanyForm = new CompanyForm({
+      name: 'Witty Services',
+      siret: '00000000000000'
+    });
+    (form.controls.companies as NgxFormArray<CompanyForm>).add(new CompanyForm());
+    expect(form.getValue().companies).toEqual([companyForm]);
   })
 
   it('should restore value on method call', () => {
