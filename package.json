@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --project ngx-form-app",
-    "build:ngx-form": "ng build --project ngx-form && cp README.md dist/ngx-form",
+    "build:ngx-form": "ng build --prod --project ngx-form && cp README.md dist/ngx-form",
     "test:ngx-form": "ng test --project ngx-form --code-coverage",
     "doc:ngx-form": "typedoc ./projects/ngx-form",
     "test:ci:ngx-form": "npm run test:ngx-form -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
