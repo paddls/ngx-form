@@ -1,11 +1,21 @@
 {
-  "name": "ngx-form",
-  "version": "1.0.0-rc.3",
+  "name": "@witty-services/ngx-form",
+  "version": "1.0.0-rc.4",
   "peerDependencies": {
-    "@angular/common": "^9.1.12",
-    "@angular/core": "^9.1.12"
+    "@angular/common": ">=9.1.12",
+    "@angular/core": ">=9.1.12"
   },
   "dependencies": {
     "tslib": "^1.10.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/witty-services/ngx-form.git"
+  },
+  "author": "Thomas Nisole, Oscar Guérin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/witty-services/ngx-form/issues"
+  },
+  "homepage": "https://github.com/witty-services/ngx-form#readme"
 }
