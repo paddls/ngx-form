@@ -1,6 +1,6 @@
 {
   "name": "@witty-services/ngx-form",
-  "version": "1.0.0-rc.6",
+  "version": "1.0.0-rc.8",
   "peerDependencies": {
     "@angular/common": ">=9.1.12",
     "@angular/core": ">=9.1.12"
