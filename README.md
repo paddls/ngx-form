@@ -33,7 +33,6 @@ Model based typed reactive forms made easy.
   * [markAllAsPristine()](#markallaspristine)
   * [markAllAsUntouched()](#markallasuntouched)
   * [add()](#add)
-* [Install and build project](#install-and-build-project)
 
 ## How to install
 
@@ -430,24 +429,3 @@ Sets all controls to ``UNTOUCHED`` state.
 Adds a new element to a form array. Prefer this method over ``push()`` method available on classic reactive forms as you
 don't need to explicitly pass a new form control to add : by default, NgxForm will add a new instance of the type of the
 form array. You can set a default value to the new element and set a specific index.
-
-## Install and build project
-
-To install and build the project, you just have to clone the repository and install dependencies :
-
-````shell script
-npm i
-````
-
-Once you've completed the installation, other available commands are :
-
-````shell script
-# Run tests
-npm run test
-
-# Run linter
-npm run lint
-
-# Run sample app
-npm run start
-````

@@ -2,17 +2,36 @@ import {AbstractControl, AbstractControlOptions, AsyncValidatorFn, FormArray, Va
 import {NgxFormBuilder} from '../ngx-form.builder';
 import {FormArrayContext} from '../decorator/form-array.decorator';
 import {UPDATE_ON_METADATA_KEY} from '../decorator/update-on.decorator';
-import {NgxForm} from './ngx-form';
+import {NgxFormCollection} from './interface/ngx-form-collection';
+import {NgxFormControl} from './ngx-form-control.model';
+import {transformValueToSmartValue} from '../common';
+import {NgxFormGroup} from './ngx-form-group.model';
 
 export const FORM_ARRAY_INSTANCE_METADATA_KEY: string = 'ngx-form:form-array-instance';
 
-export class NgxFormArray<V> extends FormArray implements NgxForm {
+export class NgxFormArray<V> extends FormArray implements NgxFormCollection {
+
+  private lastValuesSet: V[];
 
   public constructor(private readonly builder: NgxFormBuilder,
                      controls: AbstractControl[],
                      validatorOrOpts?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null,
                      asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null) {
     super(controls, validatorOrOpts, asyncValidator);
+  }
+
+  public getValue(parent: string = ''): V[] {
+    if (parent !== '') {
+      parent += parent + '.';
+    }
+
+    return this.controls.map((control: AbstractControl) => {
+      if (control instanceof NgxFormGroup) {
+        return transformValueToSmartValue(control, parent);
+      } else {
+        return control.value;
+      }
+    });
   }
 
   public add(value: V = null, index: number = -1): AbstractControl {
@@ -47,6 +66,7 @@ export class NgxFormArray<V> extends FormArray implements NgxForm {
     this.clear();
     values.forEach(() => this.add());
     super.setValue(values.map((value: V) => value), options);
+    this.lastValuesSet = values;
   }
 
   public patchValue(values: V[], options?: { onlySelf?: boolean; emitEvent?: boolean }): void {
@@ -56,6 +76,7 @@ export class NgxFormArray<V> extends FormArray implements NgxForm {
   }
 
   public cancel(): void {
+    this.setValue(this.lastValuesSet);
   }
 
   public empty(): void {
@@ -67,5 +88,53 @@ export class NgxFormArray<V> extends FormArray implements NgxForm {
 
     const formArrayContext: FormArrayContext<V> = Reflect.getMetadata(FORM_ARRAY_INSTANCE_METADATA_KEY, this);
     (formArrayContext.defaultValues || []).forEach((value: V) => this.add(value));
+  }
+
+  public markAllAsDirty(): void {
+    this.markAsDirty({onlySelf: true});
+
+    this.controls
+      .filter((value: AbstractControl) => value instanceof NgxFormControl)
+      .forEach((control: NgxFormControl<any>) => control.markAsDirty());
+
+    this.controls
+      .filter((value: AbstractControl) => !(value instanceof NgxFormControl))
+      .forEach((control: any) => control.markAllAsDirty());
+  }
+
+  public markAllAsPending(): void {
+    this.markAsPending({onlySelf: true});
+
+    this.controls
+      .filter((value: AbstractControl) => value instanceof NgxFormControl)
+      .forEach((control: NgxFormControl<any>) => control.markAsPending());
+
+    this.controls
+      .filter((value: AbstractControl) => !(value instanceof NgxFormControl))
+      .forEach((control: any) => control.markAllAsPending());
+  }
+
+  public markAllAsPristine(): void {
+    this.markAsPristine({onlySelf: true});
+
+    this.controls
+      .filter((value: AbstractControl) => value instanceof NgxFormControl)
+      .forEach((control: NgxFormControl<any>) => control.markAsPristine());
+
+    this.controls
+      .filter((value: AbstractControl) => !(value instanceof NgxFormControl))
+      .forEach((control: any) => control.markAllAsPristine());
+  }
+
+  public markAllAsUntouched(): void {
+    this.markAsUntouched({onlySelf: true});
+
+    this.controls
+      .filter((value: AbstractControl) => value instanceof NgxFormControl)
+      .forEach((control: NgxFormControl<any>) => control.markAsUntouched());
+
+    this.controls
+      .filter((value: AbstractControl) => !(value instanceof NgxFormControl))
+      .forEach((control: any) => control.markAllAsUntouched());
   }
 }

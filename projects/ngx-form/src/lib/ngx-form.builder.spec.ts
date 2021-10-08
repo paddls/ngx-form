@@ -3,7 +3,7 @@ import {UpdateOn} from './decorator/update-on.decorator';
 import {FormControl} from './decorator/form-control.decorator';
 import {FormArray} from './decorator/form-array.decorator';
 import {FormGroup, FormGroupContext} from './decorator/form-group.decorator';
-import {clone} from 'lodash';
+import {clone} from 'lodash-es';
 import {NgxFormGroup} from './model/ngx-form-group.model';
 import {Validator} from './decorator/validator.decorator';
 import {Validators} from '@angular/forms';

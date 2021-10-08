@@ -3,5 +3,9 @@
   "dest": "../../dist/ngx-form",
   "lib": {
     "entryFile": "src/public-api.ts"
-  }
+  },
+  "whitelistedNonPeerDependencies": [
+    "lodash-es",
+    "reflect-metadata"
+  ]
 }

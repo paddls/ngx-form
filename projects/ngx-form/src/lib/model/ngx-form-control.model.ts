@@ -1,12 +1,16 @@
 import {AbstractControlOptions, AsyncValidatorFn, FormControl, ValidatorFn} from '@angular/forms';
-import {NgxForm} from './ngx-form';
+import {NgxForm} from './interface/ngx-form';
 import {FormContextCommon} from '../decorator/decorator.common';
 
 export const FORM_CONTROL_INSTANCE_METADATA_KEY: string = 'ngx-form:form-control-instance';
 
 export class NgxFormControl<V> extends FormControl implements NgxForm {
 
+  private lastValueSet: V;
+
   private makeRestoration: boolean = false;
+
+  private makePatch: boolean = false;
 
   public readonly value: any;
 
@@ -23,16 +27,20 @@ export class NgxFormControl<V> extends FormControl implements NgxForm {
 
     if (this.makeRestoration) {
       this.makeRestoration = false;
-
-      return;
+    }
+    if (!this.makePatch) {
+      this.lastValueSet = value;
     }
   }
 
   public patchValue(value: V, options?: { onlySelf?: boolean; emitEvent?: boolean; emitModelToViewChange?: boolean; emitViewToModelChange?: boolean }): void {
+    this.makePatch = true;
     super.patchValue(value, options);
+    this.makePatch = false;
   }
 
   public cancel(): void {
+    this.setValue(this.lastValueSet);
   }
 
   public empty(): void {
