@@ -70,9 +70,7 @@ export class NgxFormArray<V> extends FormArray implements NgxFormCollection {
   }
 
   public patchValue(values: V[], options?: { onlySelf?: boolean; emitEvent?: boolean }): void {
-    this.clear();
-    values.forEach(() => this.add());
-    super.setValue(values.map((value: V) => value), options);
+    super.patchValue(values.map((value: V) => value), options);
   }
 
   public cancel(): void {

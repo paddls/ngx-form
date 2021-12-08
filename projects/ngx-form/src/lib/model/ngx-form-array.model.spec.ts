@@ -50,8 +50,13 @@ describe('NgxFormArray', () => {
   });
 
   it('should patch value on method call', () => {
-    form.controls.skills.patchValue(['Angular, TypeScript']);
-    expect(form.getValue().skills).toEqual(['Angular, TypeScript']);
+    form.controls.skills.patchValue(['Java', 'Angular', 'TypeScript']);
+    expect(form.getValue().skills).toEqual(['Java', 'Angular']);
+  });
+
+  it('should patch value on method call', () => {
+    form.controls.skills.patchValue(['Angular']);
+    expect(form.getValue().skills).toEqual(['Angular', 'C++']);
   });
 
   it('should add value on method call', () => {
