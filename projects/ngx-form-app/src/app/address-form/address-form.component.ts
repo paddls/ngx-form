@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ControlContainer} from '@angular/forms';
 import {AddressForm} from '../form/address.form';
-import {NgxFormGroup} from '@witty-services/ngx-form';
+import {NgxFormGroup} from '@paddls/ngx-form';
 
 @Component({
   selector: 'app-address-form',

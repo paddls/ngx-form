@@ -4,7 +4,7 @@
     "outDir": "../../out-tsc/app",
     "types": [],
     "paths": {
-      "@witty-services/ngx-form": [
+      "@paddls/ngx-form": [
         "projects/ngx-form/src/public-api.ts"
       ]
     }

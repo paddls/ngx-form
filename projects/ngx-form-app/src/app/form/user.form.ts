@@ -1,4 +1,4 @@
-import {FormArray, FormControl, FormGroup, UpdateOn, Validator} from '@witty-services/ngx-form';
+import {FormArray, FormControl, FormGroup, UpdateOn, Validator} from '@paddls/ngx-form';
 import {CompanyForm} from './company.form';
 import {AddressForm} from './address.form';
 import {clone} from 'lodash';

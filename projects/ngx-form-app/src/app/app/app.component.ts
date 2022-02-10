@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {BuildForm, FormChild, NgxFormArray, NgxFormGroup} from '@witty-services/ngx-form';
+import {BuildForm, FormChild, NgxFormArray, NgxFormGroup} from '@paddls/ngx-form';
 import {UserForm} from '../form/user.form';
 import {CompanyForm} from '../form/company.form';
 import {AddressForm} from '../form/address.form';

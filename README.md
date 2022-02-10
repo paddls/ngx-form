@@ -1,13 +1,13 @@
 # NGX-FORM
 
-![ngx-form-ci](https://github.com/witty-services/ngx-form/workflows/build/badge.svg?branch=master)
-[![Coverage Status](https://coveralls.io/repos/github/witty-services/ngx-form/badge.svg?branch=master)](https://coveralls.io/github/witty-services/ngx-form?branch=master)
-[![npm version](https://badge.fury.io/js/%40witty-services%2Fngx-form.svg)](https://badge.fury.io/js/%40witty-services%2Fngx-form)
-![GitHub](https://img.shields.io/github/license/witty-services/ngx-form)
-![GitHub repo size](https://img.shields.io/github/repo-size/witty-services/ngx-form)
-![GitHub last commit](https://img.shields.io/github/last-commit/witty-services/ngx-form)
-![GitHub issues](https://img.shields.io/github/issues/witty-services/ngx-form)
-![GitHub top language](https://img.shields.io/github/languages/top/witty-services/ngx-form)
+![ngx-form-ci](https://github.com/paddls/ngx-form/workflows/build/badge.svg?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/paddls/ngx-form/badge.svg?branch=master)](https://coveralls.io/github/paddls/ngx-form?branch=master)
+[![npm version](https://badge.fury.io/js/%40paddls%2Fngx-form.svg)](https://badge.fury.io/js/%40paddls%2Fngx-form)
+![GitHub](https://img.shields.io/github/license/paddls/ngx-form)
+![GitHub repo size](https://img.shields.io/github/repo-size/paddls/ngx-form)
+![GitHub last commit](https://img.shields.io/github/last-commit/paddls/ngx-form)
+![GitHub issues](https://img.shields.io/github/issues/paddls/ngx-form)
+![GitHub top language](https://img.shields.io/github/languages/top/paddls/ngx-form)
 
 Model based typed reactive forms made easy.
 
@@ -39,14 +39,14 @@ Model based typed reactive forms made easy.
 First install the library in your project :
 
 ```shell script
-npm install --save @witty-services/ngx-form
+npm install --save @paddls/ngx-form
 ```
 
 After that, import `NgxFormModule` as follows :
 
 ```typescript
 import {ReactiveFormsModule} from '@angular/forms';
-import {NgxFormModule} from '@witty-services/ngx-form';
+import {NgxFormModule} from '@paddls/ngx-form';
 
 @NgModule({
   imports: [
@@ -68,7 +68,7 @@ will represent the form.
 A form model should look like this :
 
 ```typescript
-import {FormControl} from '@witty-services/ngx-form';
+import {FormControl} from '@paddls/ngx-form';
 
 export class AddressForm {
 
@@ -109,7 +109,7 @@ the ``@BuildForm()`` decorator.
 
 ```typescript
 import {Component} from '@angular/core';
-import {BuildForm, NgxFormGroup} from '@witty-services/ngx-form';
+import {BuildForm, NgxFormGroup} from '@paddls/ngx-form';
 import {AddressForm} from './form/address.form';
 
 @Component({
@@ -133,7 +133,7 @@ strongly typed. To retrieve the strongly typed result, just call ``form.getValue
 ## FormGroup
 
 ```typescript
-import {FormControl, FormGroup} from '@witty-services/ngx-form';
+import {FormControl, FormGroup} from '@paddls/ngx-form';
 import {AddressForm} from './address.form';
 
 export class UserForm {
@@ -161,7 +161,7 @@ specify the type in the context directly like in the example above.
 ## FormArray
 
 ```typescript
-import {FormControl, FormArray} from '@witty-services/ngx-form';
+import {FormControl, FormArray} from '@paddls/ngx-form';
 import {CompanyForm} from './company.form';
 
 export class UserForm {
@@ -192,7 +192,7 @@ properties are available. Just specify the properties directly in the context if
 ## Validator, AsyncValidator and UpdateOn
 
 ```typescript
-import {FormControl, FormGroup, UpdateOn, Validator, AsyncValidator} from '@witty-services/ngx-form';
+import {FormControl, FormGroup, UpdateOn, Validator, AsyncValidator} from '@paddls/ngx-form';
 import {AddressForm} from './address.form';
 import {clone} from 'lodash';
 import {Validators} from '@angular/forms';
@@ -231,7 +231,7 @@ control or form.
 
 ```typescript
 import {Component} from '@angular/core';
-import {BuildForm, FormChild, NgxFormArray, NgxFormGroup} from '@witty-services/ngx-form';
+import {BuildForm, FormChild, NgxFormArray, NgxFormGroup} from '@paddls/ngx-form';
 import {UserForm} from '../form/user.form';
 import {CompanyForm} from '../form/company.form';
 
@@ -268,7 +268,7 @@ Returns the current strongly typed value of the form.
 
 ```typescript
 import {Component} from '@angular/core';
-import {BuildForm, NgxFormGroup} from '@witty-services/ngx-form';
+import {BuildForm, NgxFormGroup} from '@paddls/ngx-form';
 import {AddressForm} from './form/address.form';
 
 @Component({
@@ -292,7 +292,7 @@ Sets a new value on the form. The behaviour of this method is similar to classic
 
 ```typescript
 import {Component} from '@angular/core';
-import {BuildForm, NgxFormGroup} from '@witty-services/ngx-form';
+import {BuildForm, NgxFormGroup} from '@paddls/ngx-form';
 import {AddressForm} from './form/address.form';
 
 @Component({
@@ -316,7 +316,7 @@ Patches a new value on the form. The behaviour of this method is similar to clas
 
 ```typescript
 import {Component} from '@angular/core';
-import {BuildForm, NgxFormGroup} from '@witty-services/ngx-form';
+import {BuildForm, NgxFormGroup} from '@paddls/ngx-form';
 import {AddressForm} from './form/address.form';
 
 @Component({
@@ -341,7 +341,7 @@ available in the ``@FormControl()``, ``@FormGroup()`` and ``@FormArray()`` decor
 
 ```typescript
 import {Component} from '@angular/core';
-import {BuildForm, NgxFormGroup} from '@witty-services/ngx-form';
+import {BuildForm, NgxFormGroup} from '@paddls/ngx-form';
 import {AddressForm} from './form/address.form';
 
 @Component({
@@ -366,7 +366,7 @@ arrays.
 
 ```typescript
 import {Component} from '@angular/core';
-import {BuildForm, NgxFormGroup} from '@witty-services/ngx-form';
+import {BuildForm, NgxFormGroup} from '@paddls/ngx-form';
 import {AddressForm} from './form/address.form';
 
 @Component({
@@ -390,7 +390,7 @@ Cancels the last ``setValue()`` applied on the form.
 
 ```typescript
 import {Component} from '@angular/core';
-import {BuildForm, NgxFormGroup} from '@witty-services/ngx-form';
+import {BuildForm, NgxFormGroup} from '@paddls/ngx-form';
 import {AddressForm} from './form/address.form';
 
 @Component({

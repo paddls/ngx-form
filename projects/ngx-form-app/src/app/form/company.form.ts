@@ -1,4 +1,4 @@
-import {FormControl, FormGroup} from '@witty-services/ngx-form';
+import {FormControl, FormGroup} from '@paddls/ngx-form';
 import {AddressForm} from './address.form';
 
 export class CompanyForm {

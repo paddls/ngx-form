@@ -16,7 +16,7 @@
       "dom"
     ],
     "paths": {
-      "@witty-services/ngx-form": [
+      "@paddls/ngx-form": [
         "dist/ngx-form/ngx-form",
         "dist/ngx-form"
       ]

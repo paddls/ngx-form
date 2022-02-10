@@ -4,7 +4,7 @@ import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app/app.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import {NgxFormModule} from '@witty-services/ngx-form';
+import {NgxFormModule} from '@paddls/ngx-form';
 import {AddressFormComponent} from './address-form/address-form.component';
 import {CompanyFormComponent} from './company-form/company-form.component';
 

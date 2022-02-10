@@ -1,4 +1,4 @@
-import {FormControl, UpdateOn} from '@witty-services/ngx-form';
+import {FormControl, UpdateOn} from '@paddls/ngx-form';
 
 @UpdateOn('blur')
 export class AddressForm {

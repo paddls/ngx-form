@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ControlContainer} from '@angular/forms';
-import {NgxFormGroup} from '@witty-services/ngx-form';
+import {NgxFormGroup} from '@paddls/ngx-form';
 import {CompanyForm} from '../form/company.form';
 
 @Component({
