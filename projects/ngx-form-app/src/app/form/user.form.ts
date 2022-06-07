@@ -1,14 +1,13 @@
 import {FormArray, FormControl, FormGroup, UpdateOn, Validator} from '@paddls/ngx-form';
 import {CompanyForm} from './company.form';
 import {AddressForm} from './address.form';
-import {clone} from 'lodash';
 import {Validators} from '@angular/forms';
 
 const defaultAddress: AddressForm = new AddressForm({
   route: 'User route',
   city: 'User city',
   zipCode: 'User zipCode'
-})
+});
 
 @UpdateOn('change')
 export class UserForm {
@@ -30,7 +29,7 @@ export class UserForm {
   @FormArray(() => CompanyForm)
   public companies: CompanyForm[];
 
-  @FormGroup({type: () => AddressForm, defaultValue: clone(defaultAddress)})
+  @FormGroup({type: () => AddressForm, defaultValue: new AddressForm({...defaultAddress})})
   @UpdateOn('submit')
   public personalAddress: AddressForm;
 

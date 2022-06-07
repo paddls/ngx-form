@@ -1,4 +1,3 @@
-import {clone} from 'lodash-es';
 import {FormControl} from '../decorator/form-control.decorator';
 import {FormGroup, FormGroupContext} from '../decorator/form-group.decorator';
 import {NgxFormBuilder} from '../ngx-form.builder';
@@ -25,7 +24,7 @@ const defaultAddress: AddressForm = new AddressForm({
 
 class UserForm {
 
-  @FormGroup({type: () => AddressForm, defaultValue: clone(defaultAddress)})
+  @FormGroup({type: () => AddressForm, defaultValue: new AddressForm({...defaultAddress})})
   public address: AddressForm;
 
   @FormArray({defaultValue: 'Default skill'})

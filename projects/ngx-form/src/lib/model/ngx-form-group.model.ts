@@ -1,7 +1,6 @@
 import {AbstractControl, AbstractControlOptions, AsyncValidatorFn, FormGroup, ValidatorFn} from '@angular/forms';
 import {transformSmartValueToValue, transformValueToSmartValue} from '../common';
 import {NgxForm} from './interface/ngx-form';
-import {values} from 'lodash-es';
 import {FormGroupContext} from '../decorator/form-group.decorator';
 import {NgxFormCollection} from './interface/ngx-form-collection';
 import {NgxFormControl} from './ngx-form-control.model';
@@ -50,11 +49,11 @@ export class NgxFormGroup<V> extends FormGroup implements NgxFormCollection {
   public empty(): void {
     this.reset();
 
-    (values(this.controls) as any).forEach((control: NgxForm) => control.empty());
+    (Object.values(this.controls) as any).forEach((control: NgxForm) => control.empty());
   }
 
   public restore(): void {
-    (values(this.controls) as any).forEach((control: NgxForm) => control.restore());
+    (Object.values(this.controls) as any).forEach((control: NgxForm) => control.restore());
     const groupContext: FormGroupContext<V> = Reflect.getMetadata(FORM_GROUP_INSTANCE_METADATA_KEY, this);
 
     if (groupContext.defaultValue !== undefined) {

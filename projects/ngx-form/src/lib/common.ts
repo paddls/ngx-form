@@ -1,10 +1,10 @@
 import {findPropertyFormContexts, FormContextCommon} from './decorator/decorator.common';
 import {FORM_CONTROL_SUFFIX_METADATA_KEY} from './decorator/form-control.decorator';
-import {set} from 'lodash-es';
 import {FORM_GROUP_SUFFIX_METADATA_KEY, FormGroupContext} from './decorator/form-group.decorator';
 import {FORM_ARRAY_SUFFIX_METADATA_KEY, FormArrayContext} from './decorator/form-array.decorator';
 import {NgxFormArray} from './model/ngx-form-array.model';
 import {FORM_GROUP_INSTANCE_METADATA_KEY, NgxFormGroup} from './model/ngx-form-group.model';
+import {set} from './util';
 
 export type ConstructorFunction<T> = new(...args: any[]) => T;
 
