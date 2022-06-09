@@ -1,6 +1,7 @@
 import {FormControl} from './form-control.decorator';
 import {PROPERTY_CONFIGURATIONS_METADATA_KEY} from './decorator.common';
 import {FORM_GROUP_SUFFIX_METADATA_KEY, FormGroup, FormGroupContext} from './form-group.decorator';
+import clone from 'lodash.clone';
 
 class AddressForm {
 
@@ -25,7 +26,7 @@ class UserForm {
   @FormGroup(() => AddressForm)
   public homeAddress: AddressForm;
 
-  @FormGroup({type: () => AddressForm, defaultValue: new AddressForm({...defaultAddress})})
+  @FormGroup({type: () => AddressForm, defaultValue: clone(defaultAddress)})
   public workAddress: AddressForm;
 }
 
@@ -50,6 +51,6 @@ describe('FormGroupDecorator', () => {
     const formMetadata: {[key: string]: FormGroupContext<any>} =
       Reflect.getMetadata(`${PROPERTY_CONFIGURATIONS_METADATA_KEY}:${FORM_GROUP_SUFFIX_METADATA_KEY}`, form);
     expect(formMetadata.homeAddress.defaultValue).toBeUndefined();
-    expect(formMetadata.workAddress.defaultValue).toEqual(new AddressForm({...defaultAddress}));
+    expect(formMetadata.workAddress.defaultValue).toEqual(clone(defaultAddress));
   })
 })

@@ -4,7 +4,8 @@
   "lib": {
     "entryFile": "src/public-api.ts"
   },
-  "whitelistedNonPeerDependencies": [
+  "allowedNonPeerDependencies": [
+    "lodash.set",
     "reflect-metadata"
   ]
 }

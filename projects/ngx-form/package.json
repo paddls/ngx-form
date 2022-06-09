@@ -6,6 +6,7 @@
     "@angular/core": ">=11.2.6"
   },
   "dependencies": {
+    "lodash.set": "^4.3.2",
     "tslib": "^2.0.0",
     "reflect-metadata": "^0.1.13"
   },

@@ -4,7 +4,7 @@ import {FORM_GROUP_SUFFIX_METADATA_KEY, FormGroupContext} from './decorator/form
 import {FORM_ARRAY_SUFFIX_METADATA_KEY, FormArrayContext} from './decorator/form-array.decorator';
 import {NgxFormArray} from './model/ngx-form-array.model';
 import {FORM_GROUP_INSTANCE_METADATA_KEY, NgxFormGroup} from './model/ngx-form-group.model';
-import {set} from './util';
+import set from 'lodash.set';
 
 export type ConstructorFunction<T> = new(...args: any[]) => T;
 
@@ -15,7 +15,7 @@ export function transformValueToSmartValue<V>(formGroup: NgxFormGroup<V>, parent
   const controlContexts: { [key: string]: FormContextCommon<V> } = findPropertyFormContexts(formGroupContext.type().prototype, FORM_CONTROL_SUFFIX_METADATA_KEY);
   Object.keys(controlContexts).forEach((key: string) => {
     const controlContext: FormContextCommon<V> = controlContexts[key];
-    set(value as any, key, formGroup.get(controlContext.name)?.value);
+    set(value, key, formGroup.get(controlContext.name)?.value);
   });
 
   const arrayContexts: {[key: string]: FormContextCommon<any>} = findPropertyFormContexts(formGroupContext.type().prototype, FORM_ARRAY_SUFFIX_METADATA_KEY);
@@ -36,7 +36,7 @@ export function transformValueToSmartValue<V>(formGroup: NgxFormGroup<V>, parent
   const groupContexts: { [key: string]: FormContextCommon<V> } = findPropertyFormContexts(formGroupContext.type().prototype, FORM_GROUP_SUFFIX_METADATA_KEY);
   Object.keys(groupContexts).forEach((key: string) => {
     const groupContext: FormGroupContext<V> = groupContexts[key] as FormGroupContext<V>;
-    set(value as any, key, (formGroup.get(groupContext.name) as NgxFormGroup<any>)?.getValue(parent + key))
+    set(value, key, (formGroup.get(groupContext.name) as NgxFormGroup<any>)?.getValue(parent + key))
   });
 
   return value;
