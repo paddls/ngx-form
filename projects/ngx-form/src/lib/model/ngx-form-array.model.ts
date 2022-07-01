@@ -48,7 +48,7 @@ export class NgxFormArray<V> extends FormArray implements NgxFormCollection {
       );
     } else {
       form = this.builder.build(
-        {type: formArrayContext.type, defaultValue: formArrayContext.defaultValue},
+        {type: formArrayContext.type, defaultValue: value || formArrayContext.defaultValue},
         formArrayContext.updateOn || Reflect.getMetadata(`${UPDATE_ON_METADATA_KEY}`, formArrayContext.type())
       )
     }
