@@ -32,9 +32,9 @@ export function BuildForm<V>(type: () => ConstructorFunction<V>): any {
         };
 
         const options: AbstractControlOptions = {
-          validators: Reflect.getMetadata(VALIDATORS_METADATA_KEY, target),
-          asyncValidators: Reflect.getMetadata(ASYNC_VALIDATORS_METADATA_KEY, target),
-          updateOn: Reflect.getMetadata(UPDATE_ON_METADATA_KEY, target)
+          validators: Reflect.getMetadata(VALIDATORS_METADATA_KEY, type()),
+          asyncValidators: Reflect.getMetadata(ASYNC_VALIDATORS_METADATA_KEY, type()),
+          updateOn: Reflect.getMetadata(UPDATE_ON_METADATA_KEY, type())
         };
 
         const form: NgxFormGroup<V> = NgxFormModule.getNgxFormBuilder().build(formGroupContextConfiguration, options);

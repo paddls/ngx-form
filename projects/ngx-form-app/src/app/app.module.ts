@@ -1,6 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app/app.component';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -12,7 +11,7 @@ import {CompanyFormComponent} from './company-form/company-form.component';
   declarations: [
     AppComponent,
     AddressFormComponent,
-    CompanyFormComponent
+    CompanyFormComponent,
   ],
   imports: [
     AppRoutingModule,

@@ -39,3 +39,22 @@
 
   <input type="submit" style="display: block"/>
 </form>
+
+<form [formGroup]="signUpForm" (submit)="onSubmitSignUp()">
+  <div>
+    <label for="email">Email : </label>
+    <input type="text" id="email" name="email" formControlName="email"/>
+  </div>
+
+  <div>
+    <label for="password">Password : </label>
+    <input type="text" id="password" name="password" formControlName="password"/>
+  </div>
+
+  <div>
+    <label for="confirmPassword">Confirmation : </label>
+    <input type="text" id="passwordConfirm" name="confirmPassword" formControlName="confirmPassword"/>
+  </div>
+
+  <input type="submit" style="display: block"/>
+</form>

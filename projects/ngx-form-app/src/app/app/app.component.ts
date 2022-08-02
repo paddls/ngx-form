@@ -3,6 +3,7 @@ import {BuildForm, FormChild, NgxFormArray, NgxFormGroup} from '@paddls/ngx-form
 import {UserForm} from '../form/user.form';
 import {CompanyForm} from '../form/company.form';
 import {AddressForm} from '../form/address.form';
+import {SignupForm} from '../form/signup.form';
 
 @Component({
   selector: 'app-root',
@@ -12,13 +13,16 @@ import {AddressForm} from '../form/address.form';
 export class AppComponent {
 
   @BuildForm(() => UserForm)
-  public userForm: NgxFormGroup<UserForm>;
+  public readonly userForm: NgxFormGroup<UserForm>;
 
   @FormChild({attribute: 'userForm', path: 'skills'})
-  public skillForms: NgxFormArray<string>;
+  public readonly skillForms: NgxFormArray<string>;
 
   @FormChild({attribute: 'userForm', path: 'companies'})
-  public companyForms: NgxFormArray<CompanyForm>;
+  public readonly companyForms: NgxFormArray<CompanyForm>;
+
+  @BuildForm(() => SignupForm)
+  public readonly signUpForm: NgxFormGroup<SignupForm>;
 
   private valueToSet: UserForm = new UserForm({
     firstName: 'Thomas',
@@ -47,22 +51,27 @@ export class AppComponent {
 
   public constructor() {
     console.log(this.userForm);
+    console.log(this.signUpForm);
   }
 
   public onResetForm(): void {
     this.userForm.reset();
+    this.signUpForm.reset();
   }
 
   public onRestore(): void {
     this.userForm.restore();
+    this.signUpForm.restore();
   }
 
   public onEmpty(): void {
     this.userForm.empty();
+    this.signUpForm.empty();
   }
 
   public onCancel(): void {
     this.userForm.cancel();
+    this.signUpForm.cancel();
   }
 
   public onLoadUserProfile(): void {
@@ -96,5 +105,11 @@ export class AppComponent {
     console.log(this.userForm);
     console.log(this.userForm.getValue());
     console.log(this.userForm.value);
+  }
+
+  public onSubmitSignUp(): void {
+    console.log(this.signUpForm);
+    console.log(this.signUpForm.getValue());
+    console.log(this.signUpForm.value);
   }
 }
