@@ -30,14 +30,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "projects/ngx-form/tsconfig.lib.json",
-              "projects/ngx-form/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "projects/ngx-form/**/*.ts",
+              "projects/ngx-form/**/*.html"
             ]
           }
         }
@@ -137,15 +134,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "projects/ngx-form-app/tsconfig.app.json",
-              "projects/ngx-form-app/tsconfig.spec.json",
-              "projects/ngx-form-app/e2e/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "projects/ngx-form-app/**/*.ts",
+              "projects/ngx-form-app/**/*.html"
             ]
           }
         },
@@ -166,6 +159,7 @@
   },
   "defaultProject": "ngx-form",
   "cli": {
-    "analytics": false
+    "analytics": false,
+    "defaultCollection": "@angular-eslint/schematics"
   }
 }
