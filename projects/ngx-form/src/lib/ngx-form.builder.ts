@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {AbstractControlOptions, AsyncValidatorFn, FormBuilder, FormGroup, ValidatorFn} from '@angular/forms';
+import {AbstractControlOptions, AsyncValidatorFn, UntypedFormBuilder, UntypedFormGroup, ValidatorFn} from '@angular/forms';
 import {FORM_GROUP_INSTANCE_METADATA_KEY, NgxFormGroup} from './model/ngx-form-group.model';
 import {FORM_CONTROL_INSTANCE_METADATA_KEY, NgxFormControl} from './model/ngx-form-control.model';
 import {FORM_ARRAY_INSTANCE_METADATA_KEY, NgxFormArray} from './model/ngx-form-array.model';
@@ -13,10 +13,10 @@ import {ASYNC_VALIDATORS_METADATA_KEY} from './decorator/async-validator.decorat
 import {ConstructorFunction} from './common';
 
 @Injectable()
-export class NgxFormBuilder extends FormBuilder {
+export class NgxFormBuilder extends UntypedFormBuilder {
 
   public group<V>(controlsConfig: {[key: string]: any;}, options?: AbstractControlOptions | null): NgxFormGroup<V> {
-    const fg: FormGroup = super.group(controlsConfig, options);
+    const fg: UntypedFormGroup = super.group(controlsConfig, options);
 
     return new NgxFormGroup<V>(fg.controls, {asyncValidators: fg.asyncValidator, updateOn: fg.updateOn, validators: fg.validator});
   }

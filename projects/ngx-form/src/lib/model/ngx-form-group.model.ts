@@ -1,4 +1,4 @@
-import {AbstractControl, AbstractControlOptions, AsyncValidatorFn, FormGroup, ValidatorFn} from '@angular/forms';
+import {AbstractControl, AbstractControlOptions, AsyncValidatorFn, UntypedFormGroup, ValidatorFn} from '@angular/forms';
 import {transformSmartValueToValue, transformValueToSmartValue} from '../common';
 import {NgxForm} from './interface/ngx-form';
 import {FormGroupContext} from '../decorator/form-group.decorator';
@@ -7,7 +7,7 @@ import {NgxFormControl} from './ngx-form-control.model';
 
 export const FORM_GROUP_INSTANCE_METADATA_KEY: string = 'ngx-form:form-group-instance';
 
-export class NgxFormGroup<V> extends FormGroup implements NgxFormCollection {
+export class NgxFormGroup<V> extends UntypedFormGroup implements NgxFormCollection {
 
   private lastValueSet: V;
 
@@ -15,7 +15,7 @@ export class NgxFormGroup<V> extends FormGroup implements NgxFormCollection {
 
   public readonly value: any;
 
-  public constructor(controls: { [key: string]: AbstractControl; },
+  public constructor(controls: {[key: string]: AbstractControl;},
                      validatorOrOpts?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null,
                      asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null) {
     super(controls, validatorOrOpts, asyncValidator);

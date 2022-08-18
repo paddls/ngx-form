@@ -1,7 +1,7 @@
-import {AbstractControl, FormGroup, ValidatorFn} from '@angular/forms';
+import {AbstractControl, UntypedFormGroup, ValidatorFn} from '@angular/forms';
 
 export function matchingPasswords(passwordKey: string, confirmedKey: string): ValidatorFn {
-  return (group: FormGroup): { [key: string]: any } => {
+  return (group: UntypedFormGroup): {[key: string]: any} => {
     const password: AbstractControl = group?.controls[passwordKey];
     const confirmed: AbstractControl = group?.controls[confirmedKey];
 
