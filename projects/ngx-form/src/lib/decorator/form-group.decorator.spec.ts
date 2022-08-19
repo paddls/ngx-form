@@ -1,5 +1,5 @@
 import {FormControl} from './form-control.decorator';
-import {PROPERTY_CONFIGURATIONS_METADATA_KEY} from './decorator.common';
+import {PROPERTY_CONFIGURATIONS_METADATA_KEY} from '../common/decorator.common';
 import {FORM_GROUP_SUFFIX_METADATA_KEY, FormGroup, FormGroupContext} from './form-group.decorator';
 import clone from 'lodash.clone';
 

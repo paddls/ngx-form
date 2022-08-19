@@ -1,6 +1,6 @@
 import {NgxFormModule} from '../ngx-form.module';
 import {NgxFormGroup} from '../model/ngx-form-group.model';
-import {ConstructorFunction} from '../common';
+import {ConstructorFunction} from '../common/common';
 import {FormGroupContext} from './form-group.decorator';
 import {UPDATE_ON_METADATA_KEY} from './update-on.decorator';
 import {AbstractControlOptions} from '@angular/forms';

@@ -7,6 +7,21 @@ import {NgxFormGroup} from './model/ngx-form-group.model';
 import {Validator} from './decorator/validator.decorator';
 import {Validators} from '@angular/forms';
 import clone from 'lodash.clone';
+import {TestBed} from '@angular/core/testing';
+import {NgxFormModule} from './ngx-form.module';
+import {AsyncValidator} from './decorator/async-validator.decorator';
+import {AsyncValidatorFactory} from './factory/async-validator.factory';
+import {Observable, of} from 'rxjs';
+import {Injectable} from '@angular/core';
+import {map} from 'rxjs/operators';
+
+@Injectable()
+class MyService {
+
+  public httpCall(): Observable<string> {
+    return of('http result');
+  }
+}
 
 class AddressForm {
 
@@ -70,45 +85,73 @@ class UserForm {
   @UpdateOn('submit')
   public personalAddress: AddressForm;
 
+  @AsyncValidator([
+    AsyncValidatorFactory.of(
+      (service: MyService) => () => service.httpCall().pipe(map((result: string) => ({error: result}))),
+      [MyService]
+    )
+  ])
+  @FormControl()
+  public secondaryAddress: string;
+
   public constructor(data: Partial<UserForm> = {}) {
     Object.assign(this, data);
   }
 }
 
+let builder: NgxFormBuilder;
+
+const formGroupContextConfiguration: FormGroupContext<UserForm> = {
+  type: () => UserForm
+};
+
 describe('NgxFormBuilder', () => {
 
-  const formGroupContextConfiguration: FormGroupContext<UserForm> = {
-    type: () => UserForm
-  };
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        NgxFormModule.forRoot()
+      ],
+      providers: [
+        MyService
+      ]
+    });
 
-  const builder: NgxFormBuilder = new NgxFormBuilder();
+    builder = TestBed.inject(NgxFormBuilder);
+  });
 
   it('should create ngx form control instance', () => {
     expect(builder.build(formGroupContextConfiguration)).toBeDefined()
-  })
+  });
 
   it('should call build control method for each form control annotation', () => {
     spyOn(builder, 'buildControl').and.callThrough();
     builder.build(formGroupContextConfiguration);
-    expect(builder.buildControl).toHaveBeenCalledTimes(6);
-  })
+    expect(builder.buildControl).toHaveBeenCalledTimes(7);
+  });
 
   it('should call build group method for each form group annotation', () => {
     spyOn(builder, 'buildGroup').and.callThrough();
     builder.build(formGroupContextConfiguration);
     expect(builder.buildGroup).toHaveBeenCalledTimes(1);
-  })
+  });
 
   it('should call build array method for each form array annotation', () => {
     spyOn(builder, 'buildArray').and.callThrough();
     builder.build(formGroupContextConfiguration);
     expect(builder.buildArray).toHaveBeenCalledTimes(2);
-  })
+  });
 
   it('should have option properties set according to annotations', () => {
     const form: NgxFormGroup<UserForm> = builder.build(formGroupContextConfiguration);
     expect(form.updateOn).toEqual('change');
     expect(form.controls.lastName.validator).toEqual(Validators.required);
     expect((form.controls.personalAddress as NgxFormGroup<AddressForm>).controls.streetNumber.validator).toBeDefined();
-  })
-})
+  });
+
+  it('should resolve async validator with dependencies', () => {
+    const form: NgxFormGroup<UserForm> = builder.build(formGroupContextConfiguration);
+
+    expect(form.controls.secondaryAddress.errors).toEqual({error: 'http result'});
+  });
+});

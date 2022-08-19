@@ -1,5 +1,5 @@
 import {AbstractControl, AbstractControlOptions, AsyncValidatorFn, FormGroup, ValidatorFn} from '@angular/forms';
-import {transformSmartValueToValue, transformValueToSmartValue} from '../common';
+import {transformSmartValueToValue, transformValueToSmartValue} from '../common/common';
 import {NgxForm} from './interface/ngx-form';
 import {FormGroupContext} from '../decorator/form-group.decorator';
 import {NgxFormCollection} from './interface/ngx-form-collection';

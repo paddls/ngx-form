@@ -1,13 +1,10 @@
 import 'reflect-metadata';
 
-import {Injector, NgModule} from '@angular/core';
+import {Injector, ModuleWithProviders, NgModule} from '@angular/core';
 import {NgxFormBuilder} from './ngx-form.builder';
+import {AsyncValidatorResolver} from './resolver/async-validator.resolver';
 
-@NgModule({
-  providers: [
-    NgxFormBuilder
-  ]
-})
+@NgModule()
 export class NgxFormModule {
 
   public static injector: Injector = null;
@@ -18,5 +15,15 @@ export class NgxFormModule {
 
   public static getNgxFormBuilder(): NgxFormBuilder {
     return NgxFormModule.injector.get(NgxFormBuilder);
+  }
+
+  public static forRoot(): ModuleWithProviders<NgxFormModule> {
+    return {
+      ngModule: NgxFormModule,
+      providers: [
+        NgxFormBuilder,
+        AsyncValidatorResolver
+      ]
+    };
   }
 }

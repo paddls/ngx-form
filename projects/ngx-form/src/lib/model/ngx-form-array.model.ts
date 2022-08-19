@@ -4,7 +4,7 @@ import {FormArrayContext} from '../decorator/form-array.decorator';
 import {UPDATE_ON_METADATA_KEY} from '../decorator/update-on.decorator';
 import {NgxFormCollection} from './interface/ngx-form-collection';
 import {NgxFormControl} from './ngx-form-control.model';
-import {transformValueToSmartValue} from '../common';
+import {transformValueToSmartValue} from '../common/common';
 import {NgxFormGroup} from './ngx-form-group.model';
 
 export const FORM_ARRAY_INSTANCE_METADATA_KEY: string = 'ngx-form:form-array-instance';

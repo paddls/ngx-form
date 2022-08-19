@@ -6,6 +6,7 @@ import {NgxFormModule} from '../ngx-form.module';
 import {FormArray} from './form-array.decorator';
 import {FormChild} from './form-child.decorator';
 import {NgxFormArray} from '../model/ngx-form-array.model';
+import {TestBed} from '@angular/core/testing';
 
 class UserForm {
 
@@ -28,14 +29,21 @@ class ConsumerComponent {
   public wrongPathForm: NgxFormArray<string>;
 }
 
+let builder: NgxFormBuilder;
+
+const component: ConsumerComponent = new ConsumerComponent();
+
 describe('FormChildDecorator', () => {
 
-  const builder: NgxFormBuilder = new NgxFormBuilder();
-  const component: ConsumerComponent = new ConsumerComponent();
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        NgxFormModule.forRoot()
+      ]
+    });
 
-  beforeAll(() => {
-    spyOn(NgxFormModule, 'getNgxFormBuilder').and.returnValue(builder);
-  })
+    builder = TestBed.inject(NgxFormBuilder);
+  });
 
   it('should create form group', () => {
     expect(component.form).toBeDefined();

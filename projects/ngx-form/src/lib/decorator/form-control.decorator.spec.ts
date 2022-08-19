@@ -1,5 +1,5 @@
 import {FORM_CONTROL_SUFFIX_METADATA_KEY, FormControl} from './form-control.decorator';
-import {FormContextCommon, PROPERTY_CONFIGURATIONS_METADATA_KEY} from './decorator.common';
+import {FormContextCommon, PROPERTY_CONFIGURATIONS_METADATA_KEY} from '../common/decorator.common';
 
 class UserForm {
 

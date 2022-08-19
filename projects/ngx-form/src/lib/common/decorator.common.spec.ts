@@ -1,6 +1,6 @@
 import {addFormContextCommon, PROPERTY_CONFIGURATIONS_METADATA_KEY} from './decorator.common';
 
-describe('DecoratorCommmon', () => {
+describe('DecoratorCommon', () => {
 
   describe('#addFormContextCommon', () => {
 

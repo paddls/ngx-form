@@ -3,6 +3,7 @@ import {NgxFormGroup} from '../model/ngx-form-group.model';
 import {BuildForm} from './build-form.decorator';
 import {NgxFormBuilder} from '../ngx-form.builder';
 import {NgxFormModule} from '../ngx-form.module';
+import {TestBed} from '@angular/core/testing';
 
 class UserForm {
 
@@ -21,12 +22,19 @@ class ConsumerComponent {
 
 describe('BuildFormDecorator', () => {
 
-  const builder: NgxFormBuilder = new NgxFormBuilder();
-  const component: ConsumerComponent = new ConsumerComponent();
+  let builder: NgxFormBuilder;
 
-  beforeAll(() => {
-    spyOn(NgxFormModule, 'getNgxFormBuilder').and.returnValue(builder);
-  })
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        NgxFormModule.forRoot()
+      ]
+    });
+
+    builder = TestBed.inject(NgxFormBuilder);
+  });
+
+  const component: ConsumerComponent = new ConsumerComponent();
 
   it('should create form group', () => {
     expect(component.form).toBeDefined();
