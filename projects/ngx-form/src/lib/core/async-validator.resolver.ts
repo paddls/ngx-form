@@ -1,10 +1,9 @@
 import {Injectable, Injector, Type} from '@angular/core';
-import {Resolver} from './interface/resolver';
 import {AsyncValidatorFn} from '@angular/forms';
 import {AsyncValidatorConfig} from '../decorator/async-validator.decorator';
 
 @Injectable()
-export class AsyncValidatorResolver implements Resolver<AsyncValidatorFn | AsyncValidatorFn[]> {
+export class AsyncValidatorResolver {
 
   public constructor(private readonly injector: Injector) {
   }

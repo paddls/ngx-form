@@ -1,6 +1,6 @@
 import {FormControl} from '../decorator/form-control.decorator';
 import {FormGroup, FormGroupContext} from '../decorator/form-group.decorator';
-import {NgxFormBuilder} from '../ngx-form.builder';
+import {NgxFormBuilder} from '../core/ngx-form.builder';
 import {NgxFormGroup} from './ngx-form-group.model';
 import {FormArray} from '../decorator/form-array.decorator';
 import clone from 'lodash.clone';

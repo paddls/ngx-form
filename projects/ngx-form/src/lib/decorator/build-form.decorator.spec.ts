@@ -1,9 +1,11 @@
 import {FormControl} from './form-control.decorator';
 import {NgxFormGroup} from '../model/ngx-form-group.model';
 import {BuildForm} from './build-form.decorator';
-import {NgxFormBuilder} from '../ngx-form.builder';
+import {NgxFormBuilder} from '../core/ngx-form.builder';
 import {NgxFormModule} from '../ngx-form.module';
 import {TestBed} from '@angular/core/testing';
+import {Observable, of} from 'rxjs';
+import {DisableOn} from './disable-on.decorator';
 
 class UserForm {
 
@@ -12,11 +14,21 @@ class UserForm {
 
   @FormControl({defaultValue: 'Oscar GUERIN'})
   public displayName: string;
+
+  @DisableOn(() => void 0)
+  @FormControl()
+  public surname: string;
+  //
+  // @DisableOn(() => void 0)
+  // @FormControl()
+  // public address: string;
 }
 
 class ConsumerComponent {
 
-  @BuildForm(() => UserForm)
+  public readonly obs$: Observable<any> = of({obj: 'test'});
+
+  @BuildForm(() => UserForm, {unsubscribeOn: 'obs$'})
   public form: NgxFormGroup<UserForm>;
 }
 

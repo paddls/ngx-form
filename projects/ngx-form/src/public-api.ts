@@ -11,6 +11,6 @@ export {NgxFormArray} from './lib/model/ngx-form-array.model';
 export {NgxFormControl} from './lib/model/ngx-form-control.model';
 export {NgxFormGroup} from './lib/model/ngx-form-group.model';
 
-export {NgxFormBuilder} from './lib/ngx-form.builder';
+export {NgxFormBuilder} from './lib/core/ngx-form.builder';
 
 export {NgxFormModule} from './lib/ngx-form.module';

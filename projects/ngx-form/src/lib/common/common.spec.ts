@@ -1,6 +1,6 @@
 import {FormControl} from '../decorator/form-control.decorator';
 import {FormGroupContext} from '../decorator/form-group.decorator';
-import {NgxFormBuilder} from '../ngx-form.builder';
+import {NgxFormBuilder} from '../core/ngx-form.builder';
 import {NgxFormGroup} from '../model/ngx-form-group.model';
 import {transformSmartValueToValue, transformValueToSmartValue} from './common';
 import {FormArray} from '../decorator/form-array.decorator';

@@ -1,13 +1,14 @@
 import 'reflect-metadata';
 
 import {Injector, ModuleWithProviders, NgModule} from '@angular/core';
-import {NgxFormBuilder} from './ngx-form.builder';
-import {AsyncValidatorResolver} from './resolver/async-validator.resolver';
+import {NgxFormBuilder} from './core/ngx-form.builder';
+import {AsyncValidatorResolver} from './core/async-validator.resolver';
+import {DisableOnHandler} from './core/disable-on.handler';
 
 @NgModule()
 export class NgxFormModule {
 
-  public static injector: Injector = null;
+  private static injector: Injector = null;
 
   public constructor(injector: Injector) {
     NgxFormModule.injector = injector;
@@ -17,12 +18,17 @@ export class NgxFormModule {
     return NgxFormModule.injector.get(NgxFormBuilder);
   }
 
+  public static getInjector(): Injector {
+    return NgxFormModule.injector;
+  }
+
   public static forRoot(): ModuleWithProviders<NgxFormModule> {
     return {
       ngModule: NgxFormModule,
       providers: [
         NgxFormBuilder,
-        AsyncValidatorResolver
+        AsyncValidatorResolver,
+        DisableOnHandler
       ]
     };
   }
