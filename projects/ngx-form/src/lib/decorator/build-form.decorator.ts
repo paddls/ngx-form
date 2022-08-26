@@ -51,7 +51,7 @@ export function BuildForm<V>(type: () => ConstructorFunction<V>, config: BuildFo
         const form: NgxFormGroup<V> = NgxFormModule.getNgxFormBuilder().build(formGroupContextConfiguration, options);
         Reflect.defineMetadata(BUILD_FORM_INSTANCE_METADATA_KEY, form, this, propertyKey);
 
-        NgxFormModule.getInjector().get(DisableOnHandler).subscribe(type, form);
+        NgxFormModule.getInjector().get(DisableOnHandler).handle(type, form, this[config?.unsubscribeOn]);
 
         return form;
       },

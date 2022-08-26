@@ -1,26 +1,43 @@
+import {Observable} from 'rxjs';
+import {Type} from '@angular/core';
+
 export const DISABLE_ON_METADATA_KEY: string = 'ngx-form:disable-on';
 
-export interface DisableOnSimpleConfig {
+export type DisableOnSimpleConfig = Observable<boolean>;
 
-}
+export type DisableOnConfigFactoryFn = (...providers: any[]) => DisableOnSimpleConfig;
 
 export interface DisableOnConfigWithProviders {
+
+  factory: DisableOnConfigFactoryFn;
+
+  providers: Type<any>[];
 
 }
 
 export type DisableOnConfig = DisableOnSimpleConfig | DisableOnConfigWithProviders;
 
-export interface DisableOnContext {
+export interface DisableOnOptions {
 
-  propertyKey: string;
+  onlySelf?: boolean;
 
-  config: DisableOnConfig;
+  emitEvent?: boolean;
 
 }
 
-export function DisableOn(config: DisableOnConfig): any {
-  return (target: any, propertyKey): void => {
-    const context: DisableOnContext = {propertyKey, config};
+export interface DisableOnContext {
+
+  propertyKey?: string;
+
+  config: DisableOnConfig;
+
+  options?: DisableOnOptions;
+
+}
+
+export function DisableOn(config: DisableOnConfig, options?: DisableOnOptions): any {
+  return (target: any, propertyKey = null): void => {
+    const context: DisableOnContext = {propertyKey, config, options};
 
     let metas: DisableOnContext[] = [];
     if (Reflect.hasMetadata(DISABLE_ON_METADATA_KEY, target)) {

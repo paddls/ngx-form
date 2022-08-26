@@ -4,8 +4,34 @@ import {BuildForm} from './build-form.decorator';
 import {NgxFormBuilder} from '../core/ngx-form.builder';
 import {NgxFormModule} from '../ngx-form.module';
 import {TestBed} from '@angular/core/testing';
-import {Observable, of} from 'rxjs';
+import {EMPTY, Observable, of} from 'rxjs';
 import {DisableOn} from './disable-on.decorator';
+import {Injectable} from '@angular/core';
+import {DisableOnFactory} from '../factory/disable-on.factory';
+import {delay} from 'rxjs/operators';
+import {FormControlStatus} from '@angular/forms';
+import {RunHelpers} from 'rxjs/internal/testing/TestScheduler';
+import {TestScheduler} from 'rxjs/testing';
+import {FormGroup} from './form-group.decorator';
+
+@Injectable()
+class MyProvider {
+
+  public enable(): Observable<boolean> {
+    return of(false);
+  }
+
+  public disable(): Observable<boolean> {
+    return of(true);
+  }
+
+  public disableWithTimeout(): Observable<boolean> {
+    return of(true).pipe(
+      delay(100)
+    );
+  }
+
+}
 
 class UserForm {
 
@@ -15,35 +41,76 @@ class UserForm {
   @FormControl({defaultValue: 'Oscar GUERIN'})
   public displayName: string;
 
-  @DisableOn(() => void 0)
+  @DisableOn(of(true))
   @FormControl()
   public surname: string;
-  //
-  // @DisableOn(() => void 0)
-  // @FormControl()
-  // public address: string;
+
+  @DisableOn(DisableOnFactory.of((provider: MyProvider) => provider.disable(), [MyProvider]))
+  @FormControl()
+  public disabledAddress: string;
+
+  @DisableOn(DisableOnFactory.of((provider: MyProvider) => provider.enable(), [MyProvider]))
+  @FormControl()
+  public enabledAddress: string;
+
+  @DisableOn(DisableOnFactory.of((provider: MyProvider) => provider.disableWithTimeout(), [MyProvider]))
+  @FormControl()
+  public disabledWithTimeoutAddress: string;
+
+  @DisableOn(DisableOnFactory.of((provider: MyProvider) => provider.disableWithTimeout(), [MyProvider]), {emitEvent: false})
+  @FormControl()
+  public disabledWithTimeoutAddressWithoutEvents: string;
+
+  @FormGroup(() => SubForm)
+  public subForm: SubForm;
+}
+
+class SubForm {
+
+  @DisableOn(of(true))
+  @FormControl()
+  public myControl: string;
+
+}
+
+@DisableOn(of(true))
+class DisabledForm {
+
+  @FormControl()
+  public name: string;
+
 }
 
 class ConsumerComponent {
 
-  public readonly obs$: Observable<any> = of({obj: 'test'});
+  public readonly obs$: Observable<any> = EMPTY;
 
   @BuildForm(() => UserForm, {unsubscribeOn: 'obs$'})
   public form: NgxFormGroup<UserForm>;
+
+  @BuildForm(() => DisabledForm, {unsubscribeOn: 'obs$'})
+  public disabledForm: NgxFormGroup<DisabledForm>;
 }
 
 describe('BuildFormDecorator', () => {
 
   let builder: NgxFormBuilder;
+  let testScheduler: TestScheduler;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
         NgxFormModule.forRoot()
+      ],
+      providers: [
+        MyProvider
       ]
     });
 
     builder = TestBed.inject(NgxFormBuilder);
+    testScheduler = new TestScheduler(((actual: any, expected: any) => {
+      expect(actual).toEqual(expected);
+    }));
   });
 
   const component: ConsumerComponent = new ConsumerComponent();
@@ -59,5 +126,35 @@ describe('BuildFormDecorator', () => {
   it('should set initial value when specified', () => {
     expect(component.form.controls.name.value).toBeNull();
     expect(component.form.controls.displayName.value).toEqual('Oscar GUERIN');
+  });
+
+  it('should disable controls depending on disable on observable value', () => {
+    expect(component.form.controls.enabledAddress.enabled).toBeTrue();
+    expect(component.form.controls.disabledAddress.disabled).toBeTrue();
+    expect(component.form.controls.surname.disabled).toBeTrue();
+  });
+
+  it('should emit disable events when emit event option is true or undefined', (done: DoneFn) => {
+    component.form.controls.disabledWithTimeoutAddress.statusChanges.subscribe((event: FormControlStatus) => {
+      expect(event).toEqual('DISABLED');
+
+      done();
+    });
+  });
+
+  it('should not emit disable events when emit event option is set to false', () => {
+    testScheduler.run(({expectObservable}: RunHelpers) => {
+      const source$: Observable<FormControlStatus> = component.form.controls.disabledWithTimeoutAddressWithoutEvents.statusChanges;
+      expectObservable(source$).toBe('');
+    });
+  });
+
+  it('should disable entire form if disable on decorator is set on form class', () => {
+    expect(component.form.enabled).toBeTrue();
+    expect(component.disabledForm.disabled).toBeTrue();
+  });
+
+  it('should disable controls from child form groups', () => {
+    expect(component.form.controls.subForm.get('myControl').disabled).toBeTrue();
   });
 })
