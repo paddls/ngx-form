@@ -1,18 +1,15 @@
-import {AbstractControlOptions, AsyncValidatorFn, UntypedFormControl, ValidatorFn} from '@angular/forms';
+import {AbstractControlOptions, AsyncValidatorFn, FormControl, ValidatorFn} from '@angular/forms';
 import {NgxForm} from './interface/ngx-form';
 import {FormContextCommon} from '../decorator/decorator.common';
 
 export const FORM_CONTROL_INSTANCE_METADATA_KEY: string = 'ngx-form:form-control-instance';
 
-export class NgxFormControl<V> extends UntypedFormControl implements NgxForm {
-
-  private lastValueSet: V;
-
-  private makeRestoration: boolean = false;
-
-  private makePatch: boolean = false;
+export class NgxFormControl<V> extends FormControl implements NgxForm {
 
   public readonly value: any;
+  private lastValueSet: V;
+  private makeRestoration: boolean = false;
+  private makePatch: boolean = false;
 
   public constructor(formState?: any, validatorOrOpts?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null, asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null) {
     super(formState, validatorOrOpts, asyncValidator);
@@ -22,7 +19,7 @@ export class NgxFormControl<V> extends UntypedFormControl implements NgxForm {
     return this.value;
   }
 
-  public setValue(value: V, options?: { onlySelf?: boolean; emitEvent?: boolean; emitModelToViewChange?: boolean; emitViewToModelChange?: boolean }): void {
+  public setValue(value: V, options?: {onlySelf?: boolean; emitEvent?: boolean; emitModelToViewChange?: boolean; emitViewToModelChange?: boolean}): void {
     super.setValue(value, options);
 
     if (this.makeRestoration) {
@@ -33,7 +30,7 @@ export class NgxFormControl<V> extends UntypedFormControl implements NgxForm {
     }
   }
 
-  public patchValue(value: V, options?: { onlySelf?: boolean; emitEvent?: boolean; emitModelToViewChange?: boolean; emitViewToModelChange?: boolean }): void {
+  public patchValue(value: V, options?: {onlySelf?: boolean; emitEvent?: boolean; emitModelToViewChange?: boolean; emitViewToModelChange?: boolean}): void {
     this.makePatch = true;
     super.patchValue(value, options);
     this.makePatch = false;

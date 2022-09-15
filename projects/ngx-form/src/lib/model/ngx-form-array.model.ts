@@ -1,4 +1,4 @@
-import {AbstractControl, AbstractControlOptions, AsyncValidatorFn, UntypedFormArray, ValidatorFn} from '@angular/forms';
+import {AbstractControl, AbstractControlOptions, AsyncValidatorFn, FormArray, ValidatorFn} from '@angular/forms';
 import {NgxFormBuilder} from '../ngx-form.builder';
 import {FormArrayContext} from '../decorator/form-array.decorator';
 import {UPDATE_ON_METADATA_KEY} from '../decorator/update-on.decorator';
@@ -9,7 +9,7 @@ import {NgxFormGroup} from './ngx-form-group.model';
 
 export const FORM_ARRAY_INSTANCE_METADATA_KEY: string = 'ngx-form:form-array-instance';
 
-export class NgxFormArray<V> extends UntypedFormArray implements NgxFormCollection {
+export class NgxFormArray<V> extends FormArray implements NgxFormCollection {
 
   private lastValuesSet: V[];
 
