@@ -4,6 +4,7 @@ import {Injector, ModuleWithProviders, NgModule} from '@angular/core';
 import {NgxFormBuilder} from './core/ngx-form.builder';
 import {AsyncValidatorResolver} from './core/async-validator.resolver';
 import {DisableOnHandler} from './core/disable-on.handler';
+import {ValidatorResolver} from './core/validator.resolver';
 
 @NgModule()
 export class NgxFormModule {
@@ -27,6 +28,7 @@ export class NgxFormModule {
       ngModule: NgxFormModule,
       providers: [
         NgxFormBuilder,
+        ValidatorResolver,
         AsyncValidatorResolver,
         DisableOnHandler
       ]
