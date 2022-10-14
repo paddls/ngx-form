@@ -3,6 +3,10 @@ import {AsyncValidatorFn} from '@angular/forms';
 import {ASYNC_VALIDATORS_METADATA_KEY, AsyncValidator} from './async-validator.decorator';
 import {of} from 'rxjs';
 import {delay, map} from 'rxjs/operators';
+import {AsyncValidatorFactory} from '../factory/async-validator.factory';
+
+class MyService {
+}
 
 const myAsyncValidator: AsyncValidatorFn = () =>
   of(void 0).pipe(
@@ -17,6 +21,15 @@ class LibraryForm {
 
   @AsyncValidator([])
   public numberOfBooks: number = 10;
+
+  @AsyncValidator(AsyncValidatorFactory.of((service: MyService) => () => of({error: `${service}`}), [MyService]))
+  public address: string;
+
+  @AsyncValidator([
+    myAsyncValidator,
+    AsyncValidatorFactory.of((service: MyService) => () => of({error: `${service}`}), [MyService])
+  ])
+  public secondaryAddress: string;
 }
 
 class NotAForm {

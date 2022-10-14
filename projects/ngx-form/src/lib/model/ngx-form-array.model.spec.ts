@@ -1,9 +1,11 @@
 import {FormControl} from '../decorator/form-control.decorator';
 import {FormGroupContext} from '../decorator/form-group.decorator';
 import {FormArray} from '../decorator/form-array.decorator';
-import {NgxFormBuilder} from '../ngx-form.builder';
+import {NgxFormBuilder} from '../core/ngx-form.builder';
 import {NgxFormGroup} from './ngx-form-group.model';
 import {NgxFormArray} from './ngx-form-array.model';
+import {TestBed} from '@angular/core/testing';
+import {NgxFormModule} from '../ngx-form.module';
 
 class CompanyForm {
 
@@ -31,16 +33,23 @@ class UserForm {
   }
 }
 
+const formGroupContextConfiguration: FormGroupContext<UserForm> = {
+  type: () => UserForm
+};
+
+let builder: NgxFormBuilder;
+let form: NgxFormGroup<UserForm>;
+
 describe('NgxFormArray', () => {
 
-  const formGroupContextConfiguration: FormGroupContext<UserForm> = {
-    type: () => UserForm
-  };
-
-  const builder: NgxFormBuilder = new NgxFormBuilder();
-  let form: NgxFormGroup<UserForm>;
-
   beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        NgxFormModule.forRoot()
+      ]
+    })
+
+    builder = TestBed.inject(NgxFormBuilder);
     form = builder.build(formGroupContextConfiguration);
   });
 

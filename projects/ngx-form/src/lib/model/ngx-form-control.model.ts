@@ -1,6 +1,6 @@
 import {AbstractControlOptions, AsyncValidatorFn, FormControl, ValidatorFn} from '@angular/forms';
 import {NgxForm} from './interface/ngx-form';
-import {FormContextCommon} from '../decorator/decorator.common';
+import {FormContextCommon} from '../common/decorator.common';
 
 export const FORM_CONTROL_INSTANCE_METADATA_KEY: string = 'ngx-form:form-control-instance';
 

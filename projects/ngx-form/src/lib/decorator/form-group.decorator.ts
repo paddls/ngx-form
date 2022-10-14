@@ -1,5 +1,5 @@
-import {ConstructorFunction} from '../common';
-import {addFormContextCommon, FormContextCommon} from './decorator.common';
+import {ConstructorFunction} from '../common/common';
+import {addFormContextCommon, FormContextCommon} from '../common/decorator.common';
 
 export const FORM_GROUP_SUFFIX_METADATA_KEY: string = 'form-group';
 

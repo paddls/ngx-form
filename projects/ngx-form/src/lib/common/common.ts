@@ -1,18 +1,18 @@
-import {findPropertyFormContexts, FormContextCommon} from './decorator/decorator.common';
-import {FORM_CONTROL_SUFFIX_METADATA_KEY} from './decorator/form-control.decorator';
-import {FORM_GROUP_SUFFIX_METADATA_KEY, FormGroupContext} from './decorator/form-group.decorator';
-import {FORM_ARRAY_SUFFIX_METADATA_KEY, FormArrayContext} from './decorator/form-array.decorator';
-import {NgxFormArray} from './model/ngx-form-array.model';
-import {FORM_GROUP_INSTANCE_METADATA_KEY, NgxFormGroup} from './model/ngx-form-group.model';
+import {findPropertyFormContexts, FormContextCommon} from './decorator.common';
+import {FORM_CONTROL_SUFFIX_METADATA_KEY} from '../decorator/form-control.decorator';
+import {FORM_GROUP_SUFFIX_METADATA_KEY, FormGroupContext} from '../decorator/form-group.decorator';
+import {FORM_ARRAY_SUFFIX_METADATA_KEY, FormArrayContext} from '../decorator/form-array.decorator';
+import {NgxFormArray} from '../model/ngx-form-array.model';
+import {FORM_GROUP_INSTANCE_METADATA_KEY, NgxFormGroup} from '../model/ngx-form-group.model';
 import set from 'lodash.set';
 
 export type ConstructorFunction<T> = new(...args: any[]) => T;
 
 export function transformValueToSmartValue<V>(formGroup: NgxFormGroup<V>, parent: string): V {
-  const formGroupContext: FormGroupContext<V> =  Reflect.getMetadata(FORM_GROUP_INSTANCE_METADATA_KEY, formGroup);
+  const formGroupContext: FormGroupContext<V> = Reflect.getMetadata(FORM_GROUP_INSTANCE_METADATA_KEY, formGroup);
   const value: V = new (formGroupContext.type())();
 
-  const controlContexts: { [key: string]: FormContextCommon<V> } = findPropertyFormContexts(formGroupContext.type().prototype, FORM_CONTROL_SUFFIX_METADATA_KEY);
+  const controlContexts: {[key: string]: FormContextCommon<V>} = findPropertyFormContexts(formGroupContext.type().prototype, FORM_CONTROL_SUFFIX_METADATA_KEY);
   Object.keys(controlContexts).forEach((key: string) => {
     const controlContext: FormContextCommon<V> = controlContexts[key];
     set(value, key, formGroup.get(controlContext.name)?.value);

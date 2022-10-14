@@ -1,4 +1,4 @@
-import {FormHooks} from './decorator.common';
+import {FormHooks} from '../common/decorator.common';
 
 export const UPDATE_ON_METADATA_KEY: string = 'ngx-form:update-on';
 

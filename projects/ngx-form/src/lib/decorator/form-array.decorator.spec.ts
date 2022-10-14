@@ -1,5 +1,5 @@
 import {FormControl} from './form-control.decorator';
-import {PROPERTY_CONFIGURATIONS_METADATA_KEY} from './decorator.common';
+import {PROPERTY_CONFIGURATIONS_METADATA_KEY} from '../common/decorator.common';
 import {FORM_ARRAY_SUFFIX_METADATA_KEY, FormArray, FormArrayContext} from './form-array.decorator';
 
 class CompanyForm {
@@ -27,9 +27,9 @@ class UserForm {
   public companies: CompanyForm[];
 }
 
-describe('FormArrayDecorator', () => {
+const form: UserForm = new UserForm();
 
-  const form: UserForm = new UserForm();
+describe('FormArrayDecorator', () => {
 
   it('should add form array metadata on form class', () => {
     const formMetadata: {[key: string]: FormArrayContext<any>} =

@@ -1,23 +1,34 @@
 import {NgxFormModule} from '../ngx-form.module';
 import {NgxFormGroup} from '../model/ngx-form-group.model';
-import {ConstructorFunction} from '../common';
+import {ConstructorFunction} from '../common/common';
 import {FormGroupContext} from './form-group.decorator';
 import {UPDATE_ON_METADATA_KEY} from './update-on.decorator';
 import {AbstractControlOptions} from '@angular/forms';
 import {VALIDATORS_METADATA_KEY} from './validator.decorator';
 import {ASYNC_VALIDATORS_METADATA_KEY} from './async-validator.decorator';
+import {DisableOnHandler} from '../core/disable-on.handler';
 
 export const BUILD_FORM_METADATA_KEY: string = 'ngx-form:build-form';
+
 export const BUILD_FORM_INSTANCE_METADATA_KEY: string = 'ngx-form:form-instance';
 
-export interface BuildFormContextConfiguration<T> {
-  type: () => ConstructorFunction<T>;
+export interface BuildFormConfig {
+
+  unsubscribeOn?: string;
+
 }
 
-export function BuildForm<V>(type: () => ConstructorFunction<V>): any {
+export interface BuildFormContextConfiguration<T> extends BuildFormConfig {
+
+  type: () => ConstructorFunction<T>;
+
+}
+
+export function BuildForm<V>(type: () => ConstructorFunction<V>, config: BuildFormConfig = {}): any {
   return (target: any, propertyKey: string): void => {
     const buildFormContextConfiguration: BuildFormContextConfiguration<V> = {
-      type
+      type,
+      ...config
     };
     Reflect.defineMetadata(BUILD_FORM_METADATA_KEY, buildFormContextConfiguration, target);
 
@@ -39,6 +50,8 @@ export function BuildForm<V>(type: () => ConstructorFunction<V>): any {
 
         const form: NgxFormGroup<V> = NgxFormModule.getNgxFormBuilder().build(formGroupContextConfiguration, options);
         Reflect.defineMetadata(BUILD_FORM_INSTANCE_METADATA_KEY, form, this, propertyKey);
+
+        NgxFormModule.getInjector().get(DisableOnHandler).handle(type, form, this[config?.unsubscribeOn]);
 
         return form;
       },
