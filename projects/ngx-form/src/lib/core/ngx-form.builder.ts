@@ -12,11 +12,13 @@ import {VALIDATORS_METADATA_KEY} from '../decorator/validator.decorator';
 import {ASYNC_VALIDATORS_METADATA_KEY} from '../decorator/async-validator.decorator';
 import {ConstructorFunction} from '../common/common';
 import {AsyncValidatorResolver} from './async-validator.resolver';
+import {ValidatorResolver} from './validator.resolver';
 
 @Injectable()
 export class NgxFormBuilder extends UntypedFormBuilder {
 
-  public constructor(private readonly asyncValidatorResolver: AsyncValidatorResolver) {
+  public constructor(private readonly validatorResolver: ValidatorResolver,
+                     private readonly asyncValidatorResolver: AsyncValidatorResolver) {
     super();
   }
 
@@ -73,7 +75,7 @@ export class NgxFormBuilder extends UntypedFormBuilder {
     const ngxFormControl: NgxFormControl<VC> = this.control(
       formContextCommon.defaultValue !== undefined ? formContextCommon.defaultValue : null,
       {
-        validators: Reflect.getMetadata(`${VALIDATORS_METADATA_KEY}:${key}`, groupType),
+        validators: this.validatorResolver.resolve(Reflect.getMetadata(`${VALIDATORS_METADATA_KEY}:${key}`, groupType)),
         asyncValidators: this.asyncValidatorResolver.resolve(Reflect.getMetadata(`${ASYNC_VALIDATORS_METADATA_KEY}:${key}`, groupType)),
         updateOn: Reflect.getMetadata(`${UPDATE_ON_METADATA_KEY}:${key}`, groupType)
       }
@@ -87,7 +89,7 @@ export class NgxFormBuilder extends UntypedFormBuilder {
     const ngxFormArray: NgxFormArray<VC> = this.array<VC>(
       [],
       {
-        validators: Reflect.getMetadata(`${VALIDATORS_METADATA_KEY}:${key}`, groupType),
+        validators: this.validatorResolver.resolve(Reflect.getMetadata(`${VALIDATORS_METADATA_KEY}:${key}`, groupType)),
         asyncValidators: this.asyncValidatorResolver.resolve(Reflect.getMetadata(`${ASYNC_VALIDATORS_METADATA_KEY}:${key}`, groupType)),
         updateOn: Reflect.getMetadata(`${UPDATE_ON_METADATA_KEY}:${key}`, groupType)
       }
@@ -100,7 +102,9 @@ export class NgxFormBuilder extends UntypedFormBuilder {
   }
 
   public buildGroup<V, VC>(key: string, groupContext: FormGroupContext<VC>, groupType: ConstructorFunction<V>): NgxFormGroup<VC> {
-    const groupValidators: ValidatorFn | ValidatorFn[] = Reflect.getMetadata(`${VALIDATORS_METADATA_KEY}:${key}`, groupType) || Reflect.getMetadata(`${VALIDATORS_METADATA_KEY}`, groupContext.type());
+    const groupValidators: ValidatorFn | ValidatorFn[] = this.validatorResolver.resolve(
+      Reflect.getMetadata(`${VALIDATORS_METADATA_KEY}:${key}`, groupType) || Reflect.getMetadata(`${VALIDATORS_METADATA_KEY}`, groupContext.type())
+    );
     const groupAsyncValidators: AsyncValidatorFn | AsyncValidatorFn[] = this.asyncValidatorResolver.resolve(
       Reflect.getMetadata(`${ASYNC_VALIDATORS_METADATA_KEY}:${key}`, groupType) || Reflect.getMetadata(`${ASYNC_VALIDATORS_METADATA_KEY}`, groupContext.type())
     );
