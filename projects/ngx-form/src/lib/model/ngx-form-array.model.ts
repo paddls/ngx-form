@@ -1,7 +1,6 @@
 import {AbstractControl, AbstractControlOptions, AsyncValidatorFn, FormArray, ValidatorFn} from '@angular/forms';
 import {NgxFormBuilder} from '../core/ngx-form.builder';
 import {FormArrayContext} from '../decorator/form-array.decorator';
-import {UPDATE_ON_METADATA_KEY} from '../decorator/update-on.decorator';
 import {NgxFormCollection} from './interface/ngx-form-collection';
 import {NgxFormControl} from './ngx-form-control.model';
 import {transformValueToSmartValue} from '../common/common';
@@ -47,10 +46,7 @@ export class NgxFormArray<V> extends FormArray implements NgxFormCollection {
         }
       );
     } else {
-      form = this.builder.build(
-        {type: formArrayContext.type, defaultValue: value || formArrayContext.defaultValue},
-        formArrayContext.updateOn || Reflect.getMetadata(`${UPDATE_ON_METADATA_KEY}`, formArrayContext.type())
-      )
+      form = this.builder.build({type: formArrayContext.type, defaultValue: value || formArrayContext.defaultValue})
     }
 
     if (index === -1) {

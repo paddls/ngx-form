@@ -39,16 +39,22 @@ export class NgxFormBuilder extends UntypedFormBuilder {
   }
 
   public build<V>(rootGroupContext: FormGroupContext<V>, options?: AbstractControlOptions): NgxFormGroup<V> {
+    const rootContextOptions: AbstractControlOptions = {
+      validators: this.validatorResolver.resolve(Reflect.getMetadata(VALIDATORS_METADATA_KEY, rootGroupContext.type())),
+      asyncValidators: this.asyncValidatorResolver.resolve(Reflect.getMetadata(ASYNC_VALIDATORS_METADATA_KEY, rootGroupContext.type())),
+      updateOn: Reflect.getMetadata(UPDATE_ON_METADATA_KEY, rootGroupContext.type())
+    };
+
     const form: NgxFormGroup<V> = this.group(
       {},
-      options
+      options || rootContextOptions
     );
     Reflect.defineMetadata(FORM_GROUP_INSTANCE_METADATA_KEY, rootGroupContext, form);
 
     const controlContexts: {[key: string]: FormContextCommon<any>} = findPropertyFormContexts(rootGroupContext.type().prototype, FORM_CONTROL_SUFFIX_METADATA_KEY) || {};
     Object.keys(controlContexts).forEach((key: string) => {
       const controlConfiguration: FormContextCommon<any> = controlContexts[key];
-      form.addControl(controlConfiguration.name, this.buildControl<any, any>(key, controlConfiguration, rootGroupContext.type().prototype));
+      form.addControl(controlConfiguration.name, this.buildControl<any, any>(key, controlConfiguration, rootGroupContext.type().prototype, rootGroupContext.defaultValue));
     });
 
     const arrayContexts: {[key: string]: FormContextCommon<any>} = findPropertyFormContexts(rootGroupContext.type().prototype, FORM_ARRAY_SUFFIX_METADATA_KEY) || {};
@@ -71,9 +77,19 @@ export class NgxFormBuilder extends UntypedFormBuilder {
     return form;
   }
 
-  public buildControl<V, VC>(key: string, formContextCommon: FormContextCommon<VC>, groupType: ConstructorFunction<V>): NgxFormControl<VC> {
+  public buildControl<V, VC>(key: string, formContextCommon: FormContextCommon<VC>, groupType: ConstructorFunction<V>, groupDefaultValue: V): NgxFormControl<VC> {
+    let controlValue: any;
+
+    if (groupDefaultValue?.[key] !== undefined) {
+      controlValue = groupDefaultValue[key];
+    } else if (formContextCommon.defaultValue !== undefined) {
+      controlValue = formContextCommon.defaultValue;
+    } else {
+      controlValue = null;
+    }
+
     const ngxFormControl: NgxFormControl<VC> = this.control(
-      formContextCommon.defaultValue !== undefined ? formContextCommon.defaultValue : null,
+      controlValue,
       {
         validators: this.validatorResolver.resolve(Reflect.getMetadata(`${VALIDATORS_METADATA_KEY}:${key}`, groupType)),
         asyncValidators: this.asyncValidatorResolver.resolve(Reflect.getMetadata(`${ASYNC_VALIDATORS_METADATA_KEY}:${key}`, groupType)),

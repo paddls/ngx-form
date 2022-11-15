@@ -79,12 +79,18 @@ describe('NgxFormArray', () => {
   });
 
   it('should add form value on method call', () => {
-    const companyForm: CompanyForm = new CompanyForm({
+    const companyFormDefault: CompanyForm = new CompanyForm({
       name: 'Witty Services',
       siret: '00000000000000'
     });
-    (form.controls.companies as NgxFormArray<CompanyForm>).add(new CompanyForm());
-    expect(form.getValue().companies).toEqual([companyForm, companyForm]);
+
+    const addedCompanyForm: CompanyForm = new CompanyForm({
+      name: 'Witty',
+      siret: '11111111111111'
+    });
+
+    (form.controls.companies as NgxFormArray<CompanyForm>).add(addedCompanyForm);
+    expect(form.getValue().companies).toEqual([companyFormDefault, addedCompanyForm]);
   });
 
   it('should restore value on method call', () => {

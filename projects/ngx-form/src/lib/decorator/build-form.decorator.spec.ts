@@ -9,10 +9,11 @@ import {DisableOn} from './disable-on.decorator';
 import {Injectable} from '@angular/core';
 import {DisableOnFactory} from '../factory/disable-on.factory';
 import {delay} from 'rxjs/operators';
-import {FormControlStatus} from '@angular/forms';
+import {FormControlStatus, Validators} from '@angular/forms';
 import {RunHelpers} from 'rxjs/internal/testing/TestScheduler';
 import {TestScheduler} from 'rxjs/testing';
 import {FormGroup} from './form-group.decorator';
+import {Validator} from './validator.decorator';
 
 @Injectable()
 class MyProvider {
@@ -33,6 +34,7 @@ class MyProvider {
 
 }
 
+@Validator(Validators.required)
 class UserForm {
 
   @FormControl()
