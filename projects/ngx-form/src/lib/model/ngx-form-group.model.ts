@@ -1,4 +1,4 @@
-import {AbstractControl, AbstractControlOptions, AsyncValidatorFn, UntypedFormGroup, ValidatorFn} from '@angular/forms';
+import {AbstractControl, AbstractControlOptions, AsyncValidatorFn, FormGroup, ValidatorFn} from '@angular/forms';
 import {transformSmartValueToValue, transformValueToSmartValue} from '../common/common';
 import {NgxForm} from './interface/ngx-form';
 import {FormGroupContext} from '../decorator/form-group.decorator';
@@ -7,10 +7,10 @@ import {NgxFormControl} from './ngx-form-control.model';
 
 export const FORM_GROUP_INSTANCE_METADATA_KEY: string = 'ngx-form:form-group-instance';
 
-export class NgxFormGroup<V> extends UntypedFormGroup implements NgxFormCollection {
+export class NgxFormGroup<V> extends FormGroup implements NgxFormCollection {
 
   public readonly value: any;
-  private lastValueSet: V;
+  private lastValueSet: Partial<V>;
   private makeRestoration: boolean = false;
 
   public constructor(controls: {[key: string]: AbstractControl;},
@@ -27,7 +27,7 @@ export class NgxFormGroup<V> extends UntypedFormGroup implements NgxFormCollecti
     return transformValueToSmartValue(this, parent);
   }
 
-  public setValue(value: V, options?: {onlySelf?: boolean; emitEvent?: boolean}): void {
+  public setValue(value: Partial<V>, options?: {onlySelf?: boolean; emitEvent?: boolean}): void {
     super.setValue(transformSmartValueToValue(value), options);
 
     if (this.makeRestoration) {

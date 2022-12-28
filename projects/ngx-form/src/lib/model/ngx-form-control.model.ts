@@ -1,10 +1,10 @@
-import {AbstractControlOptions, AsyncValidatorFn, UntypedFormControl, ValidatorFn} from '@angular/forms';
+import {AbstractControlOptions, AsyncValidatorFn, FormControl, ValidatorFn} from '@angular/forms';
 import {NgxForm} from './interface/ngx-form';
 import {FormContextCommon} from '../common/decorator.common';
 
 export const FORM_CONTROL_INSTANCE_METADATA_KEY: string = 'ngx-form:form-control-instance';
 
-export class NgxFormControl<V> extends UntypedFormControl implements NgxForm {
+export class NgxFormControl<V> extends FormControl implements NgxForm {
 
   public readonly value: any;
   private lastValueSet: V;
