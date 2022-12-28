@@ -1,4 +1,4 @@
-import {AbstractControl, AbstractControlOptions, AsyncValidatorFn, FormArray, ValidatorFn} from '@angular/forms';
+import {AbstractControl, AbstractControlOptions, AsyncValidatorFn, UntypedFormArray, ValidatorFn} from '@angular/forms';
 import {NgxFormBuilder} from '../core/ngx-form.builder';
 import {FormArrayContext} from '../decorator/form-array.decorator';
 import {NgxFormCollection} from './interface/ngx-form-collection';
@@ -8,7 +8,7 @@ import {NgxFormGroup} from './ngx-form-group.model';
 
 export const FORM_ARRAY_INSTANCE_METADATA_KEY: string = 'ngx-form:form-array-instance';
 
-export class NgxFormArray<V> extends FormArray implements NgxFormCollection {
+export class NgxFormArray<V> extends UntypedFormArray implements NgxFormCollection {
 
   private lastValuesSet: V[];
 
@@ -58,14 +58,14 @@ export class NgxFormArray<V> extends FormArray implements NgxFormCollection {
     return form;
   }
 
-  public setValue(values: V[], options?: { onlySelf?: boolean; emitEvent?: boolean }): void {
+  public setValue(values: V[], options?: {onlySelf?: boolean; emitEvent?: boolean}): void {
     this.clear();
     values.forEach(() => this.add());
     super.setValue(values.map((value: V) => value), options);
     this.lastValuesSet = values;
   }
 
-  public patchValue(values: V[], options?: { onlySelf?: boolean; emitEvent?: boolean }): void {
+  public patchValue(values: V[], options?: {onlySelf?: boolean; emitEvent?: boolean}): void {
     super.patchValue(values.map((value: V) => value), options);
   }
 

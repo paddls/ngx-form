@@ -17,7 +17,7 @@ import {CompanyFormComponent} from './company-form/company-form.component';
     AppRoutingModule,
     BrowserModule,
     ReactiveFormsModule,
-    NgxFormModule
+    NgxFormModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
