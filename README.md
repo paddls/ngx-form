@@ -20,19 +20,22 @@ Model based typed reactive forms made easy.
 * [FormGroup](#formgroup)
 * [FormArray](#formarray)
 * [Validator, AsyncValidator and UpdateOn](#validator-asyncvalidator-and-updateon)
+  * [ValidatorFactory](#validatorfactory)
+  * [AsyncValidatorFactory](#asyncvalidatorfactory)
 * [FormChild](#formchild)
 * [Form lifecycle](#form-lifecycle)
-  * [getValue()](#getvalue)
-  * [setValue()](#setvalue)
-  * [patchValue()](#patchvalue)
-  * [restore()](#restore)
-  * [empty()](#empty)
-  * [cancel()](#cancel)
-  * [markAllAsDirty()](#markallasdirty)
-  * [markAllAsPending()](#markallaspending)
-  * [markAllAsPristine()](#markallaspristine)
-  * [markAllAsUntouched()](#markallasuntouched)
-  * [add()](#add)
+  * [getValue()](#getvalue--)
+  * [setValue()](#setvalue--)
+  * [patchValue()](#patchvalue--)
+  * [restore()](#restore--)
+  * [empty()](#empty--)
+  * [cancel()](#cancel--)
+  * [markAllAsDirty()](#markallasdirty--)
+  * [markAllAsPending()](#markallaspending--)
+  * [markAllAsPristine()](#markallaspristine--)
+  * [markAllAsUntouched()](#markallasuntouched--)
+  * [add()](#add--)
+* [DisableOn](#disableon)
 
 ## How to install
 
@@ -226,6 +229,42 @@ The ``@Validator`` or ``@AsyncValidator`` decorators take any ``ValidatorFn``, `
 ``ValidatorFn`` and ``AsyncValidatorFn`` as parameters to apply them to the desired control or form. The
 ``@UpdateOn`` decorator takes ``'change'``, ``'blur'`` or ``'submit'`` value as parameter to apply it to the desired
 control or form.
+
+### ValidatorFactory
+
+You can use a `ValidatorFactory` to build a `ValidatorFn` using values from any provider (`@Injectable()`) with the
+following syntax :
+
+```typescript
+class Form {
+
+  @Validator([
+    ValidatorFactory.of(((provider: MyProvider) => Validators.min(provider.length)), [MyProvider])
+  ])
+  @FormControl()
+  public secondaryAddress: string;
+}
+```
+
+You can mix standard `ValidatorFn` and `ValidatorFactory` inside the `@Validator` decorator.
+
+### AsyncValidatorFactory
+
+You can also use a `AsyncValidatorFactory`, it has the same behaviour as `ValidatorFactory`.
+
+```typescript
+class Form {
+
+  @AsyncValidator([
+    AsyncValidatorFactory.of(
+      (service: MyService) => () => service.httpCall().pipe(map((result: string) => ({error: result}))),
+      [MyService]
+    )
+  ])
+  @FormControl()
+  public secondaryAddress: string;
+}
+```
 
 ## FormChild
 
@@ -429,3 +468,43 @@ Sets all controls to ``UNTOUCHED`` state.
 Adds a new element to a form array. Prefer this method over ``push()`` method available on classic reactive forms as you
 don't need to explicitly pass a new form control to add : by default, NgxForm will add a new instance of the type of the
 form array. You can set a default value to the new element and set a specific index.
+
+## DisableOn
+
+The `@DisableOn()` decorator allows you to control when to enable/disable a control. The decorated control will be
+disabled
+when the `Observable` passed as an argument is truthy, and enabled otherwise.
+
+If you want to use a context from providers, you can use a `DisableOnFactory` and inject your providers.
+
+Options can also be passed as a second argument of the decorator.
+
+```typescript
+
+class UserForm {
+
+  @DisableOn(of(true))
+  @FormControl()
+  public surname: string;
+
+  @DisableOn(DisableOnFactory.of((provider: MyProvider) => provider.disableWithTimeout(), [MyProvider]))
+  @FormControl()
+  public disabledWithTimeoutAddress: string;
+
+  @DisableOn(DisableOnFactory.of((provider: MyProvider) => provider.disableWithTimeout(), [MyProvider]), {emitEvent: false})
+  @FormControl()
+  public disabledWithTimeoutAddressWithoutEvents: string;
+}
+```
+
+> ⚠️ Any instance (built with `@BuildForm()`) of a form using this feature must
+> have `unsubscribeOn` parameter provided in the config as follows :
+> ```typescript
+> class ConsumerComponent {
+>
+>   public readonly obs$: Observable<any> = EMPTY;
+>
+>   @BuildForm(() => UserForm, {unsubscribeOn: 'obs$'})
+>   public form: NgxFormGroup<UserForm>;
+> }
+> ```
