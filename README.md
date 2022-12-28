@@ -45,6 +45,16 @@ First install the library in your project :
 npm install --save @paddls/ngx-form
 ```
 
+### Recommended Angular versions
+
+| `Angular`          | `NgxForm`         |
+|--------------------|-------------------|
+| `15.0.0` and above | `5.0.0` and above |
+| `14.0.0` and above | `4.0.1` and above |
+| `13.0.0` and above | `3.0.1` and above |
+| `12.0.0` and above | `2.0.0` and above |
+| `11.0.0` and above | `1.0.0` and above |
+
 After that, import `NgxFormModule` as follows :
 
 ```typescript
