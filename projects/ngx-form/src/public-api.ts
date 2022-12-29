@@ -1,6 +1,7 @@
 export {AsyncValidator, AsyncValidatorConfig} from './lib/decorator/async-validator.decorator';
 export {BuildForm} from './lib/decorator/build-form.decorator';
 export {DisableOnSimpleConfig, DisableOnConfigFactoryFn, DisableOnConfigWithProviders, DisableOnConfig, DisableOnOptions, DisableOnContext, DisableOn} from './lib/decorator/disable-on.decorator';
+export {OnValueChangesContext, OnValueChanges} from './lib/decorator/on-value-changes.decorator';
 export {FormArray, FormArrayContext} from './lib/decorator/form-array.decorator';
 export {FormControl} from './lib/decorator/form-control.decorator';
 export {FormGroup, FormGroupContext} from './lib/decorator/form-group.decorator';

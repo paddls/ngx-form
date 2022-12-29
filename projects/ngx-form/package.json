@@ -14,10 +14,7 @@
     "type": "git",
     "url": "https://github.com/paddls/ngx-form.git"
   },
-  "author": "Thomas Nisole",
-  "contributors": [
-    "Oscar Guérin"
-  ],
+  "author": "Thomas Nisole, Oscar Guérin",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/paddls/ngx-form/issues"

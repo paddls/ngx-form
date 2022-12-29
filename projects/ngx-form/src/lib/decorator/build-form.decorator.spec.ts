@@ -14,6 +14,7 @@ import {RunHelpers} from 'rxjs/internal/testing/TestScheduler';
 import {TestScheduler} from 'rxjs/testing';
 import {FormGroup} from './form-group.decorator';
 import {Validator} from './validator.decorator';
+import {OnValueChanges} from './on-value-changes.decorator';
 
 @Injectable()
 class MyProvider {
@@ -83,6 +84,24 @@ class DisabledForm {
 
 }
 
+class SumForm {
+
+  @FormControl()
+  public a: number;
+
+  @FormControl()
+  public b: number;
+
+  @FormControl()
+  public sum: number;
+
+  @OnValueChanges(['a', 'b'])
+  public computeSum(instance: NgxFormGroup<SumForm>): void {
+    this.sum = this.a + this.b;
+    instance.setValue(this, {emitEvent: false});
+  }
+}
+
 class ConsumerComponent {
 
   public readonly obs$: Observable<any> = EMPTY;
@@ -92,6 +111,9 @@ class ConsumerComponent {
 
   @BuildForm(() => DisabledForm, {unsubscribeOn: 'obs$'})
   public disabledForm: NgxFormGroup<DisabledForm>;
+
+  @BuildForm(() => SumForm, {unsubscribeOn: 'obs$'})
+  public sumForm: NgxFormGroup<SumForm>;
 }
 
 describe('BuildFormDecorator', () => {
@@ -159,4 +181,11 @@ describe('BuildFormDecorator', () => {
   it('should disable controls from child form groups', () => {
     expect(component.form.controls.subForm.get('myControl').disabled).toBeTrue();
   });
+
+  it('should compute sum on value changes', () => {
+    component.sumForm.get('a').setValue(2);
+    component.sumForm.get('b').setValue(3);
+
+    expect(component.sumForm.getValue().sum).toEqual(5);
+  })
 })

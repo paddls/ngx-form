@@ -5,6 +5,13 @@ import {FORM_ARRAY_SUFFIX_METADATA_KEY, FormArrayContext} from '../decorator/for
 import {NgxFormArray} from '../model/ngx-form-array.model';
 import {FORM_GROUP_INSTANCE_METADATA_KEY, NgxFormGroup} from '../model/ngx-form-group.model';
 import set from 'lodash.set';
+import {Observable} from 'rxjs';
+
+export interface Handler {
+
+  handle<T>(type: () => ConstructorFunction<T>, instance: NgxFormGroup<T>, unsubscribeOn: Observable<any>): void;
+
+}
 
 export type ConstructorFunction<T> = new(...args: any[]) => T;
 

@@ -2,7 +2,8 @@ import {NgxFormModule} from '../ngx-form.module';
 import {NgxFormGroup} from '../model/ngx-form-group.model';
 import {ConstructorFunction} from '../common/common';
 import {FormGroupContext} from './form-group.decorator';
-import {DisableOnHandler} from '../core/disable-on.handler';
+import {DisableOnHandler} from '../core/handler/disable-on.handler';
+import {OnValueChangesHandler} from '../core/handler/on-value-changes.handler';
 
 export const BUILD_FORM_METADATA_KEY: string = 'ngx-form:build-form';
 
@@ -42,6 +43,8 @@ export function BuildForm<V>(type: () => ConstructorFunction<V>, config: BuildFo
         Reflect.defineMetadata(BUILD_FORM_INSTANCE_METADATA_KEY, form, this, propertyKey);
 
         NgxFormModule.getInjector().get(DisableOnHandler).handle(type, form, this[config?.unsubscribeOn]);
+
+        NgxFormModule.getInjector().get(OnValueChangesHandler).handle(type, form, this[config?.unsubscribeOn]);
 
         return form;
       },

@@ -3,8 +3,9 @@ import 'reflect-metadata';
 import {Injector, ModuleWithProviders, NgModule} from '@angular/core';
 import {NgxFormBuilder} from './core/ngx-form.builder';
 import {AsyncValidatorResolver} from './core/async-validator.resolver';
-import {DisableOnHandler} from './core/disable-on.handler';
+import {DisableOnHandler} from './core/handler/disable-on.handler';
 import {ValidatorResolver} from './core/validator.resolver';
+import {OnValueChangesHandler} from './core/handler/on-value-changes.handler';
 
 @NgModule()
 export class NgxFormModule {
@@ -30,7 +31,8 @@ export class NgxFormModule {
         NgxFormBuilder,
         ValidatorResolver,
         AsyncValidatorResolver,
-        DisableOnHandler
+        DisableOnHandler,
+        OnValueChangesHandler
       ]
     };
   }

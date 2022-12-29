@@ -36,6 +36,7 @@ Model based typed reactive forms made easy.
   * [markAllAsUntouched()](#markallasuntouched--)
   * [add()](#add--)
 * [DisableOn](#disableon)
+* [OnValueChanges]
 
 ## How to install
 
@@ -509,12 +510,52 @@ class UserForm {
 
 > ⚠️ Any instance (built with `@BuildForm()`) of a form using this feature must
 > have `unsubscribeOn` parameter provided in the config as follows :
-> ```typescript
-> class ConsumerComponent {
->
->   public readonly obs$: Observable<any> = EMPTY;
->
->   @BuildForm(() => UserForm, {unsubscribeOn: 'obs$'})
->   public form: NgxFormGroup<UserForm>;
-> }
-> ```
+
+```typescript
+class ConsumerComponent {
+
+  public readonly obs$: Observable<any> = EMPTY;
+
+  @BuildForm(() => UserForm, {unsubscribeOn: 'obs$'})
+  public form: NgxFormGroup<UserForm>;
+}
+```
+
+## OnValueChanges
+
+The `@OnValueChanges()` decorator allows you to call a method when a form value is changed. Pass the
+control name(s) for which you wish to listen to changes. If you wish to listen to changes on the whole
+form, you can apply the decorator without any parameters.
+
+```typescript
+class SumForm {
+
+  @FormControl()
+  public a: number;
+
+  @FormControl()
+  public b: number;
+
+  @FormControl()
+  public sum: number;
+
+  @OnValueChanges(['a', 'b'])
+  public computeSum(instance: NgxFormGroup<SumForm>): void {
+    this.sum = this.a + this.b;
+    instance.setValue(this, {emitEvent: false});
+  }
+}
+```
+
+> ⚠️ Any instance (built with `@BuildForm()`) of a form using this feature must
+> have `unsubscribeOn` parameter provided in the config as follows :
+
+```typescript
+class ConsumerComponent {
+
+  public readonly obs$: Observable<any> = EMPTY;
+
+  @BuildForm(() => UserForm, {unsubscribeOn: 'obs$'})
+  public form: NgxFormGroup<UserForm>;
+}
+```

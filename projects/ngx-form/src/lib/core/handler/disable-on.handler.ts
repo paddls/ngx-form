@@ -1,15 +1,15 @@
 import {Injectable, Injector, Type} from '@angular/core';
-import {ConstructorFunction} from '../common/common';
-import {NgxFormGroup} from '../model/ngx-form-group.model';
-import {DISABLE_ON_METADATA_KEY, DisableOnContext} from '../decorator/disable-on.decorator';
+import {ConstructorFunction, Handler} from '../../common/common';
+import {NgxFormGroup} from '../../model/ngx-form-group.model';
+import {DISABLE_ON_METADATA_KEY, DisableOnContext} from '../../decorator/disable-on.decorator';
 import {Observable} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
-import {findAllPropertyFormContexts, findPropertyFormContexts, FormContextCommon} from '../common/decorator.common';
+import {findAllPropertyFormContexts, findPropertyFormContexts, FormContextCommon} from '../../common/decorator.common';
 import {AbstractControl} from '@angular/forms';
-import {FORM_GROUP_SUFFIX_METADATA_KEY, FormGroupContext} from '../decorator/form-group.decorator';
+import {FORM_GROUP_SUFFIX_METADATA_KEY, FormGroupContext} from '../../decorator/form-group.decorator';
 
 @Injectable()
-export class DisableOnHandler {
+export class DisableOnHandler implements Handler {
 
   public constructor(private readonly injector: Injector) {
   }
