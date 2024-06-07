@@ -15,9 +15,13 @@ module.exports = function (config) {
     client: {
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
-    coverageIstanbulReporter: {
+    coverageReporter: {
       dir: require('path').join(__dirname, '../../coverage/ngx-form'),
-      reports: ['html', 'lcovonly', 'json'],
+      reporters: [
+        {type: 'html', subdir: 'html'},
+        {type: 'lcovonly', subdir: '.', file: 'lcov.info'},
+        {type: 'json', subdir: '.', file: 'coverage.json'}
+      ],
       fixWebpackSourcePaths: true
     },
     reporters: ['progress', 'kjhtml', 'coverage'],
