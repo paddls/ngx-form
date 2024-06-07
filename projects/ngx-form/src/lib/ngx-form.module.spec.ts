@@ -1,10 +1,10 @@
-import {async, TestBed} from '@angular/core/testing';
+import {TestBed, waitForAsync} from '@angular/core/testing';
 import {NgxFormModule} from './ngx-form.module';
 import {Injector} from '@angular/core';
 
 describe('NgxFormModule', () => {
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         NgxFormModule,

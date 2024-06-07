@@ -1,7 +1,10 @@
 {
   "extends": "../../.eslintrc.json",
   "ignorePatterns": [
-    "!**/*"
+    "!**/*",
+    "tsconfig.app.json",
+    "*.spec.ts",
+    "test.ts"
   ],
   "overrides": [
     {

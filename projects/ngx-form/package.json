@@ -1,10 +1,10 @@
 {
   "name": "@paddls/ngx-form",
-  "version": "7.0.0",
+  "version": "8.0.0",
   "peerDependencies": {
-    "@angular/common": ">= 17.0.0",
-    "@angular/core": ">= 17.0.0",
-    "reflect-metadata": "^0.1.13"
+    "@angular/common": ">= 18.0.0",
+    "@angular/core": ">= 18.0.0",
+    "reflect-metadata": "^0.2.2"
   },
   "dependencies": {
     "lodash.set": "^4.3.2",
