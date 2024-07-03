@@ -3,9 +3,9 @@ import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app/app.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import {NgxFormModule} from '@paddls/ngx-form';
 import {AddressFormComponent} from './address-form/address-form.component';
 import {CompanyFormComponent} from './company-form/company-form.component';
+import {provideNgxForm} from "@paddls/ngx-form";
 
 @NgModule({
   declarations: [
@@ -16,10 +16,11 @@ import {CompanyFormComponent} from './company-form/company-form.component';
   imports: [
     AppRoutingModule,
     BrowserModule,
-    ReactiveFormsModule,
-    NgxFormModule.forRoot()
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    provideNgxForm()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

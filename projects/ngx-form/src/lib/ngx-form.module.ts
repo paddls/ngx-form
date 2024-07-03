@@ -24,6 +24,7 @@ export function provideNgxForm(): Provider[] {
     OnValueChangesHandler
   ]
 }
+
 @NgModule()
 export class NgxFormModule {
 
@@ -37,6 +38,9 @@ export class NgxFormModule {
     return NgxFormModule.injector;
   }
 
+  /**
+   * @deprecated use provideNgxForm() instead
+   */
   public static forRoot(): ModuleWithProviders<NgxFormModule> {
     return {
       ngModule: NgxFormModule,
