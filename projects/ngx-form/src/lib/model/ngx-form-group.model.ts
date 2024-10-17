@@ -1,19 +1,18 @@
 import {AbstractControl, AbstractControlOptions, AsyncValidatorFn, FormGroup, ValidatorFn} from '@angular/forms';
-import {transformSmartValueToValue, transformValueToSmartValue} from '../common/common';
 import {NgxForm} from './interface/ngx-form';
 import {FormGroupContext} from '../decorator/form-group.decorator';
 import {NgxFormCollection} from './interface/ngx-form-collection';
 import {NgxFormControl} from './ngx-form-control.model';
+import {DataFormType, DataToFormType, transformSmartValueToValue, transformValueToSmartValue} from '../common/common';
 
 export const FORM_GROUP_INSTANCE_METADATA_KEY: string = 'ngx-form:form-group-instance';
 
-export class NgxFormGroup<V> extends FormGroup implements NgxFormCollection {
+export class NgxFormGroup<V> extends FormGroup<DataToFormType<V>> implements NgxFormCollection {
 
-  public readonly value: any;
   private lastValueSet: Partial<V>;
   private makeRestoration: boolean = false;
 
-  public constructor(controls: {[key: string]: AbstractControl;},
+  public constructor(controls: DataToFormType<V>,
                      validatorOrOpts?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null,
                      asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null) {
     super(controls, validatorOrOpts, asyncValidator);
@@ -27,7 +26,7 @@ export class NgxFormGroup<V> extends FormGroup implements NgxFormCollection {
     return transformValueToSmartValue(this, parent);
   }
 
-  public setValue(value: Partial<V>, options?: {onlySelf?: boolean; emitEvent?: boolean}): void {
+  public setValue(value: DataFormType<V>, options?: {onlySelf?: boolean; emitEvent?: boolean}): void {
     super.setValue(transformSmartValueToValue(value), options);
 
     if (this.makeRestoration) {
@@ -36,7 +35,7 @@ export class NgxFormGroup<V> extends FormGroup implements NgxFormCollection {
     this.lastValueSet = value;
   }
 
-  public patchValue(value: Partial<V>, options?: {onlySelf?: boolean; emitEvent?: boolean}): void {
+  public patchValue(value: DataFormType<V>, options?: {onlySelf?: boolean; emitEvent?: boolean}): void {
     super.patchValue(transformSmartValueToValue(value), options);
   }
 

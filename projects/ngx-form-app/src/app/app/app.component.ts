@@ -50,7 +50,6 @@ export class AppComponent {
   });
 
   public constructor() {
-    this.userForm.valueChanges
     console.log(this.userForm);
     console.log(this.signUpForm);
   }

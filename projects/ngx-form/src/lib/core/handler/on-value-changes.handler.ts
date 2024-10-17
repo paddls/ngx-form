@@ -28,7 +28,9 @@ export class OnValueChangesHandler implements Handler {
 
   private getValueChanges<T>(instance: NgxFormGroup<T>, keys: string | string[]): Observable<void> {
     if (!keys) {
-      return instance.valueChanges;
+      return instance.valueChanges.pipe(
+        map(() => void 0)
+      );
     } else {
       if (!Array.isArray(keys)) {
         keys = [keys];

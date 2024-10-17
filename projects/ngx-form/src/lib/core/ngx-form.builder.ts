@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {AbstractControlOptions, AsyncValidatorFn, UntypedFormBuilder, UntypedFormGroup, ValidatorFn} from '@angular/forms';
+import {AbstractControlOptions, AsyncValidatorFn, FormBuilder, FormControlOptions, FormControlState, FormGroup, ValidatorFn} from '@angular/forms';
 import {FORM_GROUP_INSTANCE_METADATA_KEY, NgxFormGroup} from '../model/ngx-form-group.model';
 import {FORM_CONTROL_INSTANCE_METADATA_KEY, NgxFormControl} from '../model/ngx-form-control.model';
 import {FORM_ARRAY_INSTANCE_METADATA_KEY, NgxFormArray} from '../model/ngx-form-array.model';
@@ -10,31 +10,31 @@ import {UPDATE_ON_METADATA_KEY} from '../decorator/update-on.decorator';
 import {FORM_ARRAY_SUFFIX_METADATA_KEY, FormArrayContext} from '../decorator/form-array.decorator';
 import {VALIDATORS_METADATA_KEY} from '../decorator/validator.decorator';
 import {ASYNC_VALIDATORS_METADATA_KEY} from '../decorator/async-validator.decorator';
-import {ConstructorFunction} from '../common/common';
+import {ConstructorFunction, DataToFormType} from '../common/common';
 import {AsyncValidatorResolver} from './async-validator.resolver';
 import {ValidatorResolver} from './validator.resolver';
 
 @Injectable()
-export class NgxFormBuilder extends UntypedFormBuilder {
+export class NgxFormBuilder extends FormBuilder {
 
   public constructor(private readonly validatorResolver: ValidatorResolver,
                      private readonly asyncValidatorResolver: AsyncValidatorResolver) {
     super();
   }
 
-  public group<V>(controlsConfig: {[key: string]: any;}, options?: AbstractControlOptions | null): NgxFormGroup<V> {
-    const fg: UntypedFormGroup = super.group(controlsConfig, options);
+  public group<V extends {}>(controlsConfig: DataToFormType<V>, options?: AbstractControlOptions | null): any {
+    const fg: FormGroup<any> = super.group(controlsConfig, options);
 
-    return new NgxFormGroup<V>(fg.controls, {asyncValidators: fg.asyncValidator, updateOn: fg.updateOn, validators: fg.validator});
+    return new NgxFormGroup<V>(fg.controls as DataToFormType<any>, {asyncValidators: fg.asyncValidator, updateOn: fg.updateOn, validators: fg.validator});
   }
 
-  public control<V>(formState: V, options?: AbstractControlOptions | null): NgxFormControl<V> {
-    return new NgxFormControl(formState, options);
+  public control<V>(formState: V | FormControlState<V>, validatorOrOpts?: ValidatorFn | ValidatorFn[] | FormControlOptions & { nonNullable?: boolean; } | null, asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null): NgxFormControl<V | null> {
+    return new NgxFormControl(formState, validatorOrOpts, asyncValidator);
   }
 
-  public array<V>(controlsConfig: any[],
+  public array<V>(controlsConfig: any,
                   validatorOrOpts?: ValidatorFn | ValidatorFn[] | AbstractControlOptions | null,
-                  asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null): NgxFormArray<V> {
+                  asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null): any {
     return new NgxFormArray(this, controlsConfig, validatorOrOpts, asyncValidator);
   }
 
@@ -45,7 +45,7 @@ export class NgxFormBuilder extends UntypedFormBuilder {
       updateOn: Reflect.getMetadata(UPDATE_ON_METADATA_KEY, rootGroupContext.type())
     };
 
-    const form: NgxFormGroup<V> = this.group(
+    const form: NgxFormGroup<V> = this.group<any>(
       {},
       options || rootContextOptions
     );
