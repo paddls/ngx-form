@@ -1,20 +1,34 @@
 import 'reflect-metadata';
 
-import {Injector, ModuleWithProviders, NgModule} from '@angular/core';
+import {APP_INITIALIZER, Injector, ModuleWithProviders, NgModule, Provider} from '@angular/core';
 import {NgxFormBuilder} from './core/ngx-form.builder';
 import {AsyncValidatorResolver} from './core/async-validator.resolver';
 import {DisableOnHandler} from './core/handler/disable-on.handler';
 import {ValidatorResolver} from './core/validator.resolver';
 import {OnValueChangesHandler} from './core/handler/on-value-changes.handler';
 
+export function provideNgxForm(): Provider[] {
+  return [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (injector: Injector) => (): void => {
+        NgxFormModule.injector = injector;
+      },
+      multi: true,
+      deps: [Injector]
+    },
+    NgxFormBuilder,
+    ValidatorResolver,
+    AsyncValidatorResolver,
+    DisableOnHandler,
+    OnValueChangesHandler
+  ]
+}
+
 @NgModule()
 export class NgxFormModule {
 
-  private static injector: Injector = null;
-
-  public constructor(injector: Injector) {
-    NgxFormModule.injector = injector;
-  }
+  public static injector: Injector = null;
 
   public static getNgxFormBuilder(): NgxFormBuilder {
     return NgxFormModule.injector.get(NgxFormBuilder);
@@ -24,16 +38,13 @@ export class NgxFormModule {
     return NgxFormModule.injector;
   }
 
+  /**
+   * @deprecated use provideNgxForm() instead
+   */
   public static forRoot(): ModuleWithProviders<NgxFormModule> {
     return {
       ngModule: NgxFormModule,
-      providers: [
-        NgxFormBuilder,
-        ValidatorResolver,
-        AsyncValidatorResolver,
-        DisableOnHandler,
-        OnValueChangesHandler
-      ]
+      providers: provideNgxForm()
     };
   }
 }
