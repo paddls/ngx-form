@@ -6,6 +6,7 @@ import {NgxFormArray} from '../model/ngx-form-array.model';
 import {FORM_GROUP_INSTANCE_METADATA_KEY, NgxFormGroup} from '../model/ngx-form-group.model';
 import set from 'lodash.set';
 import {Observable} from 'rxjs';
+import {NgxFormControl} from '../model/ngx-form-control.model';
 
 export interface Handler {
 
@@ -34,16 +35,16 @@ export function transformValueToSmartValue<V>(formGroup: NgxFormGroup<V>, parent
     }
 
     if (formArrayContext.type) {
-      value[key] = (formGroup.get(formArrayContext.name) as NgxFormArray<any>)?.controls.map((item: NgxFormGroup<V>, index: number) => item.getValue(parent + index));
+      value[key] = (formGroup.get(formArrayContext.name) as unknown as NgxFormArray<V>)?.controls.map((item: any, index: number) => (item as NgxFormGroup<V>).getValue(parent + index));
     } else {
-      value[key] = (formGroup.get(formArrayContext.name) as NgxFormArray<any>)?.controls.map((item: NgxFormGroup<V>, index: number) => item.value);
+      value[key] = (formGroup.get(formArrayContext.name) as unknown as NgxFormArray<V>)?.controls.map((item: any) => (item as NgxFormControl<V>).value);
     }
   });
 
   const groupContexts: { [key: string]: FormContextCommon<V> } = findPropertyFormContexts(formGroupContext.type().prototype, FORM_GROUP_SUFFIX_METADATA_KEY);
   Object.keys(groupContexts).forEach((key: string) => {
     const groupContext: FormGroupContext<V> = groupContexts[key] as FormGroupContext<V>;
-    set(value, key, (formGroup.get(groupContext.name) as NgxFormGroup<any>)?.getValue(parent + key))
+    set(value, key, (formGroup.get(groupContext.name) as unknown as NgxFormArray<V>)?.getValue(parent + key))
   });
 
   return value;
@@ -81,3 +82,26 @@ export function transformSmartValueToValue<V>(value: V): any {
 
   return obj;
 }
+
+type Primitive =
+  | null
+  | undefined
+  | string
+  | number
+  | boolean
+  | symbol
+  | bigint;
+
+type Arrayable<T> = T[];
+
+type IterableElement<TargetIterable> =
+  TargetIterable extends Iterable<infer ElementType> ?
+    ElementType :
+    TargetIterable extends AsyncIterable<infer ElementType> ?
+      ElementType :
+      never;
+
+export type DataToFormType<V, K extends keyof V = keyof V> = {
+  [key in K]: V[key] extends Primitive ?  NgxFormControl<V[key]> : V[key] extends Arrayable<IterableElement<V[key]>> ? NgxFormArray<IterableElement<V[key]>> : NgxFormGroup<V[key]>
+};
+export type DataFormType<V> = Partial<V> & {[key: string]: any};

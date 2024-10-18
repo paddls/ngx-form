@@ -25,7 +25,7 @@ export class DisableOnHandler implements Handler {
 
     const children: {[key: string]: FormGroupContext<T>} = findPropertyFormContexts(type().prototype, FORM_GROUP_SUFFIX_METADATA_KEY) as {[key: string]: FormGroupContext<T>};
 
-    Object.keys(children).forEach((key: string) => this.handle(children[key].type, instance.get(children[key].name) as NgxFormGroup<any>, unsubscribeOn));
+    Object.keys(children).forEach((key: string) => this.handle(children[key].type, instance.get(children[key].name) as unknown as NgxFormGroup<any>, unsubscribeOn));
 
     const disableOnContexts: DisableOnContext[] = [
       ...(Reflect.getMetadata(DISABLE_ON_METADATA_KEY, type().prototype) || []),

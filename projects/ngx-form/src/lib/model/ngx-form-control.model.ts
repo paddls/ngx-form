@@ -4,9 +4,8 @@ import {FormContextCommon} from '../common/decorator.common';
 
 export const FORM_CONTROL_INSTANCE_METADATA_KEY: string = 'ngx-form:form-control-instance';
 
-export class NgxFormControl<V> extends FormControl implements NgxForm {
+export class NgxFormControl<V> extends FormControl<V> implements NgxForm {
 
-  public readonly value: any;
   private lastValueSet: V;
   private makeRestoration: boolean = false;
   private makePatch: boolean = false;
@@ -15,9 +14,7 @@ export class NgxFormControl<V> extends FormControl implements NgxForm {
     super(formState, validatorOrOpts, asyncValidator);
   }
 
-  public getValue(): V {
-    return this.value;
-  }
+  public readonly value: V;
 
   public setValue(value: V, options?: {onlySelf?: boolean; emitEvent?: boolean; emitModelToViewChange?: boolean; emitViewToModelChange?: boolean}): void {
     super.setValue(value, options);
@@ -25,6 +22,7 @@ export class NgxFormControl<V> extends FormControl implements NgxForm {
     if (this.makeRestoration) {
       this.makeRestoration = false;
     }
+
     if (!this.makePatch) {
       this.lastValueSet = value;
     }

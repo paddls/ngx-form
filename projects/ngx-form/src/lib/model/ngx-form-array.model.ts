@@ -8,7 +8,7 @@ import {NgxFormGroup} from './ngx-form-group.model';
 
 export const FORM_ARRAY_INSTANCE_METADATA_KEY: string = 'ngx-form:form-array-instance';
 
-export class NgxFormArray<V> extends FormArray implements NgxFormCollection {
+export class NgxFormArray<V> extends FormArray<AbstractControl<V>> implements NgxFormCollection {
 
   private lastValuesSet: V[];
 
@@ -88,8 +88,8 @@ export class NgxFormArray<V> extends FormArray implements NgxFormCollection {
     this.markAsDirty({onlySelf: true});
 
     this.controls
-      .filter((value: AbstractControl) => value instanceof NgxFormControl)
-      .forEach((control: NgxFormControl<any>) => control.markAsDirty());
+      .filter((value: AbstractControl<any>) => value instanceof NgxFormControl)
+      .forEach((control: any) => control.markAsDirty());
 
     this.controls
       .filter((value: AbstractControl) => !(value instanceof NgxFormControl))
@@ -100,8 +100,8 @@ export class NgxFormArray<V> extends FormArray implements NgxFormCollection {
     this.markAsPending({onlySelf: true});
 
     this.controls
-      .filter((value: AbstractControl) => value instanceof NgxFormControl)
-      .forEach((control: NgxFormControl<any>) => control.markAsPending());
+      .filter((value: AbstractControl<any>) => value instanceof NgxFormControl)
+      .forEach((control: any) => control.markAsPending());
 
     this.controls
       .filter((value: AbstractControl) => !(value instanceof NgxFormControl))
@@ -113,7 +113,7 @@ export class NgxFormArray<V> extends FormArray implements NgxFormCollection {
 
     this.controls
       .filter((value: AbstractControl) => value instanceof NgxFormControl)
-      .forEach((control: NgxFormControl<any>) => control.markAsPristine());
+      .forEach((control: any) => control.markAsPristine());
 
     this.controls
       .filter((value: AbstractControl) => !(value instanceof NgxFormControl))
@@ -124,8 +124,8 @@ export class NgxFormArray<V> extends FormArray implements NgxFormCollection {
     this.markAsUntouched({onlySelf: true});
 
     this.controls
-      .filter((value: AbstractControl) => value instanceof NgxFormControl)
-      .forEach((control: NgxFormControl<any>) => control.markAsUntouched());
+      .filter((value: AbstractControl<any>) => value instanceof NgxFormControl)
+      .forEach((control: any) => control.markAsUntouched());
 
     this.controls
       .filter((value: AbstractControl) => !(value instanceof NgxFormControl))
