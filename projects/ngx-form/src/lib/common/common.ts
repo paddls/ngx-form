@@ -90,7 +90,8 @@ type Primitive =
   | number
   | boolean
   | symbol
-  | bigint;
+  | bigint
+  | Date;
 
 type Arrayable<T> = T[];
 
