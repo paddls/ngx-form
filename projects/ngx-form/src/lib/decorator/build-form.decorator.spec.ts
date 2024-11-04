@@ -2,7 +2,7 @@ import {FormControl} from './form-control.decorator';
 import {NgxFormGroup} from '../model/ngx-form-group.model';
 import {BuildForm} from './build-form.decorator';
 import {NgxFormBuilder} from '../core/ngx-form.builder';
-import {NgxFormModule} from '../ngx-form.module';
+import {provideNgxForm} from '../ngx-form.module';
 import {TestBed} from '@angular/core/testing';
 import {EMPTY, Observable, of} from 'rxjs';
 import {DisableOn} from './disable-on.decorator';
@@ -123,10 +123,8 @@ describe('BuildFormDecorator', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        NgxFormModule.forRoot()
-      ],
       providers: [
+        provideNgxForm(),
         MyProvider
       ]
     });
