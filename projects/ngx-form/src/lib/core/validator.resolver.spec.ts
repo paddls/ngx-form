@@ -1,5 +1,5 @@
 import {TestBed} from '@angular/core/testing';
-import {NgxFormModule} from '../ngx-form.module';
+import {provideNgxForm} from '../ngx-form.module';
 import {ValidatorResolver} from './validator.resolver';
 import {Injectable} from '@angular/core';
 import {FormControl, ValidatorFn, Validators} from '@angular/forms';
@@ -18,10 +18,8 @@ describe('ValidatorResolver', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        NgxFormModule.forRoot()
-      ],
       providers: [
+        provideNgxForm(),
         ValidatorResolver,
         MyProvider
       ]

@@ -2,7 +2,7 @@ import {FormControl} from './form-control.decorator';
 import {NgxFormGroup} from '../model/ngx-form-group.model';
 import {BuildForm} from './build-form.decorator';
 import {NgxFormBuilder} from '../core/ngx-form.builder';
-import {NgxFormModule} from '../ngx-form.module';
+import {provideNgxForm} from '../ngx-form.module';
 import {FormArray} from './form-array.decorator';
 import {FormChild} from './form-child.decorator';
 import {NgxFormArray} from '../model/ngx-form-array.model';
@@ -37,8 +37,8 @@ describe('FormChildDecorator', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        NgxFormModule.forRoot()
+      providers: [
+        provideNgxForm(),
       ]
     });
 

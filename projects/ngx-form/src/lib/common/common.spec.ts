@@ -5,7 +5,7 @@ import {NgxFormGroup} from '../model/ngx-form-group.model';
 import {transformSmartValueToValue, transformValueToSmartValue} from './common';
 import {FormArray} from '../decorator/form-array.decorator';
 import {TestBed} from '@angular/core/testing';
-import {NgxFormModule} from '../ngx-form.module';
+import {provideNgxForm} from '../ngx-form.module';
 
 class UserForm {
 
@@ -30,8 +30,8 @@ describe('Common', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        NgxFormModule.forRoot()
+      providers: [
+        provideNgxForm(),
       ]
     })
 

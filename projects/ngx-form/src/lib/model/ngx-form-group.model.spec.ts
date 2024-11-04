@@ -5,7 +5,7 @@ import {NgxFormGroup} from './ngx-form-group.model';
 import {FormArray} from '../decorator/form-array.decorator';
 import clone from 'lodash.clone';
 import {TestBed} from '@angular/core/testing';
-import {NgxFormModule} from '../ngx-form.module';
+import {provideNgxForm} from '../ngx-form.module';
 
 class AddressForm {
 
@@ -49,8 +49,8 @@ describe('NgxFormGroup', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        NgxFormModule.forRoot()
+      providers: [
+        provideNgxForm(),
       ]
     })
 

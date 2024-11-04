@@ -1,5 +1,5 @@
 import {TestBed} from '@angular/core/testing';
-import {NgxFormModule} from '../ngx-form.module';
+import {provideNgxForm} from '../ngx-form.module';
 import {Injectable} from '@angular/core';
 import {AsyncValidatorFn, FormControl, ValidationErrors} from '@angular/forms';
 import {Observable, of} from 'rxjs';
@@ -26,10 +26,8 @@ describe('AsyncValidatorResolver', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        NgxFormModule.forRoot()
-      ],
       providers: [
+        provideNgxForm(),
         AsyncValidatorResolver,
         MyProvider
       ]

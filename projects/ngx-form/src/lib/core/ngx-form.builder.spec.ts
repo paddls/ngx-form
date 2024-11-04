@@ -8,7 +8,7 @@ import {Validator} from '../decorator/validator.decorator';
 import {Validators} from '@angular/forms';
 import clone from 'lodash.clone';
 import {TestBed} from '@angular/core/testing';
-import {NgxFormModule} from '../ngx-form.module';
+import {provideNgxForm} from '../ngx-form.module';
 import {AsyncValidator} from '../decorator/async-validator.decorator';
 import {AsyncValidatorFactory} from '../factory/async-validator.factory';
 import {Observable, of} from 'rxjs';
@@ -109,12 +109,10 @@ describe('NgxFormBuilder', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        NgxFormModule.forRoot()
-      ],
       providers: [
+        provideNgxForm(),
         MyService
-      ]
+      ],
     });
 
     builder = TestBed.inject(NgxFormBuilder);

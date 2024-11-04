@@ -5,7 +5,7 @@ import {NgxFormBuilder} from '../core/ngx-form.builder';
 import {NgxFormGroup} from './ngx-form-group.model';
 import {NgxFormArray} from './ngx-form-array.model';
 import {TestBed} from '@angular/core/testing';
-import {NgxFormModule} from '../ngx-form.module';
+import {provideNgxForm} from '../ngx-form.module';
 
 class CompanyForm {
 
@@ -44,8 +44,8 @@ describe('NgxFormArray', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        NgxFormModule.forRoot()
+      providers: [
+        provideNgxForm(),
       ]
     })
 

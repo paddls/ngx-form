@@ -7,7 +7,7 @@ import {NgxFormBuilder} from '../core/ngx-form.builder';
 import {NgxFormGroup} from './ngx-form-group.model';
 import {NgxFormControl} from './ngx-form-control.model';
 import {TestBed} from '@angular/core/testing';
-import {NgxFormModule} from '../ngx-form.module';
+import {provideNgxForm} from '../ngx-form.module';
 
 @UpdateOn('change')
 class UserForm {
@@ -35,8 +35,8 @@ describe('NgxFormControl', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        NgxFormModule.forRoot()
+      providers: [
+        provideNgxForm(),
       ]
     })
 
