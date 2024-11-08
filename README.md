@@ -211,7 +211,6 @@ properties are available. Just specify the properties directly in the context if
 ```typescript
 import {FormControl, FormGroup, UpdateOn, Validator, AsyncValidator} from '@paddls/ngx-form';
 import {AddressForm} from './address.form';
-import {clone} from 'lodash';
 import {Validators} from '@angular/forms';
 
 @UpdateOn('change')
@@ -229,7 +228,7 @@ export class UserForm {
   @Validator([Validators.required, Validators.min(0)])
   public age: number;
 
-  @FormGroup({type: () => AddressForm, defaultValue: clone(defaultAddress)})
+  @FormGroup({type: () => AddressForm, defaultValue: structuredClone(defaultAddress)})
   @UpdateOn('submit')
   public personalAddress: AddressForm;
 }

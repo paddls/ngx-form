@@ -3,7 +3,6 @@ import {FormGroup, FormGroupContext} from '../decorator/form-group.decorator';
 import {NgxFormBuilder} from '../core/ngx-form.builder';
 import {NgxFormGroup} from './ngx-form-group.model';
 import {FormArray} from '../decorator/form-array.decorator';
-import clone from 'lodash.clone';
 import {TestBed} from '@angular/core/testing';
 import {provideNgxForm} from '../ngx-form.module';
 
@@ -27,7 +26,7 @@ const defaultAddress: AddressForm = new AddressForm({
 
 class UserForm {
 
-  @FormGroup({type: () => AddressForm, defaultValue: clone(defaultAddress)})
+  @FormGroup({type: () => AddressForm, defaultValue: structuredClone(defaultAddress)})
   public address: AddressForm;
 
   @FormArray({defaultValue: 'Default skill'})

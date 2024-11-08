@@ -7,7 +7,6 @@
     "reflect-metadata": "^0.2.2"
   },
   "dependencies": {
-    "lodash.set": "^4.3.2",
     "tslib": "^2.0.0"
   },
   "repository": {
