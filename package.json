@@ -22,7 +22,6 @@
     "@angular/platform-browser": "^18.0.2",
     "@angular/platform-browser-dynamic": "^18.0.2",
     "@angular/router": "^18.0.2",
-    "lodash.set": "^4.3.2",
     "rxjs": "~7.5.3",
     "tslib": "^2.4.0",
     "zone.js": "~0.14.2"
@@ -49,7 +48,6 @@
     "karma-coverage": "~2.2.1",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "^2.1.0",
-    "lodash.clone": "^4.5.0",
     "ng-packagr": "^18.0.0",
     "protractor": "~7.0.0",
     "reflect-metadata": "^0.2.2",

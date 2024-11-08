@@ -6,7 +6,6 @@ import {FormGroup, FormGroupContext} from '../decorator/form-group.decorator';
 import {NgxFormGroup} from '../model/ngx-form-group.model';
 import {Validator} from '../decorator/validator.decorator';
 import {Validators} from '@angular/forms';
-import clone from 'lodash.clone';
 import {TestBed} from '@angular/core/testing';
 import {provideNgxForm} from '../ngx-form.module';
 import {AsyncValidator} from '../decorator/async-validator.decorator';
@@ -81,7 +80,7 @@ class UserForm {
   @FormArray(() => CompanyForm)
   public companies: CompanyForm[];
 
-  @FormGroup({type: () => AddressForm, defaultValue: clone(defaultAddress)})
+  @FormGroup({type: () => AddressForm, defaultValue: structuredClone(defaultAddress)})
   @UpdateOn('submit')
   public personalAddress: AddressForm;
 

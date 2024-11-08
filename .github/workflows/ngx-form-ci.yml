@@ -1,42 +1,135 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
 name: build
 
 on:
   push:
     branches: [ master ]
+  pull_request:
+    branches: [ '**' ]
 
 jobs:
-  build_and_test:
-
+  build:
+    name: Build NgxForm
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [ 18.19.1 ]
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+
       - name: Installation
         run: npm ci
+
       - name: Build NgxForm
         run: npm run build:ngx-form
         env:
           CI: true
-      - name: Linter
+
+      - name: Archive build artifact
+        uses: actions/upload-artifact@master
+        with:
+          name: ngx-form-build
+          path: ./dist/ngx-form
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 18.19.1 ]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Installation
+        run: npm ci
+
+      - name: Run Linter
         run: npm run lint
-      - name: Test
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 18.19.1 ]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Installation
+        run: npm ci
+
+      - name: Run Tests
         run: npm run test:ci
+
+      - name: Archive Coverage Artifact
+        uses: actions/upload-artifact@master
+        with:
+          name: ngx-form-coverage
+          path: ./coverage
+
+  coverall:
+    name: Coverall
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    strategy:
+      matrix:
+        node-version: [ 18.19.1 ]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Download Coverage Artifact
+        uses: actions/download-artifact@master
+        with:
+          name: ngx-form-coverage
+          path: ./coverage
+
       - name: Send coverage to Coverall
         uses: coverallsapp/github-action@v1.0.1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: ./coverage/ngx-form/lcov.info
+
+  deploy_paddls:
+    name: Deploy NgxForm @paddls
+    needs: [ build, lint, test ]
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 18.19.1 ]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Download Build Artifact
+        uses: actions/download-artifact@master
+        with:
+          name: ngx-form-build
+          path: ./dist/ngx-form
 
       - name: "Publish @paddls/ngx-form"
         uses: pascalgn/npm-publish-action@1.3.9
@@ -49,12 +142,33 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN_PADDLS }}
+
+  deploy_witty:
+    name: Deploy NgxForm @witty-services
+    needs: [ build, lint, test ]
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 18.19.1 ]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Download Build Artifact
+        uses: actions/download-artifact@master
+        with:
+          name: ngx-form-build
+          path: ./dist/ngx-form
+
       - name: "PrePublish @witty-services/ngx-form"
         uses: jossef/action-set-json-field@v1
         with:
           file: "./dist/ngx-form/package.json"
           field: name
           value: "@witty-services/ngx-form"
+
       - name: "Publish @witty-services/ngx-form"
         uses: pascalgn/npm-publish-action@1.3.9
         with:
