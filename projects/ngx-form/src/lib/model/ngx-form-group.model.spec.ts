@@ -26,7 +26,7 @@ const defaultAddress: AddressForm = new AddressForm({
 
 class UserForm {
 
-  @FormGroup({type: () => AddressForm, defaultValue: structuredClone(defaultAddress)})
+  @FormGroup({type: () => AddressForm, defaultValue: defaultAddress})
   public address: AddressForm;
 
   @FormArray({defaultValue: 'Default skill'})
