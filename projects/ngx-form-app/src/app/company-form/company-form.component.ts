@@ -5,7 +5,8 @@ import {CompanyForm} from '../form/company.form';
 
 @Component({
   selector: 'app-company-form',
-  templateUrl: './company-form.component.html'
+  templateUrl: './company-form.component.html',
+  standalone: false
 })
 export class CompanyFormComponent implements OnInit {
 

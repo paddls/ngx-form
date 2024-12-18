@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-import {APP_INITIALIZER, EnvironmentProviders, Injector, makeEnvironmentProviders, ModuleWithProviders, NgModule} from '@angular/core';
+import {EnvironmentProviders, inject, Injector, makeEnvironmentProviders, ModuleWithProviders, NgModule, provideAppInitializer} from '@angular/core';
 import {NgxFormBuilder} from './core/ngx-form.builder';
 import {AsyncValidatorResolver} from './core/async-validator.resolver';
 import {DisableOnHandler} from './core/handler/disable-on.handler';
@@ -9,14 +9,13 @@ import {OnValueChangesHandler} from './core/handler/on-value-changes.handler';
 
 export function provideNgxForm(): EnvironmentProviders {
   return makeEnvironmentProviders([
-    {
-      provide: APP_INITIALIZER,
-      useFactory: (injector: Injector) => (): void => {
+    provideAppInitializer(() => {
+      const initializerFn = ((injector: Injector) => (): void => {
         NgxFormModule.injector = injector;
-      },
-      multi: true,
-      deps: [Injector]
-    },
+      })(inject(Injector));
+
+      return initializerFn();
+    }),
     NgxFormBuilder,
     ValidatorResolver,
     AsyncValidatorResolver,

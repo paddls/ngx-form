@@ -5,7 +5,7 @@ import {AppComponent} from './app/app.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {AddressFormComponent} from './address-form/address-form.component';
 import {CompanyFormComponent} from './company-form/company-form.component';
-import {provideNgxForm} from "@paddls/ngx-form";
+import {provideNgxForm} from '@paddls/ngx-form';
 
 @NgModule({
   declarations: [

@@ -5,7 +5,8 @@ import {NgxFormGroup} from '@paddls/ngx-form';
 
 @Component({
   selector: 'app-address-form',
-  templateUrl: './address-form.component.html'
+  templateUrl: './address-form.component.html',
+  standalone: false
 })
 export class AddressFormComponent implements OnInit {
 
