@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {ControlContainer, ReactiveFormsModule} from '@angular/forms';
 import {NgxFormGroup} from '@paddls/ngx-form';
 import {CompanyForm} from '../form/company.form';
@@ -14,10 +14,9 @@ import {AddressFormComponent} from '../address-form/address-form.component';
 })
 export class CompanyFormComponent implements OnInit {
 
-  public companyForm: NgxFormGroup<CompanyForm>;
+  private readonly controlContainer: ControlContainer = inject(ControlContainer);
 
-  public constructor(private readonly controlContainer: ControlContainer) {
-  }
+  public companyForm: NgxFormGroup<CompanyForm>;
 
   public ngOnInit(): void {
     this.companyForm = this.controlContainer.control as NgxFormGroup<CompanyForm>;

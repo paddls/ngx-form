@@ -1,4 +1,4 @@
-import {Injectable, Injector, Type} from '@angular/core';
+import {inject, Injectable, Injector, Type} from '@angular/core';
 import {ConstructorFunction, Handler} from '../../common/common';
 import {NgxFormGroup} from '../../model/ngx-form-group.model';
 import {DISABLE_ON_METADATA_KEY, DisableOnContext} from '../../decorator/disable-on.decorator';
@@ -11,8 +11,7 @@ import {FORM_GROUP_SUFFIX_METADATA_KEY, FormGroupContext} from '../../decorator/
 @Injectable()
 export class DisableOnHandler implements Handler {
 
-  public constructor(private readonly injector: Injector) {
-  }
+  private readonly injector: Injector = inject(Injector);
 
   public handle<T>(type: () => ConstructorFunction<T>, instance: NgxFormGroup<T>, unsubscribeOn: Observable<any>): void {
     if (!Reflect.hasMetadata(DISABLE_ON_METADATA_KEY, type().prototype) && !Reflect.hasMetadata(DISABLE_ON_METADATA_KEY, type())) {
