@@ -50,6 +50,7 @@ npm install --save @paddls/ngx-form
 
 | `Angular`          | `NgxForm`         |
 |--------------------|-------------------|
+| `19.0.0` and above | `9.0.0` and above |
 | `18.0.0` and above | `8.0.0` and above |
 | `17.0.0` and above | `7.0.0` and above |
 | `16.0.0` and above | `6.0.0` and above |
@@ -62,8 +63,8 @@ npm install --save @paddls/ngx-form
 After that, import `NgxFormModule` as follows :
 
 ```typescript
-import {ReactiveFormsModule} from '@angular/forms';
-import {NgxFormModule} from '@paddls/ngx-form';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgxFormModule } from '@paddls/ngx-form';
 
 @NgModule({
   imports: [
@@ -85,7 +86,7 @@ will represent the form.
 A form model should look like this :
 
 ```typescript
-import {FormControl} from '@paddls/ngx-form';
+import { FormControl } from '@paddls/ngx-form';
 
 export class AddressForm {
 
@@ -125,9 +126,9 @@ Once you've created the model, you can build the form wherever you like through 
 the ``@BuildForm()`` decorator.
 
 ```typescript
-import {Component} from '@angular/core';
-import {BuildForm, NgxFormGroup} from '@paddls/ngx-form';
-import {AddressForm} from './form/address.form';
+import { Component } from '@angular/core';
+import { BuildForm, NgxFormGroup } from '@paddls/ngx-form';
+import { AddressForm } from './form/address.form';
 
 @Component({
   selector: 'app-root',
@@ -150,8 +151,8 @@ strongly typed. To retrieve the strongly typed result, just call ``form.getValue
 ## FormGroup
 
 ```typescript
-import {FormControl, FormGroup} from '@paddls/ngx-form';
-import {AddressForm} from './address.form';
+import { FormControl, FormGroup } from '@paddls/ngx-form';
+import { AddressForm } from './address.form';
 
 export class UserForm {
 
@@ -178,8 +179,8 @@ specify the type in the context directly like in the example above.
 ## FormArray
 
 ```typescript
-import {FormControl, FormArray} from '@paddls/ngx-form';
-import {CompanyForm} from './company.form';
+import { FormArray, FormControl } from '@paddls/ngx-form';
+import { CompanyForm } from './company.form';
 
 export class UserForm {
 
@@ -209,9 +210,9 @@ properties are available. Just specify the properties directly in the context if
 ## Validator, AsyncValidator and UpdateOn
 
 ```typescript
-import {FormControl, FormGroup, UpdateOn, Validator, AsyncValidator} from '@paddls/ngx-form';
-import {AddressForm} from './address.form';
-import {Validators} from '@angular/forms';
+import { AsyncValidator, FormControl, FormGroup, UpdateOn, Validator } from '@paddls/ngx-form';
+import { AddressForm } from './address.form';
+import { Validators } from '@angular/forms';
 
 @UpdateOn('change')
 export class UserForm {
@@ -282,10 +283,10 @@ class Form {
 ## FormChild
 
 ```typescript
-import {Component} from '@angular/core';
-import {BuildForm, FormChild, NgxFormArray, NgxFormGroup} from '@paddls/ngx-form';
-import {UserForm} from '../form/user.form';
-import {CompanyForm} from '../form/company.form';
+import { Component } from '@angular/core';
+import { BuildForm, FormChild, NgxFormArray, NgxFormGroup } from '@paddls/ngx-form';
+import { UserForm } from '../form/user.form';
+import { CompanyForm } from '../form/company.form';
 
 @Component({
   selector: 'app-root',
@@ -319,9 +320,9 @@ A `NgxForm` object exposes the following methods :
 Returns the current strongly typed value of the form.
 
 ```typescript
-import {Component} from '@angular/core';
-import {BuildForm, NgxFormGroup} from '@paddls/ngx-form';
-import {AddressForm} from './form/address.form';
+import { Component } from '@angular/core';
+import { BuildForm, NgxFormGroup } from '@paddls/ngx-form';
+import { AddressForm } from './form/address.form';
 
 @Component({
   selector: 'app-root',
@@ -343,9 +344,9 @@ export class AppComponent {
 Sets a new value on the form. The behaviour of this method is similar to classic reactive forms.
 
 ```typescript
-import {Component} from '@angular/core';
-import {BuildForm, NgxFormGroup} from '@paddls/ngx-form';
-import {AddressForm} from './form/address.form';
+import { Component } from '@angular/core';
+import { BuildForm, NgxFormGroup } from '@paddls/ngx-form';
+import { AddressForm } from './form/address.form';
 
 @Component({
   selector: 'app-root',
@@ -367,9 +368,9 @@ export class AppComponent {
 Patches a new value on the form. The behaviour of this method is similar to classic reactive forms.
 
 ```typescript
-import {Component} from '@angular/core';
-import {BuildForm, NgxFormGroup} from '@paddls/ngx-form';
-import {AddressForm} from './form/address.form';
+import { Component } from '@angular/core';
+import { BuildForm, NgxFormGroup } from '@paddls/ngx-form';
+import { AddressForm } from './form/address.form';
 
 @Component({
   selector: 'app-root',
@@ -392,9 +393,9 @@ Restores the form value to the initial value. Each control initial value is defi
 available in the ``@FormControl()``, ``@FormGroup()`` and ``@FormArray()`` decorators.
 
 ```typescript
-import {Component} from '@angular/core';
-import {BuildForm, NgxFormGroup} from '@paddls/ngx-form';
-import {AddressForm} from './form/address.form';
+import { Component } from '@angular/core';
+import { BuildForm, NgxFormGroup } from '@paddls/ngx-form';
+import { AddressForm } from './form/address.form';
 
 @Component({
   selector: 'app-root',
@@ -417,9 +418,9 @@ Empties all values of the form. This calls ``reset()`` method on each form contr
 arrays.
 
 ```typescript
-import {Component} from '@angular/core';
-import {BuildForm, NgxFormGroup} from '@paddls/ngx-form';
-import {AddressForm} from './form/address.form';
+import { Component } from '@angular/core';
+import { BuildForm, NgxFormGroup } from '@paddls/ngx-form';
+import { AddressForm } from './form/address.form';
 
 @Component({
   selector: 'app-root',
@@ -441,9 +442,9 @@ export class AppComponent {
 Cancels the last ``setValue()`` applied on the form.
 
 ```typescript
-import {Component} from '@angular/core';
-import {BuildForm, NgxFormGroup} from '@paddls/ngx-form';
-import {AddressForm} from './form/address.form';
+import { Component } from '@angular/core';
+import { BuildForm, NgxFormGroup } from '@paddls/ngx-form';
+import { AddressForm } from './form/address.form';
 
 @Component({
   selector: 'app-root',
