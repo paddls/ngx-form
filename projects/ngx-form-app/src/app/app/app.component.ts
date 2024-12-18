@@ -6,7 +6,7 @@ import {AddressForm} from '../form/address.form';
 import {SignupForm} from '../form/signup.form';
 import {ReactiveFormsModule} from '@angular/forms';
 import {AddressFormComponent} from '../address-form/address-form.component';
-import {NgFor} from '@angular/common';
+
 import {CompanyFormComponent} from '../company-form/company-form.component';
 
 @Component({
@@ -14,7 +14,6 @@ import {CompanyFormComponent} from '../company-form/company-form.component';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   imports: [
-    NgFor,
     ReactiveFormsModule,
     AddressFormComponent,
     CompanyFormComponent

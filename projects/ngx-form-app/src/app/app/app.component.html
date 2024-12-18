@@ -23,17 +23,24 @@
 
   <h2>Skills :</h2>
   <ul>
-    <li formArrayName="skills" *ngFor="let control of skillForms.controls; index as i">
-      <input type="text" id="skills-{{ i }}" name="skills-{{ i }}" [formControlName]="i" />
-    </li>
+    @for (control of skillForms.controls; track control; let i = $index) {
+      <li formArrayName="skills">
+        <input type="text"
+               id="skills-{{ i }}"
+               name="skills-{{ i }}"
+               [formControlName]="i"/>
+      </li>
+    }
   </ul>
 
   <button type="button" (click)="onAddSkill()">Add Skill</button>
 
   <h2>Companies :</h2>
-  <ng-container formArrayName="companies" *ngFor="let control of companyForms.controls; index as i">
-    <app-company-form [formGroupName]="i"></app-company-form>
-  </ng-container>
+  @for (control of companyForms.controls; track control; let i = $index) {
+    <ng-container formArrayName="companies">
+      <app-company-form [formGroupName]="i"></app-company-form>
+    </ng-container>
+  }
 
   <button type="button" (click)="onAddCompany()">Add company</button>
 
