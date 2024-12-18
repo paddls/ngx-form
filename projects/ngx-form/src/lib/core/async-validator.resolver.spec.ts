@@ -1,11 +1,11 @@
-import {TestBed} from '@angular/core/testing';
-import {provideNgxForm} from '../ngx-form.module';
-import {Injectable} from '@angular/core';
-import {AsyncValidatorFn, FormControl, ValidationErrors} from '@angular/forms';
-import {Observable, of} from 'rxjs';
-import {AsyncValidatorResolver} from './async-validator.resolver';
-import {delay, map} from 'rxjs/operators';
-import {AsyncValidatorFactory, AsyncValidatorFactoryWithProviders} from '../factory/async-validator.factory';
+import { TestBed } from '@angular/core/testing';
+import { provideNgxForm } from '../ngx-form.module';
+import { Injectable } from '@angular/core';
+import { AsyncValidatorFn, FormControl, ValidationErrors } from '@angular/forms';
+import { Observable, of } from 'rxjs';
+import { AsyncValidatorResolver } from './async-validator.resolver';
+import { delay, map } from 'rxjs/operators';
+import { AsyncValidatorFactory, AsyncValidatorFactoryWithProviders } from '../factory/async-validator.factory';
 
 const myAsyncValidator: AsyncValidatorFn = () =>
   of(void 0).pipe(

@@ -1,6 +1,6 @@
-import {TestBed, waitForAsync} from '@angular/core/testing';
-import {NgxFormModule} from './ngx-form.module';
-import {Injector} from '@angular/core';
+import { TestBed, waitForAsync } from '@angular/core/testing';
+import { NgxFormModule } from './ngx-form.module';
+import { Injector } from '@angular/core';
 
 describe('NgxFormModule', () => {
 

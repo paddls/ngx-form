@@ -1,5 +1,5 @@
-import {Observable} from 'rxjs';
-import {Type} from '@angular/core';
+import { Observable } from 'rxjs';
+import { Type } from '@angular/core';
 
 export const DISABLE_ON_METADATA_KEY: string = 'ngx-form:disable-on';
 

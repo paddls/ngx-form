@@ -1,7 +1,7 @@
-import {NgxFormGroup} from '../model/ngx-form-group.model';
-import {AbstractControl} from '@angular/forms';
-import {NgxFormControl} from '../model/ngx-form-control.model';
-import {NgxFormArray} from '../model/ngx-form-array.model';
+import { NgxFormGroup } from '../model/ngx-form-group.model';
+import { AbstractControl } from '@angular/forms';
+import { NgxFormControl } from '../model/ngx-form-control.model';
+import { NgxFormArray } from '../model/ngx-form-array.model';
 
 export const FORM_CHILD_METADATA_KEY: string = 'ngx-form:form-children';
 
@@ -17,8 +17,8 @@ export function FormChild<V>(context: FormChildContext): any {
     Reflect.defineMetadata(FORM_CHILD_METADATA_KEY, context, target, propertyKey);
 
     Object.defineProperty(target.constructor.prototype, propertyKey, {
-      get(): NgxFormGroup<V>|NgxFormControl<V>|NgxFormArray<V> {
-        return (this[context.attribute] as AbstractControl).get(context.path) as NgxFormGroup<V>|NgxFormControl<V>|NgxFormArray<V>;
+      get(): NgxFormGroup<V> | NgxFormControl<V> | NgxFormArray<V> {
+        return (this[context.attribute] as AbstractControl).get(context.path) as NgxFormGroup<V> | NgxFormControl<V> | NgxFormArray<V>;
       },
       set: () => void 0,
       enumerable: true,

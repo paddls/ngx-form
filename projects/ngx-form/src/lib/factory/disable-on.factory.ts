@@ -1,5 +1,5 @@
-import {Type} from '@angular/core';
-import {DisableOnConfigFactoryFn, DisableOnConfigWithProviders} from '../decorator/disable-on.decorator';
+import { Type } from '@angular/core';
+import { DisableOnConfigFactoryFn, DisableOnConfigWithProviders } from '../decorator/disable-on.decorator';
 
 export class DisableOnFactory {
 

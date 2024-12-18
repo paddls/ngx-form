@@ -1,18 +1,18 @@
-import {inject, Injectable} from '@angular/core';
-import {AbstractControlOptions, AsyncValidatorFn, FormBuilder, FormControlOptions, FormControlState, FormGroup, ValidatorFn} from '@angular/forms';
-import {FORM_GROUP_INSTANCE_METADATA_KEY, NgxFormGroup} from '../model/ngx-form-group.model';
-import {FORM_CONTROL_INSTANCE_METADATA_KEY, NgxFormControl} from '../model/ngx-form-control.model';
-import {FORM_ARRAY_INSTANCE_METADATA_KEY, NgxFormArray} from '../model/ngx-form-array.model';
-import {findPropertyFormContexts, FormContextCommon, FormHooks} from '../common/decorator.common';
-import {FORM_GROUP_SUFFIX_METADATA_KEY, FormGroupContext} from '../decorator/form-group.decorator';
-import {FORM_CONTROL_SUFFIX_METADATA_KEY} from '../decorator/form-control.decorator';
-import {UPDATE_ON_METADATA_KEY} from '../decorator/update-on.decorator';
-import {FORM_ARRAY_SUFFIX_METADATA_KEY, FormArrayContext} from '../decorator/form-array.decorator';
-import {VALIDATORS_METADATA_KEY} from '../decorator/validator.decorator';
-import {ASYNC_VALIDATORS_METADATA_KEY} from '../decorator/async-validator.decorator';
-import {ConstructorFunction, DataToFormType} from '../common/common';
-import {AsyncValidatorResolver} from './async-validator.resolver';
-import {ValidatorResolver} from './validator.resolver';
+import { inject, Injectable } from '@angular/core';
+import { AbstractControlOptions, AsyncValidatorFn, FormBuilder, FormControlOptions, FormControlState, FormGroup, ValidatorFn } from '@angular/forms';
+import { FORM_GROUP_INSTANCE_METADATA_KEY, NgxFormGroup } from '../model/ngx-form-group.model';
+import { FORM_CONTROL_INSTANCE_METADATA_KEY, NgxFormControl } from '../model/ngx-form-control.model';
+import { FORM_ARRAY_INSTANCE_METADATA_KEY, NgxFormArray } from '../model/ngx-form-array.model';
+import { findPropertyFormContexts, FormContextCommon, FormHooks } from '../common/decorator.common';
+import { FORM_GROUP_SUFFIX_METADATA_KEY, FormGroupContext } from '../decorator/form-group.decorator';
+import { FORM_CONTROL_SUFFIX_METADATA_KEY } from '../decorator/form-control.decorator';
+import { UPDATE_ON_METADATA_KEY } from '../decorator/update-on.decorator';
+import { FORM_ARRAY_SUFFIX_METADATA_KEY, FormArrayContext } from '../decorator/form-array.decorator';
+import { VALIDATORS_METADATA_KEY } from '../decorator/validator.decorator';
+import { ASYNC_VALIDATORS_METADATA_KEY } from '../decorator/async-validator.decorator';
+import { ConstructorFunction, DataToFormType } from '../common/common';
+import { AsyncValidatorResolver } from './async-validator.resolver';
+import { ValidatorResolver } from './validator.resolver';
 
 @Injectable()
 export class NgxFormBuilder extends FormBuilder {
@@ -27,7 +27,9 @@ export class NgxFormBuilder extends FormBuilder {
     return new NgxFormGroup<V>(fg.controls as DataToFormType<any>, {asyncValidators: fg.asyncValidator, updateOn: fg.updateOn, validators: fg.validator});
   }
 
-  public control<V>(formState: V | FormControlState<V>, validatorOrOpts?: ValidatorFn | ValidatorFn[] | FormControlOptions & { nonNullable?: boolean; } | null, asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null): NgxFormControl<V | null> {
+  public control<V>(formState: V | FormControlState<V>, validatorOrOpts?: ValidatorFn | ValidatorFn[] | FormControlOptions & {
+    nonNullable?: boolean;
+  } | null, asyncValidator?: AsyncValidatorFn | AsyncValidatorFn[] | null): NgxFormControl<V | null> {
     return new NgxFormControl(formState, validatorOrOpts, asyncValidator);
   }
 

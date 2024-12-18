@@ -1,9 +1,9 @@
 import 'reflect-metadata';
-import {AsyncValidatorFn} from '@angular/forms';
-import {ASYNC_VALIDATORS_METADATA_KEY, AsyncValidator} from './async-validator.decorator';
-import {of} from 'rxjs';
-import {delay, map} from 'rxjs/operators';
-import {AsyncValidatorFactory} from '../factory/async-validator.factory';
+import { AsyncValidatorFn } from '@angular/forms';
+import { ASYNC_VALIDATORS_METADATA_KEY, AsyncValidator } from './async-validator.decorator';
+import { of } from 'rxjs';
+import { delay, map } from 'rxjs/operators';
+import { AsyncValidatorFactory } from '../factory/async-validator.factory';
 
 class MyService {
 }

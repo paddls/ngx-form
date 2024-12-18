@@ -1,6 +1,6 @@
-import {FormControl, Validator} from '@paddls/ngx-form';
-import {Validators} from '@angular/forms';
-import {matchingPasswords} from '../validators/matching-passwords.validator';
+import { FormControl, Validator } from '@paddls/ngx-form';
+import { Validators } from '@angular/forms';
+import { matchingPasswords } from '../validators/matching-passwords.validator';
 
 @Validator(matchingPasswords('password', 'confirmPassword'))
 export class SignupForm {

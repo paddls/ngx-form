@@ -1,6 +1,6 @@
-import {FormControl} from './form-control.decorator';
-import {PROPERTY_CONFIGURATIONS_METADATA_KEY} from '../common/decorator.common';
-import {FORM_ARRAY_SUFFIX_METADATA_KEY, FormArray, FormArrayContext} from './form-array.decorator';
+import { FormControl } from './form-control.decorator';
+import { PROPERTY_CONFIGURATIONS_METADATA_KEY } from '../common/decorator.common';
+import { FORM_ARRAY_SUFFIX_METADATA_KEY, FormArray, FormArrayContext } from './form-array.decorator';
 
 class CompanyForm {
 

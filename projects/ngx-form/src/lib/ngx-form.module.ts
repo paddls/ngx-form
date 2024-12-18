@@ -1,11 +1,11 @@
 import 'reflect-metadata';
 
-import {EnvironmentProviders, inject, Injector, makeEnvironmentProviders, ModuleWithProviders, NgModule, provideAppInitializer} from '@angular/core';
-import {NgxFormBuilder} from './core/ngx-form.builder';
-import {AsyncValidatorResolver} from './core/async-validator.resolver';
-import {DisableOnHandler} from './core/handler/disable-on.handler';
-import {ValidatorResolver} from './core/validator.resolver';
-import {OnValueChangesHandler} from './core/handler/on-value-changes.handler';
+import { EnvironmentProviders, inject, Injector, makeEnvironmentProviders, ModuleWithProviders, NgModule, provideAppInitializer } from '@angular/core';
+import { NgxFormBuilder } from './core/ngx-form.builder';
+import { AsyncValidatorResolver } from './core/async-validator.resolver';
+import { DisableOnHandler } from './core/handler/disable-on.handler';
+import { ValidatorResolver } from './core/validator.resolver';
+import { OnValueChangesHandler } from './core/handler/on-value-changes.handler';
 
 export function provideNgxForm(): EnvironmentProviders {
   return makeEnvironmentProviders([

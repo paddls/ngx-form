@@ -1,13 +1,13 @@
-import {Component} from '@angular/core';
-import {BuildForm, FormChild, NgxFormArray, NgxFormGroup} from '@paddls/ngx-form';
-import {UserForm} from '../form/user.form';
-import {CompanyForm} from '../form/company.form';
-import {AddressForm} from '../form/address.form';
-import {SignupForm} from '../form/signup.form';
-import {ReactiveFormsModule} from '@angular/forms';
-import {AddressFormComponent} from '../address-form/address-form.component';
+import { Component } from '@angular/core';
+import { BuildForm, FormChild, NgxFormArray, NgxFormGroup } from '@paddls/ngx-form';
+import { UserForm } from '../form/user.form';
+import { CompanyForm } from '../form/company.form';
+import { AddressForm } from '../form/address.form';
+import { SignupForm } from '../form/signup.form';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AddressFormComponent } from '../address-form/address-form.component';
 
-import {CompanyFormComponent} from '../company-form/company-form.component';
+import { CompanyFormComponent } from '../company-form/company-form.component';
 
 @Component({
   selector: 'app-root',

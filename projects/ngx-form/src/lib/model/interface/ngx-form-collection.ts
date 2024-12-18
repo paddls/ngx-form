@@ -1,4 +1,4 @@
-import {NgxForm} from './ngx-form';
+import { NgxForm } from './ngx-form';
 
 export interface NgxFormCollection extends NgxForm {
 

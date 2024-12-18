@@ -1,7 +1,7 @@
 import 'reflect-metadata';
-import {FORM_CONTROL_SUFFIX_METADATA_KEY} from '../decorator/form-control.decorator';
-import {FORM_GROUP_SUFFIX_METADATA_KEY} from '../decorator/form-group.decorator';
-import {FORM_ARRAY_SUFFIX_METADATA_KEY} from '../decorator/form-array.decorator';
+import { FORM_CONTROL_SUFFIX_METADATA_KEY } from '../decorator/form-control.decorator';
+import { FORM_GROUP_SUFFIX_METADATA_KEY } from '../decorator/form-group.decorator';
+import { FORM_ARRAY_SUFFIX_METADATA_KEY } from '../decorator/form-array.decorator';
 
 export const PROPERTY_CONFIGURATIONS_METADATA_KEY: string = 'ngx-form:form-context-commons';
 

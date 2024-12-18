@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import {ON_VALUE_CHANGES_METADATA_KEY, OnValueChanges} from './on-value-changes.decorator';
+import { ON_VALUE_CHANGES_METADATA_KEY, OnValueChanges } from './on-value-changes.decorator';
 
 class LibraryForm {
 

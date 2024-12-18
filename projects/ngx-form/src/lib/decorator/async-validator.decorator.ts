@@ -1,5 +1,5 @@
-import {AsyncValidatorFn} from '@angular/forms';
-import {AsyncValidatorFactoryWithProviders} from '../factory/async-validator.factory';
+import { AsyncValidatorFn } from '@angular/forms';
+import { AsyncValidatorFactoryWithProviders } from '../factory/async-validator.factory';
 
 export const ASYNC_VALIDATORS_METADATA_KEY: string = 'ngx-form:async-validators';
 

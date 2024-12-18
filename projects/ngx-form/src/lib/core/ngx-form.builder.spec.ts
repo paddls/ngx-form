@@ -1,18 +1,18 @@
-import {NgxFormBuilder} from './ngx-form.builder';
-import {UpdateOn} from '../decorator/update-on.decorator';
-import {FormControl} from '../decorator/form-control.decorator';
-import {FormArray} from '../decorator/form-array.decorator';
-import {FormGroup, FormGroupContext} from '../decorator/form-group.decorator';
-import {NgxFormGroup} from '../model/ngx-form-group.model';
-import {Validator} from '../decorator/validator.decorator';
-import {Validators} from '@angular/forms';
-import {TestBed} from '@angular/core/testing';
-import {provideNgxForm} from '../ngx-form.module';
-import {AsyncValidator} from '../decorator/async-validator.decorator';
-import {AsyncValidatorFactory} from '../factory/async-validator.factory';
-import {Observable, of} from 'rxjs';
-import {Injectable} from '@angular/core';
-import {map} from 'rxjs/operators';
+import { NgxFormBuilder } from './ngx-form.builder';
+import { UpdateOn } from '../decorator/update-on.decorator';
+import { FormControl } from '../decorator/form-control.decorator';
+import { FormArray } from '../decorator/form-array.decorator';
+import { FormGroup, FormGroupContext } from '../decorator/form-group.decorator';
+import { NgxFormGroup } from '../model/ngx-form-group.model';
+import { Validator } from '../decorator/validator.decorator';
+import { Validators } from '@angular/forms';
+import { TestBed } from '@angular/core/testing';
+import { provideNgxForm } from '../ngx-form.module';
+import { AsyncValidator } from '../decorator/async-validator.decorator';
+import { AsyncValidatorFactory } from '../factory/async-validator.factory';
+import { Observable, of } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 class MyService {

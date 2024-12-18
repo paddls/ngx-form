@@ -1,9 +1,9 @@
-import {TestBed} from '@angular/core/testing';
-import {provideNgxForm} from '../ngx-form.module';
-import {ValidatorResolver} from './validator.resolver';
-import {Injectable} from '@angular/core';
-import {FormControl, ValidatorFn, Validators} from '@angular/forms';
-import {ValidatorFactory, ValidatorFactoryWithProviders} from '../factory/validator.factory';
+import { TestBed } from '@angular/core/testing';
+import { provideNgxForm } from '../ngx-form.module';
+import { ValidatorResolver } from './validator.resolver';
+import { Injectable } from '@angular/core';
+import { FormControl, ValidatorFn, Validators } from '@angular/forms';
+import { ValidatorFactory, ValidatorFactoryWithProviders } from '../factory/validator.factory';
 
 @Injectable()
 class MyProvider {

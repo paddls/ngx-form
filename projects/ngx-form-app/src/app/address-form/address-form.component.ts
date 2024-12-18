@@ -1,7 +1,7 @@
-import {Component, inject, OnInit} from '@angular/core';
-import {ControlContainer, ReactiveFormsModule} from '@angular/forms';
-import {AddressForm} from '../form/address.form';
-import {NgxFormGroup} from '@paddls/ngx-form';
+import { Component, inject, OnInit } from '@angular/core';
+import { ControlContainer, ReactiveFormsModule } from '@angular/forms';
+import { AddressForm } from '../form/address.form';
+import { NgxFormGroup } from '@paddls/ngx-form';
 
 @Component({
   selector: 'app-address-form',

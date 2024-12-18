@@ -1,6 +1,6 @@
 import 'reflect-metadata';
-import {Validator, VALIDATORS_METADATA_KEY} from './validator.decorator';
-import {Validators} from '@angular/forms';
+import { Validator, VALIDATORS_METADATA_KEY } from './validator.decorator';
+import { Validators } from '@angular/forms';
 
 @Validator(Validators.required)
 class LibraryForm {

@@ -1,5 +1,5 @@
-import {ConstructorFunction} from '../common/common';
-import {addFormContextCommon, FormContextCommon, FormHooks} from '../common/decorator.common';
+import { ConstructorFunction } from '../common/common';
+import { addFormContextCommon, FormContextCommon, FormHooks } from '../common/decorator.common';
 
 export const FORM_ARRAY_SUFFIX_METADATA_KEY: string = 'form-array';
 

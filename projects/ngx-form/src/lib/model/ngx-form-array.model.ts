@@ -1,10 +1,10 @@
-import {AbstractControl, AbstractControlOptions, AsyncValidatorFn, FormArray, ValidatorFn} from '@angular/forms';
-import {NgxFormBuilder} from '../core/ngx-form.builder';
-import {FormArrayContext} from '../decorator/form-array.decorator';
-import {NgxFormCollection} from './interface/ngx-form-collection';
-import {NgxFormControl} from './ngx-form-control.model';
-import {transformValueToSmartValue} from '../common/common';
-import {NgxFormGroup} from './ngx-form-group.model';
+import { AbstractControl, AbstractControlOptions, AsyncValidatorFn, FormArray, ValidatorFn } from '@angular/forms';
+import { NgxFormBuilder } from '../core/ngx-form.builder';
+import { FormArrayContext } from '../decorator/form-array.decorator';
+import { NgxFormCollection } from './interface/ngx-form-collection';
+import { NgxFormControl } from './ngx-form-control.model';
+import { transformValueToSmartValue } from '../common/common';
+import { NgxFormGroup } from './ngx-form-group.model';
 
 export const FORM_ARRAY_INSTANCE_METADATA_KEY: string = 'ngx-form:form-array-instance';
 

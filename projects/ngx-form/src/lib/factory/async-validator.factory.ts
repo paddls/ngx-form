@@ -1,5 +1,5 @@
-import {AsyncValidatorFn} from '@angular/forms';
-import {Type} from '@angular/core';
+import { AsyncValidatorFn } from '@angular/forms';
+import { Type } from '@angular/core';
 
 export type AsyncValidatorFactoryFn = (...providers: any[]) => AsyncValidatorFn;
 

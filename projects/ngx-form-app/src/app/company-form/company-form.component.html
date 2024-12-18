@@ -3,12 +3,18 @@
 
   <div>
     <label for="companyName">Company's name : </label>
-    <input type="text" id="companyName" name="companyName" formControlName="name"/>
+    <input formControlName="name"
+           id="companyName"
+           name="companyName"
+           type="text"/>
   </div>
 
   <div>
     <label for="companySiret">Company's Siret : </label>
-    <input type="text" id="companySiret" name="companySiret" formControlName="siret"/>
+    <input formControlName="siret"
+           id="companySiret"
+           name="companySiret"
+           type="text"/>
   </div>
 
   <app-address-form formGroupName="address"></app-address-form>

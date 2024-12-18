@@ -1,5 +1,5 @@
-import {ValidatorFn} from '@angular/forms';
-import {ValidatorFactoryWithProviders} from '../factory/validator.factory';
+import { ValidatorFn } from '@angular/forms';
+import { ValidatorFactoryWithProviders } from '../factory/validator.factory';
 
 export const VALIDATORS_METADATA_KEY: string = 'ngx-form:validators';
 

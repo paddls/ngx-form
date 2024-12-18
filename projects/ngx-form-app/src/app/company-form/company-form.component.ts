@@ -1,8 +1,8 @@
-import {Component, inject, OnInit} from '@angular/core';
-import {ControlContainer, ReactiveFormsModule} from '@angular/forms';
-import {NgxFormGroup} from '@paddls/ngx-form';
-import {CompanyForm} from '../form/company.form';
-import {AddressFormComponent} from '../address-form/address-form.component';
+import { Component, inject, OnInit } from '@angular/core';
+import { ControlContainer, ReactiveFormsModule } from '@angular/forms';
+import { NgxFormGroup } from '@paddls/ngx-form';
+import { CompanyForm } from '../form/company.form';
+import { AddressFormComponent } from '../address-form/address-form.component';
 
 @Component({
   selector: 'app-company-form',

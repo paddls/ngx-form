@@ -1,6 +1,6 @@
-import {inject, Injectable, Injector, Type} from '@angular/core';
-import {AsyncValidatorFn} from '@angular/forms';
-import {AsyncValidatorConfig} from '../decorator/async-validator.decorator';
+import { inject, Injectable, Injector, Type } from '@angular/core';
+import { AsyncValidatorFn } from '@angular/forms';
+import { AsyncValidatorConfig } from '../decorator/async-validator.decorator';
 
 @Injectable()
 export class AsyncValidatorResolver {

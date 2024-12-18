@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import {UPDATE_ON_METADATA_KEY, UpdateOn} from './update-on.decorator';
+import { UPDATE_ON_METADATA_KEY, UpdateOn } from './update-on.decorator';
 
 @UpdateOn('blur')
 class LibraryForm {

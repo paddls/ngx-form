@@ -1,5 +1,5 @@
-import {FormControl, FormGroup} from '@paddls/ngx-form';
-import {AddressForm} from './address.form';
+import { FormControl, FormGroup } from '@paddls/ngx-form';
+import { AddressForm } from './address.form';
 
 export class CompanyForm {
 

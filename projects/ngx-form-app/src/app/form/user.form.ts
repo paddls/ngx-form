@@ -1,7 +1,7 @@
-import {FormArray, FormControl, FormGroup, UpdateOn, Validator} from '@paddls/ngx-form';
-import {CompanyForm} from './company.form';
-import {AddressForm} from './address.form';
-import {Validators} from '@angular/forms';
+import { FormArray, FormControl, FormGroup, UpdateOn, Validator } from '@paddls/ngx-form';
+import { CompanyForm } from './company.form';
+import { AddressForm } from './address.form';
+import { Validators } from '@angular/forms';
 
 const defaultAddress: AddressForm = new AddressForm({
   route: 'User route',

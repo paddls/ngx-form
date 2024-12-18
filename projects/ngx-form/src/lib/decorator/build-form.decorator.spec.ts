@@ -1,20 +1,20 @@
-import {FormControl} from './form-control.decorator';
-import {NgxFormGroup} from '../model/ngx-form-group.model';
-import {BuildForm} from './build-form.decorator';
-import {NgxFormBuilder} from '../core/ngx-form.builder';
-import {provideNgxForm} from '../ngx-form.module';
-import {TestBed} from '@angular/core/testing';
-import {EMPTY, Observable, of} from 'rxjs';
-import {DisableOn} from './disable-on.decorator';
-import {Injectable} from '@angular/core';
-import {DisableOnFactory} from '../factory/disable-on.factory';
-import {delay} from 'rxjs/operators';
-import {FormControlStatus, Validators} from '@angular/forms';
-import {RunHelpers} from 'rxjs/internal/testing/TestScheduler';
-import {TestScheduler} from 'rxjs/testing';
-import {FormGroup} from './form-group.decorator';
-import {Validator} from './validator.decorator';
-import {OnValueChanges} from './on-value-changes.decorator';
+import { FormControl } from './form-control.decorator';
+import { NgxFormGroup } from '../model/ngx-form-group.model';
+import { BuildForm } from './build-form.decorator';
+import { NgxFormBuilder } from '../core/ngx-form.builder';
+import { provideNgxForm } from '../ngx-form.module';
+import { TestBed } from '@angular/core/testing';
+import { EMPTY, Observable, of } from 'rxjs';
+import { DisableOn } from './disable-on.decorator';
+import { Injectable } from '@angular/core';
+import { DisableOnFactory } from '../factory/disable-on.factory';
+import { delay } from 'rxjs/operators';
+import { FormControlStatus, Validators } from '@angular/forms';
+import { RunHelpers } from 'rxjs/internal/testing/TestScheduler';
+import { TestScheduler } from 'rxjs/testing';
+import { FormGroup } from './form-group.decorator';
+import { Validator } from './validator.decorator';
+import { OnValueChanges } from './on-value-changes.decorator';
 
 @Injectable()
 class MyProvider {

@@ -1,11 +1,11 @@
-import {FormControl} from '../decorator/form-control.decorator';
-import {FormGroupContext} from '../decorator/form-group.decorator';
-import {FormArray} from '../decorator/form-array.decorator';
-import {NgxFormBuilder} from '../core/ngx-form.builder';
-import {NgxFormGroup} from './ngx-form-group.model';
-import {NgxFormArray} from './ngx-form-array.model';
-import {TestBed} from '@angular/core/testing';
-import {provideNgxForm} from '../ngx-form.module';
+import { FormControl } from '../decorator/form-control.decorator';
+import { FormGroupContext } from '../decorator/form-group.decorator';
+import { FormArray } from '../decorator/form-array.decorator';
+import { NgxFormBuilder } from '../core/ngx-form.builder';
+import { NgxFormGroup } from './ngx-form-group.model';
+import { NgxFormArray } from './ngx-form-array.model';
+import { TestBed } from '@angular/core/testing';
+import { provideNgxForm } from '../ngx-form.module';
 
 class CompanyForm {
 

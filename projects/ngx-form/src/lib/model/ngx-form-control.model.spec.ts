@@ -1,13 +1,13 @@
-import {Validators} from '@angular/forms';
-import {Validator} from '../decorator/validator.decorator';
-import {FormControl} from '../decorator/form-control.decorator';
-import {FormGroupContext} from '../decorator/form-group.decorator';
-import {UpdateOn} from '../decorator/update-on.decorator';
-import {NgxFormBuilder} from '../core/ngx-form.builder';
-import {NgxFormGroup} from './ngx-form-group.model';
-import {NgxFormControl} from './ngx-form-control.model';
-import {TestBed} from '@angular/core/testing';
-import {provideNgxForm} from '../ngx-form.module';
+import { Validators } from '@angular/forms';
+import { Validator } from '../decorator/validator.decorator';
+import { FormControl } from '../decorator/form-control.decorator';
+import { FormGroupContext } from '../decorator/form-group.decorator';
+import { UpdateOn } from '../decorator/update-on.decorator';
+import { NgxFormBuilder } from '../core/ngx-form.builder';
+import { NgxFormGroup } from './ngx-form-group.model';
+import { NgxFormControl } from './ngx-form-control.model';
+import { TestBed } from '@angular/core/testing';
+import { provideNgxForm } from '../ngx-form.module';
 
 @UpdateOn('change')
 class UserForm {

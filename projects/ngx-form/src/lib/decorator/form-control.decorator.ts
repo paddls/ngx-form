@@ -1,4 +1,4 @@
-import {addFormContextCommon, FormContextCommon} from '../common/decorator.common';
+import { addFormContextCommon, FormContextCommon } from '../common/decorator.common';
 
 export const FORM_CONTROL_SUFFIX_METADATA_KEY: string = 'form-control';
 

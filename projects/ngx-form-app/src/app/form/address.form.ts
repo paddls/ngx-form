@@ -1,4 +1,4 @@
-import {FormControl, UpdateOn} from '@paddls/ngx-form';
+import { FormControl, UpdateOn } from '@paddls/ngx-form';
 
 @UpdateOn('blur')
 export class AddressForm {
@@ -16,6 +16,6 @@ export class AddressForm {
   public city: string;
 
   public constructor(data: Partial<AddressForm> = {}) {
-    Object.assign(this,  data);
+    Object.assign(this, data);
   }
 }
