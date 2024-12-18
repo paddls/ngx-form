@@ -1,12 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {ControlContainer} from '@angular/forms';
+import {ControlContainer, ReactiveFormsModule} from '@angular/forms';
 import {AddressForm} from '../form/address.form';
 import {NgxFormGroup} from '@paddls/ngx-form';
 
 @Component({
   selector: 'app-address-form',
   templateUrl: './address-form.component.html',
-  standalone: false
+  imports: [
+    ReactiveFormsModule
+  ]
 })
 export class AddressFormComponent implements OnInit {
 
