@@ -8,6 +8,15 @@ import { Observable } from 'rxjs';
 import { NgxFormControl } from '../model/ngx-form-control.model';
 import { set } from './functions/set';
 
+
+type MarkFunctionProperties<Component> = {
+  [Key in keyof Component]: Component[Key] extends Function ? never : Key;
+};
+
+type ExcludedFunctionPropertyNames<T> = MarkFunctionProperties<T>[keyof T];
+
+type ExcludeFunctions<T> = Pick<T, ExcludedFunctionPropertyNames<T>>;
+
 export interface Handler {
 
   handle<T>(type: () => ConstructorFunction<T>, instance: NgxFormGroup<T>, unsubscribeOn: Observable<any>): void;
@@ -102,7 +111,7 @@ type IterableElement<TargetIterable> =
       ElementType :
       never;
 
-export type DataToFormType<V, K extends keyof V = keyof V> = {
+export type DataToFormType<V, K extends keyof ExcludeFunctions<V> = keyof ExcludeFunctions<V>> = {
   [key in K]: V[key] extends Primitive ? NgxFormControl<V[key]> : V[key] extends Arrayable<IterableElement<V[key]>> ? NgxFormArray<IterableElement<V[key]>> : NgxFormGroup<V[key]>
 };
 export type DataFormType<V> = Partial<V> & {[key: string]: any};
