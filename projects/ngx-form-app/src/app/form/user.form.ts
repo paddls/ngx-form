@@ -36,4 +36,8 @@ export class UserForm {
   public constructor(data: Partial<UserForm> = {}) {
     Object.assign(this, data);
   }
+
+  public getFullName(): string {
+    return `${this.firstName} ${this.lastName}`;
+  }
 }

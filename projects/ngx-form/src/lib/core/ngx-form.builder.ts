@@ -24,7 +24,7 @@ export class NgxFormBuilder extends FormBuilder {
   public group<V extends {}>(controlsConfig: DataToFormType<V>, options?: AbstractControlOptions | null): any {
     const fg: FormGroup = super.group(controlsConfig, options);
 
-    return new NgxFormGroup<V>(fg.controls as DataToFormType<any>, {asyncValidators: fg.asyncValidator, updateOn: fg.updateOn, validators: fg.validator});
+    return new NgxFormGroup<V>(fg.controls as DataToFormType<V>, {asyncValidators: fg.asyncValidator, updateOn: fg.updateOn, validators: fg.validator});
   }
 
   public control<V>(formState: V | FormControlState<V>, validatorOrOpts?: ValidatorFn | ValidatorFn[] | FormControlOptions & {
