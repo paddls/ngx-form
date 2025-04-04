@@ -9,13 +9,9 @@ import { OnValueChangesHandler } from './core/handler/on-value-changes.handler';
 
 export function provideNgxForm(): EnvironmentProviders {
   return makeEnvironmentProviders([
-    provideAppInitializer(() => {
-      const initializerFn = ((injector: Injector) => (): void => {
-        NgxFormModule.injector = injector;
-      })(inject(Injector));
-
-      return initializerFn();
-    }),
+    provideAppInitializer(() => ((injector: Injector) => (): void => {
+      NgxFormModule.injector = injector;
+    })(inject(Injector))()),
     NgxFormBuilder,
     ValidatorResolver,
     AsyncValidatorResolver,
