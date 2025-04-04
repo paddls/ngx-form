@@ -9,8 +9,8 @@ import { NgxFormControl } from '../model/ngx-form-control.model';
 import { set } from './functions/set';
 
 
-type MarkFunctionProperties<Component> = {
-  [Key in keyof Component]: Component[Key] extends Function ? never : Key;
+type MarkFunctionProperties<T> = {
+  [Key in keyof T]: T[Key] extends Function ? never : Key;
 };
 
 type ExcludedFunctionPropertyNames<T> = MarkFunctionProperties<T>[keyof T];

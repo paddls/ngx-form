@@ -6,8 +6,8 @@ import { transformSmartValueToValue, transformValueToSmartValue } from './common
 import { FormArray } from '../decorator/form-array.decorator';
 import { TestBed } from '@angular/core/testing';
 import { provideNgxForm } from '../ngx-form.module';
-import {NgxFormControl} from '../model/ngx-form-control.model';
-import {NgxFormArray} from '../model/ngx-form-array.model';
+import { NgxFormControl } from '../model/ngx-form-control.model';
+import { NgxFormArray } from '../model/ngx-form-array.model';
 
 class UserForm {
 
