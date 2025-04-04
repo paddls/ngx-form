@@ -1,7 +1,7 @@
 name: 'auto-release'
 
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
       version:
         type: 'string'
