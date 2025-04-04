@@ -7,7 +7,7 @@ on:
         type: 'string'
         description: 'Version to release'
         required: true
-        default: '1.0.0'
+        default: 'x.y.z'
 
 jobs:
   release:
@@ -27,5 +27,5 @@ jobs:
         uses: EndBug/add-and-commit@v9.1.4
         with:
           author_name: '@paddls'
-          message: release
+          message: 'release: v${{ inputs.version }}'
           github_token: ${{ secrets.GITHUB_TOKEN }}
