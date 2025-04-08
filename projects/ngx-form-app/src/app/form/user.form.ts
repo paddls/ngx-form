@@ -1,4 +1,4 @@
-import { FormArray, FormControl, FormGroup, UpdateOn, Validator } from '@paddls/ngx-form';
+import { FormArray, FormControl, FormGroup, OnValueChanges, UpdateOn, Validator } from '@paddls/ngx-form';
 import { CompanyForm } from './company.form';
 import { AddressForm } from './address.form';
 import { Validators } from '@angular/forms';
@@ -39,5 +39,10 @@ export class UserForm {
 
   public getFullName(): string {
     return `${this.firstName} ${this.lastName}`;
+  }
+
+  @OnValueChanges('firstName')
+  public test(firstName: string): void {
+    console.log('Test', firstName);
   }
 }

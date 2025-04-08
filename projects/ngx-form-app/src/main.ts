@@ -1,6 +1,4 @@
 import { enableProdMode, importProvidersFrom } from '@angular/core';
-
-
 import { environment } from './environments/environment';
 import { provideNgxForm } from '@paddls/ngx-form';
 import { AppRoutingModule } from './app/app-routing.module';

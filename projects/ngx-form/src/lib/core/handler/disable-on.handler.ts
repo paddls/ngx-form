@@ -1,4 +1,4 @@
-import { inject, Injectable, Injector, Type } from '@angular/core';
+import { DestroyRef, inject, Injectable, Injector, Type } from '@angular/core';
 import { ConstructorFunction, Handler } from '../../common/common';
 import { NgxFormGroup } from '../../model/ngx-form-group.model';
 import { DISABLE_ON_METADATA_KEY, DisableOnContext } from '../../decorator/disable-on.decorator';
@@ -7,13 +7,14 @@ import { takeUntil } from 'rxjs/operators';
 import { findAllPropertyFormContexts, findPropertyFormContexts, FormContextCommon } from '../../common/decorator.common';
 import { AbstractControl } from '@angular/forms';
 import { FORM_GROUP_SUFFIX_METADATA_KEY, FormGroupContext } from '../../decorator/form-group.decorator';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Injectable()
 export class DisableOnHandler implements Handler {
 
   private readonly injector: Injector = inject(Injector);
 
-  public handle<T>(type: () => ConstructorFunction<T>, instance: NgxFormGroup<T>, unsubscribeOn: Observable<any>): void {
+  public handle<T>(type: () => ConstructorFunction<T>, instance: NgxFormGroup<T>, unsubscribeOn: Observable<any> | DestroyRef): void {
     if (!Reflect.hasMetadata(DISABLE_ON_METADATA_KEY, type().prototype) && !Reflect.hasMetadata(DISABLE_ON_METADATA_KEY, type())) {
       return;
     }
@@ -51,9 +52,19 @@ export class DisableOnHandler implements Handler {
         throw new Error('Invalid @DisableOn argument');
       }
 
-      trigger$.pipe(
-        takeUntil(unsubscribeOn)
-      ).subscribe((disable: boolean) => {
+      if (unsubscribeOn instanceof Observable) {
+        trigger$ = trigger$.pipe(
+          takeUntil(unsubscribeOn)
+        );
+      } else if (unsubscribeOn instanceof DestroyRef) {
+        trigger$ = trigger$.pipe(
+          takeUntilDestroyed(unsubscribeOn)
+        );
+      } else {
+        throw new Error('Please provide a valid Observable or DestroyRef property name on @BuildForm decorator context to use @DisableOnHandler');
+      }
+
+      trigger$.subscribe((disable: boolean) => {
         if (!!disable) {
           element.disable(context.options);
         } else {

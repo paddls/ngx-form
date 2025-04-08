@@ -58,9 +58,6 @@
               "base": "dist/ngx-form-app"
             },
             "index": "projects/ngx-form-app/src/index.html",
-            "polyfills": [
-              "projects/ngx-form-app/src/polyfills.ts"
-            ],
             "tsConfig": "projects/ngx-form-app/tsconfig.app.json",
             "aot": true,
             "assets": [
@@ -71,7 +68,10 @@
               "projects/ngx-form-app/src/styles.scss"
             ],
             "scripts": [],
-            "browser": "projects/ngx-form-app/src/main.ts"
+            "browser": "projects/ngx-form-app/src/main.ts",
+            "polyfills": [
+              "zone.js"
+            ]
           },
           "configurations": {
             "production": {

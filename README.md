@@ -517,9 +517,9 @@ class UserForm {
 ```typescript
 class ConsumerComponent {
 
-  public readonly obs$: Observable<any> = EMPTY;
+  public readonly destroyRef: DestroyRef = inject(DestroyRef);
 
-  @BuildForm(() => UserForm, {unsubscribeOn: 'obs$'})
+  @BuildForm(() => UserForm, {unsubscribeOn: destroyRef})
   public form: NgxFormGroup<UserForm>;
 }
 ```
@@ -556,9 +556,9 @@ class SumForm {
 ```typescript
 class ConsumerComponent {
 
-  public readonly obs$: Observable<any> = EMPTY;
+  public readonly destroyRef: DestroyRef = inject(DestroyRef);
 
-  @BuildForm(() => UserForm, {unsubscribeOn: 'obs$'})
+  @BuildForm(() => UserForm, {unsubscribeOn: destroyRef})
   public form: NgxFormGroup<UserForm>;
 }
 ```

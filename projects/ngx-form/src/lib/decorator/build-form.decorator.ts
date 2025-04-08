@@ -12,13 +12,11 @@ export const BUILD_FORM_INSTANCE_METADATA_KEY: string = 'ngx-form:form-instance'
 export interface BuildFormConfig {
 
   unsubscribeOn?: string;
-
 }
 
 export interface BuildFormContextConfiguration<T> extends BuildFormConfig {
 
   type: () => ConstructorFunction<T>;
-
 }
 
 export function BuildForm<V>(type: () => ConstructorFunction<V>, config: BuildFormConfig = {}): any {
