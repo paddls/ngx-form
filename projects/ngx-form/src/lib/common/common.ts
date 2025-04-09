@@ -100,7 +100,8 @@ type Primitive =
   | boolean
   | symbol
   | bigint
-  | Date;
+  | Date
+  | File;
 
 type Arrayable<T> = T[];
 

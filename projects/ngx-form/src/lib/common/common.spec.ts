@@ -17,6 +17,9 @@ class UserForm {
   @FormControl()
   public lastName: string;
 
+  @FormControl()
+  public file: File;
+
   @FormArray({defaultValue: 'Default skill'})
   public skills: string[];
 
@@ -72,5 +75,11 @@ describe('Common', () => {
   it('should expose functions when retrieving value', () => {
     expect(form.getValue().getFullName).toBeDefined();
   });
+
+  it('should correctly type primitive types forms', () => {
+    form.controls.file.setValue(new File([], 'test.txt'));
+
+    expect(form.controls.file.value).toBeInstanceOf(File);
+  })
 
 })
