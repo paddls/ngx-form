@@ -2,17 +2,17 @@ import { NgxFormControl } from '../model/ngx-form-control.model';
 import { NgxFormArray } from '../model/ngx-form-array.model';
 import { NgxFormGroup } from '../model/ngx-form-group.model';
 
-type MarkFunctionProperties<T> = {
+export type MarkFunctionProperties<T> = {
   [Key in keyof T]: T[Key] extends Function ? never : Key;
 };
 
-type ExcludedFunctionPropertyNames<T> = MarkFunctionProperties<T>[keyof T];
+export type ExcludedFunctionPropertyNames<T> = MarkFunctionProperties<T>[keyof T];
 
-type ExcludeFunctions<T> = Pick<T, ExcludedFunctionPropertyNames<T>>;
+export type ExcludeFunctions<T> = Pick<T, ExcludedFunctionPropertyNames<T>>;
 
 export type ConstructorFunction<T> = new(...args: any[]) => T;
 
-type Primitive =
+export type Primitive =
   | null
   | undefined
   | string
@@ -23,9 +23,9 @@ type Primitive =
   | Date
   | File;
 
-type Arrayable<T> = T[];
+export type Arrayable<T> = T[];
 
-type IterableElement<TargetIterable> =
+export type IterableElement<TargetIterable> =
   TargetIterable extends Iterable<infer ElementType> ?
     ElementType :
     TargetIterable extends AsyncIterable<infer ElementType> ?
