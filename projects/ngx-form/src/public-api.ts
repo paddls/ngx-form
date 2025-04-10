@@ -19,3 +19,5 @@ export { NgxFormGroup } from './lib/model/ngx-form-group.model';
 export { NgxFormBuilder } from './lib/core/ngx-form.builder';
 
 export { NgxFormModule, provideNgxForm } from './lib/ngx-form.module';
+
+export * from './lib/common/typing';

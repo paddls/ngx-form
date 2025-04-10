@@ -1,5 +1,5 @@
 import { DestroyRef, inject, Injectable, Injector, Type } from '@angular/core';
-import { ConstructorFunction, Handler } from '../../common/common';
+import { Handler } from '../../common/common';
 import { NgxFormGroup } from '../../model/ngx-form-group.model';
 import { DISABLE_ON_METADATA_KEY, DisableOnContext } from '../../decorator/disable-on.decorator';
 import { Observable } from 'rxjs';
@@ -8,6 +8,7 @@ import { findAllPropertyFormContexts, findPropertyFormContexts, FormContextCommo
 import { AbstractControl } from '@angular/forms';
 import { FORM_GROUP_SUFFIX_METADATA_KEY, FormGroupContext } from '../../decorator/form-group.decorator';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ConstructorFunction } from '../../common/typing';
 
 @Injectable()
 export class DisableOnHandler implements Handler {

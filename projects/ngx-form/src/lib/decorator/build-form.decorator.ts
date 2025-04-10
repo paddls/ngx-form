@@ -1,9 +1,9 @@
 import { NgxFormModule } from '../ngx-form.module';
 import { NgxFormGroup } from '../model/ngx-form-group.model';
-import { ConstructorFunction } from '../common/common';
 import { FormGroupContext } from './form-group.decorator';
 import { DisableOnHandler } from '../core/handler/disable-on.handler';
 import { OnValueChangesHandler } from '../core/handler/on-value-changes.handler';
+import { ConstructorFunction } from '../common/typing';
 
 export const BUILD_FORM_METADATA_KEY: string = 'ngx-form:build-form';
 

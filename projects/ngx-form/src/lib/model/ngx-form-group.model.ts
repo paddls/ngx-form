@@ -3,7 +3,8 @@ import { NgxForm } from './interface/ngx-form';
 import { FormGroupContext } from '../decorator/form-group.decorator';
 import { NgxFormCollection } from './interface/ngx-form-collection';
 import { NgxFormControl } from './ngx-form-control.model';
-import { DataFormType, DataToFormType, transformSmartValueToValue, transformValueToSmartValue } from '../common/common';
+import { transformSmartValueToValue, transformValueToSmartValue } from '../common/common';
+import { DataFormType, DataToFormType } from '../common/typing';
 
 export const FORM_GROUP_INSTANCE_METADATA_KEY: string = 'ngx-form:form-group-instance';
 

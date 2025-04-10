@@ -10,9 +10,9 @@ import { UPDATE_ON_METADATA_KEY } from '../decorator/update-on.decorator';
 import { FORM_ARRAY_SUFFIX_METADATA_KEY, FormArrayContext } from '../decorator/form-array.decorator';
 import { VALIDATORS_METADATA_KEY } from '../decorator/validator.decorator';
 import { ASYNC_VALIDATORS_METADATA_KEY } from '../decorator/async-validator.decorator';
-import { ConstructorFunction, DataToFormType } from '../common/common';
 import { AsyncValidatorResolver } from './async-validator.resolver';
 import { ValidatorResolver } from './validator.resolver';
+import { ConstructorFunction, DataToFormType } from '../common/typing';
 
 @Injectable()
 export class NgxFormBuilder extends FormBuilder {

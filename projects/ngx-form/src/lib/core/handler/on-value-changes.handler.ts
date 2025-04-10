@@ -1,10 +1,11 @@
 import { DestroyRef, Injectable } from '@angular/core';
-import { ConstructorFunction, Handler } from '../../common/common';
+import { Handler } from '../../common/common';
 import { NgxFormGroup } from '../../model/ngx-form-group.model';
 import { merge, Observable } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { ON_VALUE_CHANGES_METADATA_KEY, OnValueChangesContext } from '../../decorator/on-value-changes.decorator';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ConstructorFunction } from '../../common/typing';
 
 @Injectable()
 export class OnValueChangesHandler implements Handler {
