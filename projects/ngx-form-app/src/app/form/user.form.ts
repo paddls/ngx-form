@@ -2,6 +2,7 @@ import { FormArray, FormControl, FormGroup, OnValueChanges, UpdateOn, Validator 
 import { CompanyForm } from './company.form';
 import { AddressForm } from './address.form';
 import { Validators } from '@angular/forms';
+import { FriendModel } from '../model/friend.model';
 
 const defaultAddress: AddressForm = new AddressForm({
   route: 'User route',
@@ -32,6 +33,9 @@ export class UserForm {
   @FormGroup({type: () => AddressForm, defaultValue: new AddressForm({...defaultAddress})})
   @UpdateOn('submit')
   public personalAddress: AddressForm;
+
+  @FormControl()
+  public friend: FriendModel;
 
   public constructor(data: Partial<UserForm> = {}) {
     Object.assign(this, data);

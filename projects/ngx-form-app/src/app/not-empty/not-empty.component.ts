@@ -35,33 +35,11 @@ export class NotEmptyComponent {
   @BuildForm(() => SignupForm)
   public readonly signUpForm: NgxFormGroup<SignupForm>;
 
-  private valueToSet: UserForm = new UserForm({
-    firstName: 'Thomas',
-    lastName: 'Nisole',
-    skills: ['Angular', 'NestJS'],
-    personalAddress: new AddressForm({
-      city: 'Cesson',
-      route: 'rue des Myosotis',
-      streetNumber: 1,
-      zipCode: '35510'
-    }),
-    companies: [
-      new CompanyForm({
-        name: 'Witty SARL',
-        address: new AddressForm({
-          city: 'Cesson',
-          route: 'a rue des Charmilles',
-          streetNumber: 7,
-          zipCode: '35510'
-        }),
-        siret: '1010101010101010'
-      })
-
-    ]
-  });
+  private valueToSet: UserForm = new UserForm({});
 
   public constructor() {
-    console.log(this.userForm);
+    this.userForm.controls.personalAddress.
+
     console.log(this.signUpForm);
   }
 
