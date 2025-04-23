@@ -148,6 +148,10 @@ export class AppComponent {
 That's it ! You can now use your newly created form juste like any other reactive form. Furthermore, the form is
 strongly typed. To retrieve the strongly typed result, just call ``form.getValue()`` method.
 
+With a strongly typed form also comes the ability to adress your controls with strict checking.
+Where you would use addressForm.controls['street'], you can now use addressForm.controls.street, which will come
+with spelling and type checking.
+
 ## FormGroup
 
 ```typescript
@@ -163,7 +167,7 @@ export class UserForm {
   public lastName: string;
 
   @FormGroup(() => AddressForm)
-  public personalAddress: AddressForm;
+  public personalAddressFormGroup: AddressForm;
 
   @FormGroup({type: () => AddressForm, defaultValue: myAddressValue, name: 'companyAddress'})
   public workAddress: AddressForm;
@@ -172,6 +176,7 @@ export class UserForm {
 
 To nest forms, use the ``@FormGroup()`` decorator. Do not forget to specify the type of your child form in the decorator
 context.
+To get proper type definition from your ts compiler when using the ``form.controls.lastName accessor``, you need to suffix your attribute name with "FormGroup".
 
 You can also specify ``defaultValue`` and ``name`` properties if necessary. If you don't need to specify them, you can
 specify the type in the context directly like in the example above.
@@ -191,15 +196,18 @@ export class UserForm {
   public lastName: string;
 
   @FormArray({defaultValue: 'Default skill', defaultValues: ['Java', 'C++'], updateOn: 'blur', name: 'userSkills'})
-  public skills: string[];
+  public skillsFormArray: string[];
 
   @FormArray(() => CompanyForm)
   public companies: CompanyForm[];
 }
 ```
 
-To add a ``FormArray`` to your form model, just add an attribute with the ``@FormArray()``
-decorator. Again, you can specify ``defaultValue`` and ``name`` properties if necessary. Like with the ``@FormGroup()``
+To add a ``FormArray`` to your form model, add an attribute with the ``@FormArray()``
+decorator, and suffix your attribute name with "FormArray" to benefit from proper type definitions when using
+the ``form.controls.skillsFormArray`` syntax.
+
+Again, you can specify ``defaultValue`` and ``name`` properties if necessary. Like with the ``@FormGroup()``
 decorator, you can specify a type if you wish to create an array of nested forms.
 
 Additionally, you can add ``defaultValues`` or ``updateOn`` properties to the context.
@@ -231,7 +239,7 @@ export class UserForm {
 
   @FormGroup({type: () => AddressForm, defaultValue: structuredClone(defaultAddress)})
   @UpdateOn('submit')
-  public personalAddress: AddressForm;
+  public personalAddressFormGroup: AddressForm;
 }
 ```
 

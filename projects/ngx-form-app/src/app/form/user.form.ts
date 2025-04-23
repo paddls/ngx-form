@@ -2,6 +2,7 @@ import { FormArray, FormControl, FormGroup, OnValueChanges, UpdateOn, Validator 
 import { CompanyForm } from './company.form';
 import { AddressForm } from './address.form';
 import { Validators } from '@angular/forms';
+import { FriendModel } from '../model/friend.model';
 
 const defaultAddress: AddressForm = new AddressForm({
   route: 'User route',
@@ -23,15 +24,18 @@ export class UserForm {
   @Validator([Validators.required, Validators.min(0)])
   public age: number;
 
-  @FormArray({defaultValue: 'Default skill', defaultValues: ['Java', 'C++']})
+  @FormControl({defaultValue: ['Java', 'C++']})
   public skills: string[];
 
   @FormArray(() => CompanyForm)
-  public companies: CompanyForm[];
+  public companiesFormArray: CompanyForm[];
 
   @FormGroup({type: () => AddressForm, defaultValue: new AddressForm({...defaultAddress})})
   @UpdateOn('submit')
-  public personalAddress: AddressForm;
+  public personalAddressFormGroup: AddressForm;
+
+  @FormControl()
+  public friend: FriendModel;
 
   public constructor(data: Partial<UserForm> = {}) {
     Object.assign(this, data);

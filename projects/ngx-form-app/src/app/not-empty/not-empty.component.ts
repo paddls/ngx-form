@@ -35,34 +35,9 @@ export class NotEmptyComponent {
   @BuildForm(() => SignupForm)
   public readonly signUpForm: NgxFormGroup<SignupForm>;
 
-  private valueToSet: UserForm = new UserForm({
-    firstName: 'Thomas',
-    lastName: 'Nisole',
-    skills: ['Angular', 'NestJS'],
-    personalAddress: new AddressForm({
-      city: 'Cesson',
-      route: 'rue des Myosotis',
-      streetNumber: 1,
-      zipCode: '35510'
-    }),
-    companies: [
-      new CompanyForm({
-        name: 'Witty SARL',
-        address: new AddressForm({
-          city: 'Cesson',
-          route: 'a rue des Charmilles',
-          streetNumber: 7,
-          zipCode: '35510'
-        }),
-        siret: '1010101010101010'
-      })
-
-    ]
-  });
+  private valueToSet: UserForm = new UserForm({});
 
   public constructor() {
-    console.log(this.userForm);
-    console.log(this.signUpForm);
   }
 
   public onResetForm(): void {
@@ -90,7 +65,7 @@ export class NotEmptyComponent {
 
     setTimeout(() => {
       this.userForm.patchValue(new UserForm({
-        companies: [...this.userForm.getValue().companies, new CompanyForm({
+        companiesFormArray: [...this.userForm.getValue().companiesFormArray, new CompanyForm({
           name: 'Romain SA',
           address: new AddressForm({
             city: 'Cesson',

@@ -12,27 +12,18 @@ export type ExcludeFunctions<T> = Pick<T, ExcludedFunctionPropertyNames<T>>;
 
 export type ConstructorFunction<T> = new(...args: any[]) => T;
 
-export type Primitive =
-  | null
-  | undefined
-  | string
-  | number
-  | boolean
-  | symbol
-  | bigint
-  | Date
-  | File;
+type GenericFormName = `${string}FormGroup`;
 
-export type Arrayable<T> = T[];
+type GenericFormArrayName = `${string}FormArray`;
 
-export type IterableElement<TargetIterable> =
-  TargetIterable extends Iterable<infer ElementType> ?
-    ElementType :
-    TargetIterable extends AsyncIterable<infer ElementType> ?
-      ElementType :
-      never;
+type ElementArray<T> = T extends Array<infer U> ? U : never;
 
 export type DataToFormType<V, K extends keyof ExcludeFunctions<V> = keyof ExcludeFunctions<V>> = {
-  [key in K]: V[key] extends Primitive ? NgxFormControl<V[key]> : V[key] extends Arrayable<IterableElement<V[key]>> ? NgxFormArray<IterableElement<V[key]>> : NgxFormGroup<V[key]>
+  [key in K]:  key extends GenericFormName
+      ? NgxFormGroup<V[key]>
+      : key extends GenericFormArrayName
+        ? NgxFormArray<ElementArray<V[key]>>
+        : NgxFormControl<V[key]>;
 };
+
 export type DataFormType<V> = Partial<V> & {[key: string]: any};
