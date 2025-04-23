@@ -38,9 +38,6 @@ export class NotEmptyComponent {
   private valueToSet: UserForm = new UserForm({});
 
   public constructor() {
-    this.userForm.controls.personalAddress.
-
-    console.log(this.signUpForm);
   }
 
   public onResetForm(): void {
@@ -68,7 +65,7 @@ export class NotEmptyComponent {
 
     setTimeout(() => {
       this.userForm.patchValue(new UserForm({
-        companies: [...this.userForm.getValue().companies, new CompanyForm({
+        companiesFormArray: [...this.userForm.getValue().companiesFormArray, new CompanyForm({
           name: 'Romain SA',
           address: new AddressForm({
             city: 'Cesson',

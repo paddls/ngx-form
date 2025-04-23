@@ -74,15 +74,15 @@ class UserForm {
   @FormControl()
   public lastName: string;
 
-  @FormArray({defaultValue: 'Default skill', defaultValues: ['Java', 'C++']})
+  @FormControl({defaultValue: ['Java', 'C++']})
   public skills: string[];
 
   @FormArray(() => CompanyForm)
-  public companies: CompanyForm[];
+  public companiesFormArray: CompanyForm[];
 
-  @FormGroup({type: () => AddressForm, defaultValue: structuredClone(defaultAddress)})
+  @FormGroup({type: () => AddressForm, defaultValue: new AddressForm({...defaultAddress})})
   @UpdateOn('submit')
-  public personalAddress: AddressForm;
+  public personalAddressFormGroup: AddressForm;
 
   @AsyncValidator([
     AsyncValidatorFactory.of(
@@ -124,7 +124,7 @@ describe('NgxFormBuilder', () => {
   it('should call build control method for each form control annotation', () => {
     spyOn(builder, 'buildControl').and.callThrough();
     builder.build(formGroupContextConfiguration);
-    expect(builder.buildControl).toHaveBeenCalledTimes(7);
+    expect(builder.buildControl).toHaveBeenCalledTimes(8);
   });
 
   it('should call build group method for each form group annotation', () => {
@@ -136,14 +136,14 @@ describe('NgxFormBuilder', () => {
   it('should call build array method for each form array annotation', () => {
     spyOn(builder, 'buildArray').and.callThrough();
     builder.build(formGroupContextConfiguration);
-    expect(builder.buildArray).toHaveBeenCalledTimes(2);
+    expect(builder.buildArray).toHaveBeenCalledTimes(1);
   });
 
   it('should have option properties set according to annotations', () => {
     const form: NgxFormGroup<UserForm> = builder.build(formGroupContextConfiguration);
     expect(form.updateOn).toEqual('change');
     expect(form.controls.lastName.validator).toEqual(Validators.required);
-    expect((form.controls.personalAddress as NgxFormGroup<AddressForm>).controls.streetNumber.validator).toBeDefined();
+    expect(form.controls.personalAddressFormGroup.controls.streetNumber.validator).toBeDefined();
   });
 
   it('should resolve async validator with dependencies', () => {

@@ -24,15 +24,15 @@ export class UserForm {
   @Validator([Validators.required, Validators.min(0)])
   public age: number;
 
-  @FormArray({defaultValue: 'Default skill', defaultValues: ['Java', 'C++']})
+  @FormControl({defaultValue: ['Java', 'C++']})
   public skills: string[];
 
   @FormArray(() => CompanyForm)
-  public companies: CompanyForm[];
+  public companiesFormArray: CompanyForm[];
 
   @FormGroup({type: () => AddressForm, defaultValue: new AddressForm({...defaultAddress})})
   @UpdateOn('submit')
-  public personalAddress: AddressForm;
+  public personalAddressFormGroup: AddressForm;
 
   @FormControl()
   public friend: FriendModel;

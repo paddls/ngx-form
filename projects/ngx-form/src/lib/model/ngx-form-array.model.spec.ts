@@ -23,10 +23,10 @@ class CompanyForm {
 class UserForm {
 
   @FormArray({defaultValue: 'Default skill', defaultValues: ['Java', 'C++']})
-  public skills: string[];
+  public skillsFormArray: string[];
 
   @FormArray({type: () => CompanyForm, defaultValues: [new CompanyForm()]})
-  public companies: CompanyForm[];
+  public companiesFormArray: CompanyForm[];
 
   public constructor(data: Partial<UserForm> = {}) {
     Object.assign(this, data);
@@ -54,28 +54,28 @@ describe('NgxFormArray', () => {
   });
 
   it('should set value on method call', () => {
-    form.controls.skills.setValue(['Angular, TypeScript']);
-    expect(form.getValue().skills).toEqual(['Angular, TypeScript']);
+    form.controls.skillsFormArray.setValue(['Angular, TypeScript']);
+    expect(form.getValue().skillsFormArray).toEqual(['Angular, TypeScript']);
   });
 
   it('should patch value on method call', () => {
-    form.controls.skills.patchValue(['Java', 'Angular', 'TypeScript']);
-    expect(form.getValue().skills).toEqual(['Java', 'Angular']);
+    form.controls.skillsFormArray.patchValue(['Java', 'Angular', 'TypeScript']);
+    expect(form.getValue().skillsFormArray).toEqual(['Java', 'Angular']);
   });
 
   it('should patch value on method call', () => {
-    form.controls.skills.patchValue(['Angular']);
-    expect(form.getValue().skills).toEqual(['Angular', 'C++']);
+    form.controls.skillsFormArray.patchValue(['Angular']);
+    expect(form.getValue().skillsFormArray).toEqual(['Angular', 'C++']);
   });
 
   it('should add value on method call', () => {
-    (form.controls.skills as NgxFormArray<string>).add('C#');
-    expect(form.getValue().skills).toEqual(['Java', 'C++', 'C#']);
+    form.controls.skillsFormArray.add('C#');
+    expect(form.getValue().skillsFormArray).toEqual(['Java', 'C++', 'C#']);
   });
 
   it('should insert value on add method call with index', () => {
-    (form.controls.skills as NgxFormArray<string>).add('C#', 0);
-    expect(form.getValue().skills).toEqual(['C#', 'Java', 'C++']);
+    form.controls.skillsFormArray.add('C#', 0);
+    expect(form.getValue().skillsFormArray).toEqual(['C#', 'Java', 'C++']);
   });
 
   it('should add form value on method call', () => {
@@ -89,24 +89,24 @@ describe('NgxFormArray', () => {
       siret: '11111111111111'
     });
 
-    (form.controls.companies as NgxFormArray<CompanyForm>).add(addedCompanyForm);
-    expect(form.getValue().companies).toEqual([companyFormDefault, addedCompanyForm]);
+    form.controls.companiesFormArray.add(addedCompanyForm);
+    expect(form.getValue().companiesFormArray).toEqual([companyFormDefault, addedCompanyForm]);
   });
 
   it('should restore value on method call', () => {
-    form.controls.skills.setValue(['Angular, TypeScript']);
+    form.controls.skillsFormArray.setValue(['Angular, TypeScript']);
     form.restore();
-    expect(form.getValue().skills).toEqual(['Java', 'C++']);
+    expect(form.getValue().skillsFormArray).toEqual(['Java', 'C++']);
   });
 
   it('should empty value on method call', () => {
-    form.controls.skills.setValue(['Angular, TypeScript']);
+    form.controls.skillsFormArray.setValue(['Angular, TypeScript']);
     form.empty();
-    expect(form.getValue().skills).toEqual([]);
+    expect(form.getValue().skillsFormArray).toEqual([]);
   });
 
   it('should mark all as dirty', () => {
-    const companies: NgxFormArray<CompanyForm> = form.controls.companies as NgxFormArray<CompanyForm>;
+    const companies: NgxFormArray<CompanyForm> = form.controls.companiesFormArray;
     expect(companies.dirty).toBeFalse();
     expect(companies.controls[0].dirty).toBeFalse();
     expect(companies.controls[0].get('name').dirty).toBeFalse();
@@ -117,7 +117,7 @@ describe('NgxFormArray', () => {
   });
 
   it('should mark all as untouched', () => {
-    const companies: NgxFormArray<CompanyForm> = form.controls.companies as NgxFormArray<CompanyForm>;
+    const companies: NgxFormArray<CompanyForm> = form.controls.companiesFormArray;
     companies.controls[0].get('name').markAsTouched();
     expect(companies.untouched).toBeFalse();
     expect(companies.controls[0].untouched).toBeFalse();
@@ -129,7 +129,7 @@ describe('NgxFormArray', () => {
   });
 
   it('should mark all as pending', () => {
-    const companies: NgxFormArray<CompanyForm> = form.controls.companies as NgxFormArray<CompanyForm>;
+    const companies: NgxFormArray<CompanyForm> = form.controls.companiesFormArray;
     expect(companies.pending).toBeFalse();
     expect(companies.controls[0].pending).toBeFalse();
     expect(companies.controls[0].get('name').pending).toBeFalse();
@@ -140,7 +140,7 @@ describe('NgxFormArray', () => {
   });
 
   it('should mark all as pristine', () => {
-    const companies: NgxFormArray<CompanyForm> = form.controls.companies as NgxFormArray<CompanyForm>;
+    const companies: NgxFormArray<CompanyForm> = form.controls.companiesFormArray;
     companies.controls[0].get('name').markAsDirty();
     expect(companies.pristine).toBeFalse();
     expect(companies.controls[0].pristine).toBeFalse();
@@ -156,14 +156,14 @@ describe('NgxFormArray', () => {
       name: 'Thomas SA',
       siret: 'mon siret'
     })];
-    form.get('companies').setValue(initialValue);
+    form.controls.companiesFormArray.setValue(initialValue);
 
-    form.get('companies').patchValue([new CompanyForm({
+    form.controls.companiesFormArray.patchValue([new CompanyForm({
       name: 'Oscarrr SA',
       siret: 'mon siret'
     })]);
 
-    (form.get('companies') as NgxFormArray<CompanyForm>).cancel();
-    expect((form.get('companies') as NgxFormArray<CompanyForm>).getValue()).toEqual(initialValue);
+    form.controls.companiesFormArray.cancel();
+    expect(form.controls.companiesFormArray.getValue()).toEqual(initialValue);
   });
 });
