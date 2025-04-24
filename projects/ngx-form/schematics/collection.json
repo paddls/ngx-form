@@ -1,0 +1,10 @@
+{
+  "$schema": "../../../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "bail": {
+      "description": "Replaces library usages with native Angular.",
+      "factory": "./bail/index#bail",
+      "schema": "./bail/schema.json"
+    }
+  }
+}
