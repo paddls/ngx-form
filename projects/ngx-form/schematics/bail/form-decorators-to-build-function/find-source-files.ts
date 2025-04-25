@@ -1,6 +1,6 @@
 import { Tree } from '@angular-devkit/schematics';
 
-export function findFormFiles(dirPath: string, tree: Tree): string[] {
+export function findSourceFiles(dirPath: string, tree: Tree): string[] {
   const dir = tree.getDir(dirPath);
   let matches: string[] = [];
 
@@ -11,7 +11,7 @@ export function findFormFiles(dirPath: string, tree: Tree): string[] {
   }
 
   for (const subdir of dir.subdirs) {
-    matches = matches.concat(findFormFiles(`${dirPath}/${subdir}`, tree));
+    matches = matches.concat(findSourceFiles(`${dirPath}/${subdir}`, tree));
   }
 
   return matches;
