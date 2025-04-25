@@ -1,4 +1,5 @@
-import { FormControl, UpdateOn } from '@paddls/ngx-form';
+import { FormControl, UpdateOn, Validator } from '@paddls/ngx-form';
+import { Validators } from '@angular/forms';
 
 @UpdateOn('blur')
 export class AddressForm {
@@ -6,6 +7,7 @@ export class AddressForm {
   @FormControl({defaultValue: 0})
   public streetNumber: number;
 
+  @Validator(Validators.required)
   @FormControl({defaultValue: 'Default route'})
   public route: string;
 
